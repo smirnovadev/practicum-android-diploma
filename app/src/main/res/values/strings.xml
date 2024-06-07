@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Practicum-Android-Diploma</string>
+    <string name="team">Команда</string>
+    <string name="list_of_developers">Над приложением работали</string>
+    <string name="developer_one">Шипилов Александр Сергеевич</string>
+    <string name="developer_two">Петрова Ольга Алексеевна</string>
+    <string name="developer_three">Лебедев Никита Максимович</string>
+    <string name="developer_four">Смирнова Анна Валерьевна</string>
+    <string name="developer_five">Евстигнеев Станислав Юрьевич</string>
 </resources>
