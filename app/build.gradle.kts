@@ -51,32 +51,32 @@ dependencies {
     implementation(libs.ui.constraintLayout)
     implementation(libs.ui.fragments)
 
-    //Navigation
+    // Navigation
     implementation(libs.nav.navigationFragment)
     implementation(libs.nav.navigationUI)
 
-    //ViewModel
+    // ViewModel
     implementation(libs.viewModel.lifecycleViewModel)
 
-    //Livedata
+    // Livedata
     implementation(libs.liveData.lifecycleLiveData)
 
-    //Glide
+    // Glide
     implementation(libs.glide.glide)
 
-    //Network
+    // Network
     implementation(libs.network.retrofit)
     implementation(libs.network.retrofitConverterGson)
     implementation(libs.network.gson)
 
-    //Dependency Injections
+    // Dependency Injections
     implementation(libs.di.koinAndroid)
     implementation(libs.di.koinCore)
 
-    //Coroutines
+    // Coroutines
     implementation(libs.coroutines.coroutines)
 
-    //Database
+    // Database
     implementation(libs.db.roomRuntime)
     kapt(libs.db.roomCompiler)
     implementation(libs.db.roomKtx)
