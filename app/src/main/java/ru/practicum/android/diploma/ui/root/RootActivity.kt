@@ -11,11 +11,9 @@ import ru.practicum.android.diploma.databinding.ActivityRootBinding
 
 class RootActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityRootBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRootBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_root)
 
         // Пример использования access token для HeadHunter API
         networkRequestExample(accessToken = BuildConfig.HH_ACCESS_TOKEN)
@@ -23,7 +21,8 @@ class RootActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.rootFragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
 
-        binding.bottomNavigationView.setupWithNavController(navController)
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView.setupWithNavController(navController)
     }
 
     private fun networkRequestExample(accessToken: String) {
