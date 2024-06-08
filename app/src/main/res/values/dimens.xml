@@ -3,12 +3,9 @@
     <dimen name="_16sp">16sp</dimen>
     <dimen name="_16dp">16dp</dimen>
     <dimen name="_22sp">22sp</dimen>
-    <dimen name="_26sp">26sp</dimen>
     <dimen name="_19dp">19dp</dimen>
     <dimen name="_32dp">32dp</dimen>
     <dimen name="_32sp">32sp</dimen>
     <dimen name="_43dp">43dp</dimen>
     <dimen name="_12sp">12sp</dimen>
-    <dimen name="fontWeight500">500</dimen>
-
 </resources>
