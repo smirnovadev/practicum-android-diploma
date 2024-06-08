@@ -17,7 +17,6 @@ class MainFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentMainBinding.inflate(inflater, container, false)
 
         return binding.root
@@ -32,8 +31,4 @@ class MainFragment : Fragment() {
         _binding = null
     }
 
-
 }
-
-
-
