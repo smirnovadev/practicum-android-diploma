@@ -17,7 +17,7 @@ class DevelopersFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentDevelopersBinding.inflate(inflater)
+        _binding = FragmentDevelopersBinding.inflate(inflater, container, false)
         return binding.root
     }
 
