@@ -7,4 +7,8 @@
     <string name="developer_three">Лебедев Никита Максимович</string>
     <string name="developer_four">Смирнова Анна Валерьевна</string>
     <string name="developer_five">Евстигнеев Станислав Юрьевич</string>
+    <string name="main_fragment">Главная</string>
+    <string name="vacancies_search">Поиск вакансий</string>
+
+
 </resources>
