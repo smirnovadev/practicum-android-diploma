@@ -103,8 +103,6 @@ class SearchFragment : Fragment() {
                 binding.searchStatus.text = getString(R.string.no_such_vacancies)
                 binding.recyclerView.isVisible = false
             }
-
-
         }
     }
 
