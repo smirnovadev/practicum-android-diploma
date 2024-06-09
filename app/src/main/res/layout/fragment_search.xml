@@ -13,18 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="@string/vacancies_search">
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginEnd="@dimen/_8dp"
-            android:backgroundTint="@android:color/transparent"
-            android:contentDescription="@string/filter_settings"
-            android:src="@drawable/ic_filter_off" />
-
-    </androidx.appcompat.widget.Toolbar>
+        app:title="@string/vacancies_search"/>
 
     <ImageView
         android:id="@+id/icFilter"
@@ -70,6 +59,7 @@
         tools:visibility="gone" />
 
     <ImageView
+        android:id="@+id/searchScreenCover"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/img_search_screen_cover"
@@ -78,7 +68,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText"
-        tools:visibility="visible" />
+        tools:visibility="gone" />
 
     <TextView
         android:id="@+id/noInternetPlaceholder"
@@ -109,6 +99,20 @@
         tools:visibility="gone" />
 
     <TextView
+        android:id="@+id/serverErrorPlaceholder"
+        style="@style/ErrorPlaceholder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/img_server_error_placeholder"
+        android:text="@string/server_error"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText"
+        tools:visibility="gone" />
+
+    <TextView
         android:id="@+id/searchStatus"
         style="@style/SearchStatus"
         android:layout_width="wrap_content"
@@ -129,9 +133,12 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText"
+        app:layout_constraintVertical_bias="0.0"
         tools:itemCount="15"
-        tools:visibility="gone" />
+        tools:listitem="@layout/card_item"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
