@@ -13,9 +13,9 @@
         android:layout_width="@dimen/_48dp"
         android:layout_height="@dimen/_48dp"
         android:contentDescription="@null"
-        android:src="@drawable/ic_placeholder_card_list"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_placeholder_card_list" />
 
     <TextView
         android:id="@+id/tv_vacancy"
