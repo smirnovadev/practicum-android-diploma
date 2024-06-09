@@ -9,7 +9,11 @@
         android:id="@+id/mainFragment"
         android:name="ru.practicum.android.diploma.search.ui.SearchFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_mainFragment_to_filtersFragment"
+            app:destination="@id/filtersFragment" />
+    </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="ru.practicum.android.diploma.favorites.ui.FavoritesFragment"
@@ -20,4 +24,9 @@
         android:name="ru.practicum.android.diploma.developers.DevelopersFragment"
         android:label="fragment_developers"
         tools:layout="@layout/fragment_developers" />
+    <fragment
+        android:id="@+id/filtersFragment"
+        android:name="ru.practicum.android.diploma.filters.ui.FiltersFragment"
+        android:label="FiltersFragment"
+        tools:layout="@layout/fragment_filter"/>
 </navigation>
