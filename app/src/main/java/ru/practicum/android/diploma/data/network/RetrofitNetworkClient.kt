@@ -7,20 +7,20 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import ru.practicum.android.diploma.data.dto.NetworkResponse
+import ru.practicum.android.diploma.data.dto.requests.AreaRequest
+import ru.practicum.android.diploma.data.dto.requests.CountriesRequest
+import ru.practicum.android.diploma.data.dto.requests.FindVacanciesRequest
+import ru.practicum.android.diploma.data.dto.requests.IndustriesRequest
+import ru.practicum.android.diploma.data.dto.requests.VacancyByIdRequest
 import ru.practicum.android.diploma.data.dto.responses.AreasListResponse
 import ru.practicum.android.diploma.data.dto.responses.CountriesListResponse
 import ru.practicum.android.diploma.data.dto.responses.IndustriesListResponse
-import ru.practicum.android.diploma.data.dto.requests.FindVacanciesRequest
-import ru.practicum.android.diploma.data.dto.requests.AreaRequest
-import ru.practicum.android.diploma.data.dto.requests.CountriesRequest
-import ru.practicum.android.diploma.data.dto.requests.IndustriesRequest
-import ru.practicum.android.diploma.data.dto.requests.VacancyByIdRequest
 import java.io.IOException
 
 /**
  * Error codes:
  * -2 - UNKNOWN THROWABLE
- * -1 - NO INTERNET
+ * -1 - IO EXCEPTION
  * 100-500 - NETWORK ERROR CODES
  */
 
@@ -49,8 +49,6 @@ class RetrofitNetworkClient(
                 NetworkResponse().apply { resultCode = e.code() }
             } catch (e: IOException) {
                 NetworkResponse().apply { resultCode = IO_EXCEPTION }
-            } catch (e: Exception) {
-                NetworkResponse().apply { resultCode = UNKNOWN_EXCEPTION }
             }
         }
     }
@@ -67,8 +65,6 @@ class RetrofitNetworkClient(
                 NetworkResponse().apply { resultCode = e.code() }
             } catch (e: IOException) {
                 NetworkResponse().apply { resultCode = IO_EXCEPTION }
-            } catch (e: Exception) {
-                NetworkResponse().apply { resultCode = UNKNOWN_EXCEPTION }
             }
         }
     }
@@ -87,8 +83,6 @@ class RetrofitNetworkClient(
                 NetworkResponse().apply { resultCode = e.code() }
             } catch (e: IOException) {
                 NetworkResponse().apply { resultCode = IO_EXCEPTION }
-            } catch (e: Exception) {
-                NetworkResponse().apply { resultCode = UNKNOWN_EXCEPTION }
             }
         }
     }
@@ -107,8 +101,6 @@ class RetrofitNetworkClient(
                 NetworkResponse().apply { resultCode = e.code() }
             } catch (e: IOException) {
                 NetworkResponse().apply { resultCode = IO_EXCEPTION }
-            } catch (e: Exception) {
-                NetworkResponse().apply { resultCode = UNKNOWN_EXCEPTION }
             }
         }
     }
@@ -127,8 +119,6 @@ class RetrofitNetworkClient(
                 NetworkResponse().apply { resultCode = e.code() }
             } catch (e: IOException) {
                 NetworkResponse().apply { resultCode = IO_EXCEPTION }
-            } catch (e: Exception) {
-                NetworkResponse().apply { resultCode = UNKNOWN_EXCEPTION }
             }
         }
     }
@@ -152,7 +142,6 @@ class RetrofitNetworkClient(
     companion object {
         const val ERROR_NO_INTERNET = -1
         const val IO_EXCEPTION = -2
-        const val UNKNOWN_EXCEPTION = -10
         const val SUCCESS_STATUS = 200
     }
 }
