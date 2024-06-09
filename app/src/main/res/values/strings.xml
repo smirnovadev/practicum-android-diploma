@@ -11,4 +11,10 @@
     <string name="vacancies_search">Поиск вакансий</string>
     <string name="enter_search_request">Введите запрос</string>
     <string name="favorites">Избранное</string>
+    <string name="no_internet">Нет интернета</string>
+    <string name="empty_search_results">Не удалось получить\nсписок вакансий</string>
+    <string name="no_such_vacancies">Таких вакансий нет</string>
+    <string name="vacancy">вакансия</string>
+    <string name="vacancy_genitive">вакансии</string>
+    <string name="vacancies_genitive">вакансий</string>
 </resources>
