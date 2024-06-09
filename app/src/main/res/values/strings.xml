@@ -10,6 +10,7 @@
     <string name="main_fragment">Главная</string>
     <string name="vacancies_search">Поиск вакансий</string>
     <string name="favorites">Избранное</string>
+    <string name="text">Text</string>
 
 
 </resources>

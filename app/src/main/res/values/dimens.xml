@@ -13,6 +13,9 @@
     <dimen name="_1dp">1dp</dimen>
 
     <dimen name="fontWeight500">500</dimen>
+    <dimen name="_12dp">12dp</dimen>
+    <dimen name="_48dp">48dp</dimen>
+    <dimen name="_9dp">9dp</dimen>
 
 
 </resources>
