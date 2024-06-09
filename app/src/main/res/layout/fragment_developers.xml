@@ -5,16 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/backgroundColor"
-    tools:context=".presentation.DevelopersFragment">
+    tools:context=".developers.DevelopersFragment">
 
-    <TextView
-        android:id="@+id/tv_team"
-        style="@style/toolBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/team"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/ToolbarStyle"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/team" />
 
     <TextView
         android:id="@+id/tv_list_of_developers"
@@ -27,7 +26,7 @@
         android:text="@string/list_of_developers"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_team" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <TextView
         android:id="@+id/tv_developer_one"

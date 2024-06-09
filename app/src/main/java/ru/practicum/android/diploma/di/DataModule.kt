@@ -11,7 +11,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import ru.practicum.android.diploma.data.network.NetworkClient
 
 val dataModule = module {
-
     single(named("baseUrl")) {
         "https://api.hh.ru"
     }
@@ -31,5 +30,4 @@ val dataModule = module {
     single<NetworkClient> {
         RetrofitNetworkClient(get(), androidContext())
     }
-
 }
