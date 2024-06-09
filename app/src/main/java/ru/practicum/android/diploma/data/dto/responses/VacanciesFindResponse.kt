@@ -2,7 +2,7 @@ package ru.practicum.android.diploma.data.dto.responses
 
 import com.google.gson.annotations.SerializedName
 import ru.practicum.android.diploma.data.dto.NetworkResponse
-import ru.practicum.android.diploma.data.dto.vacancies.fields.SearchVacanciesUnit
+import ru.practicum.android.diploma.data.dto.responses.fields.SearchVacanciesUnit
 
 /**
  * https://api.hh.ru/openapi/redoc#tag/Poisk-vakansij/operation/get-vacancies
@@ -10,7 +10,7 @@ import ru.practicum.android.diploma.data.dto.vacancies.fields.SearchVacanciesUni
 
 data class VacanciesFindResponse(
     @SerializedName("items")
-    val vacancies: List<SearchVacanciesUnit>,
+    val vacancies: List<ru.practicum.android.diploma.data.dto.responses.fields.SearchVacanciesUnit>,
     @SerializedName("found")
     val found: Int,
     @SerializedName("page")

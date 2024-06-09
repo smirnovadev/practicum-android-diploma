@@ -5,8 +5,8 @@ import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
 import ru.practicum.android.diploma.BuildConfig
-import ru.practicum.android.diploma.data.dto.areas.AreasList
-import ru.practicum.android.diploma.data.dto.industry.IndustriesList
+import ru.practicum.android.diploma.data.dto.responses.areas.AreasList
+import ru.practicum.android.diploma.data.dto.responses.industry.IndustriesList
 import ru.practicum.android.diploma.data.dto.responses.VacanciesFindResponse
 import ru.practicum.android.diploma.data.dto.responses.VacancyByIdResponse
 
@@ -36,15 +36,15 @@ interface ApiService {
     @GET("/areas/countries")
     suspend fun getCountries(
         @Query("locale") locale: String = "RU"
-    ): AreasList
+    ): ru.practicum.android.diploma.data.dto.responses.areas.AreasList
 
     @GET("/areas")
     suspend fun getAreas(
         @Query("locale") locale: String = "RU"
-    ): AreasList
+    ): ru.practicum.android.diploma.data.dto.responses.areas.AreasList
 
     @GET("/salary_statistics/dictionaries/salary_industries")
     suspend fun getIndustries(
         @Query("locale") locale: String = "RU"
-    ): IndustriesList
+    ): ru.practicum.android.diploma.data.dto.responses.industry.IndustriesList
 }

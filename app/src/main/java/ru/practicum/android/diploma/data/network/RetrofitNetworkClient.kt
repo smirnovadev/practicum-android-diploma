@@ -17,6 +17,12 @@ import ru.practicum.android.diploma.data.dto.requests.CountriesRequest
 import ru.practicum.android.diploma.data.dto.requests.IndustriesRequest
 import ru.practicum.android.diploma.data.dto.requests.VacancyByIdRequest
 
+/**
+ * Error codes:
+ * -2 - UNKNOWN THROWABLE
+ * -1 - NO INTERNET
+ * 100-500 - NETWORK ERROR CODES
+ */
 
 class RetrofitNetworkClient(
     private val apiService: ApiService,

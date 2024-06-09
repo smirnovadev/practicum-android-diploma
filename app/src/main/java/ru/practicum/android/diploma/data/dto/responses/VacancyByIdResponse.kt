@@ -2,7 +2,7 @@ package ru.practicum.android.diploma.data.dto.responses
 
 import com.google.gson.annotations.SerializedName
 import ru.practicum.android.diploma.data.dto.NetworkResponse
-import ru.practicum.android.diploma.data.dto.vacancies.fields.Address
+import ru.practicum.android.diploma.data.dto.responses.fields.Address
 
 data class VacancyByIdResponse(
     @SerializedName("accept_handicapped")
@@ -14,7 +14,7 @@ data class VacancyByIdResponse(
     @SerializedName("accept_temporary")
     val acceptTemporary: Boolean,
     @SerializedName("address")
-    val address: Address,
+    val address: ru.practicum.android.diploma.data.dto.responses.fields.Address,
     @SerializedName("allow_messages")
     val allowMessages: Boolean,
     @SerializedName("alternate_url")
@@ -26,7 +26,7 @@ data class VacancyByIdResponse(
     @SerializedName("archived")
     val archived: Boolean,
     @SerializedName("area")
-    val area: ru.practicum.android.diploma.data.dto.vacancies.fields.VacancyArea,
+    val area: ru.practicum.android.diploma.data.dto.responses.fields.VacancyArea,
     @SerializedName("billing_type")
     val brandedDescription: String,
     @SerializedName("can_upgrade_billing_type")
@@ -34,17 +34,17 @@ data class VacancyByIdResponse(
     @SerializedName("code")
     val code: String,
     @SerializedName("contacts")
-    val contacts: ru.practicum.android.diploma.data.dto.vacancies.fields.Contacts,
+    val contacts: ru.practicum.android.diploma.data.dto.responses.fields.Contacts,
     @SerializedName("created_at")
     val createdAt: String,
     @SerializedName("department")
-    val department: ru.practicum.android.diploma.data.dto.vacancies.fields.Department,
+    val department: ru.practicum.android.diploma.data.dto.responses.fields.Department,
     @SerializedName("description")
     val description: String,
     @SerializedName("employer")
-    val employer: ru.practicum.android.diploma.data.dto.vacancies.fields.Employer,
+    val employer: ru.practicum.android.diploma.data.dto.responses.fields.Employer,
     @SerializedName("experience")
-    val experience: ru.practicum.android.diploma.data.dto.vacancies.fields.Experience,
+    val experience: ru.practicum.android.diploma.data.dto.responses.fields.Experience,
     @SerializedName("expires_at")
     val expiresAt: String,
     @SerializedName("has_test")
@@ -56,11 +56,11 @@ data class VacancyByIdResponse(
     @SerializedName("initial_created_at")
     val initialCreatedAt: String,
     @SerializedName("insider_interview")
-    val insiderInterview: ru.practicum.android.diploma.data.dto.vacancies.fields.InsiderInterview,
+    val insiderInterview: ru.practicum.android.diploma.data.dto.responses.fields.InsiderInterview,
     @SerializedName("key_skills")
-    val keySkills: List<ru.practicum.android.diploma.data.dto.vacancies.fields.KeySkill>,
+    val keySkills: List<ru.practicum.android.diploma.data.dto.responses.fields.KeySkill>,
     @SerializedName("manager")
-    val manager: ru.practicum.android.diploma.data.dto.vacancies.fields.Manager,
+    val manager: ru.practicum.android.diploma.data.dto.responses.fields.Manager,
     @SerializedName("name")
     val name: String,
     @SerializedName("premium")
@@ -68,7 +68,7 @@ data class VacancyByIdResponse(
     @SerializedName("previous_id")
     val previousId: String,
     @SerializedName("professional_roles")
-    val professionalRoles: List<ru.practicum.android.diploma.data.dto.vacancies.fields.ProfessionalRole>,
+    val professionalRoles: List<ru.practicum.android.diploma.data.dto.responses.fields.ProfessionalRole>,
     @SerializedName("published_at")
     val publishedAt: String,
     @SerializedName("response_letter_required")
@@ -78,13 +78,13 @@ data class VacancyByIdResponse(
     @SerializedName("response_url")
     val responseUrl: String?,
     @SerializedName("salary")
-    val salary: ru.practicum.android.diploma.data.dto.vacancies.fields.Salary,
+    val salary: ru.practicum.android.diploma.data.dto.responses.fields.Salary,
     @SerializedName("schedule")
-    val schedule: ru.practicum.android.diploma.data.dto.vacancies.fields.Schedule,
+    val schedule: ru.practicum.android.diploma.data.dto.responses.fields.Schedule,
     @SerializedName("type")
-    val type: ru.practicum.android.diploma.data.dto.vacancies.fields.Type,
+    val type: ru.practicum.android.diploma.data.dto.responses.fields.Type,
     @SerializedName("working_days")
-    val workingDays: List<ru.practicum.android.diploma.data.dto.vacancies.fields.WorkingDay>,
+    val workingDays: List<ru.practicum.android.diploma.data.dto.responses.fields.WorkingDay>,
     @SerializedName("working_time_intervals")
-    val workingTimeIntervals: List<ru.practicum.android.diploma.data.dto.vacancies.fields.WorkingTimeInterval>,
+    val workingTimeIntervals: List<ru.practicum.android.diploma.data.dto.responses.fields.WorkingTimeInterval>,
 ) : NetworkResponse()

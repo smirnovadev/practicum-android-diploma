@@ -1,5 +1,7 @@
 package ru.practicum.android.diploma.data.dto.requests
 
+import ru.practicum.android.diploma.data.dto.NetworkRequest
+
 data class FindVacanciesRequest(
     val query: String,
     val salary: String? = null,
