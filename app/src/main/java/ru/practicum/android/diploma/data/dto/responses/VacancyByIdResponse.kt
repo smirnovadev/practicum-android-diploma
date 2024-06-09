@@ -1,6 +1,7 @@
-package ru.practicum.android.diploma.data.dto.vacancies
+package ru.practicum.android.diploma.data.dto.responses
 
 import com.google.gson.annotations.SerializedName
+import ru.practicum.android.diploma.data.dto.NetworkResponse
 import ru.practicum.android.diploma.data.dto.vacancies.fields.Address
 
 data class VacancyByIdResponse(
@@ -86,4 +87,4 @@ data class VacancyByIdResponse(
     val workingDays: List<ru.practicum.android.diploma.data.dto.vacancies.fields.WorkingDay>,
     @SerializedName("working_time_intervals")
     val workingTimeIntervals: List<ru.practicum.android.diploma.data.dto.vacancies.fields.WorkingTimeInterval>,
-)
+) : NetworkResponse()

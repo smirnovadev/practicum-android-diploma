@@ -6,11 +6,11 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 import ru.practicum.android.diploma.BuildConfig
 import ru.practicum.android.diploma.data.dto.areas.AreasList
-import ru.practicum.android.diploma.data.dto.vacancies.VacanciesFindResponse
-import ru.practicum.android.diploma.data.dto.vacancies.VacancyByIdResponse
+import ru.practicum.android.diploma.data.dto.industry.IndustriesList
+import ru.practicum.android.diploma.data.dto.responses.VacanciesFindResponse
+import ru.practicum.android.diploma.data.dto.responses.VacancyByIdResponse
 
 interface ApiService {
-
     @Headers(
         "Authorization: Bearer ${BuildConfig.HH_ACCESS_TOKEN}",
         "HH-User-Agent: YP HH Diploma (evstigneevstas@gmail.com)"
@@ -33,23 +33,18 @@ interface ApiService {
         @Query("area") area: String? = null
     ): VacanciesFindResponse
 
-    @Headers(
-        "Authorization: Bearer ${BuildConfig.HH_ACCESS_TOKEN}",
-        "HH-User-Agent: YP HH Diploma (evstigneevstas@gmail.com)"
-    )
     @GET("/areas/countries")
     suspend fun getCountries(
         @Query("locale") locale: String = "RU"
     ): AreasList
 
-    @Headers(
-        "Authorization: Bearer ${BuildConfig.HH_ACCESS_TOKEN}",
-        "HH-User-Agent: YP HH Diploma (evstigneevstas@gmail.com)"
-    )
     @GET("/areas")
     suspend fun getAreas(
         @Query("locale") locale: String = "RU"
     ): AreasList
 
-    // Список индустрий
+    @GET("/salary_statistics/dictionaries/salary_industries")
+    suspend fun getIndustries(
+        @Query("locale") locale: String = "RU"
+    ): IndustriesList
 }

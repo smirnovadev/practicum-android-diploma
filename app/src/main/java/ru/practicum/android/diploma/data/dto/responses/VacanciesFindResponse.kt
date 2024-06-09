@@ -1,6 +1,8 @@
-package ru.practicum.android.diploma.data.dto.vacancies
+package ru.practicum.android.diploma.data.dto.responses
 
 import com.google.gson.annotations.SerializedName
+import ru.practicum.android.diploma.data.dto.NetworkResponse
+import ru.practicum.android.diploma.data.dto.vacancies.fields.SearchVacanciesUnit
 
 /**
  * https://api.hh.ru/openapi/redoc#tag/Poisk-vakansij/operation/get-vacancies
@@ -8,7 +10,7 @@ import com.google.gson.annotations.SerializedName
 
 data class VacanciesFindResponse(
     @SerializedName("items")
-    val vacancies: List<ru.practicum.android.diploma.data.dto.vacancies.fields.SearchVacanciesUnit>,
+    val vacancies: List<SearchVacanciesUnit>,
     @SerializedName("found")
     val found: Int,
     @SerializedName("page")
@@ -21,4 +23,4 @@ data class VacanciesFindResponse(
     val fixes: String?,
     @SerializedName("suggests")
     val suggests: String?
-)
+): NetworkResponse()

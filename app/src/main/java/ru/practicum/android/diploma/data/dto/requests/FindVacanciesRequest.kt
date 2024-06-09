@@ -1,0 +1,11 @@
+package ru.practicum.android.diploma.data.dto.requests
+
+data class FindVacanciesRequest(
+    val query: String,
+    val salary: String? = null,
+    val page: Int = 0,
+    val amount: Int = 20,
+    val onlyWithSalary: Boolean = false,
+    val industry: String? = null,
+    val area: String? = null
+) : NetworkRequest
