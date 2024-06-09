@@ -3,21 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/searchFragment">
 
     <fragment
-        android:id="@+id/mainFragment"
-        android:name="ru.practicum.android.diploma.MainFragment"
+        android:id="@+id/searchFragment"
+        android:name="ru.practicum.android.diploma.search.ui.SearchFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="ru.practicum.android.diploma.FavoritesFragment"
+        android:name="ru.practicum.android.diploma.favorites.ui.FavoritesFragment"
         android:label="fragment_favorites"
         tools:layout="@layout/fragment_favorites" />
     <fragment
         android:id="@+id/developersFragment"
-        android:name="ru.practicum.android.diploma.presentation.DevelopersFragment"
+        android:name="ru.practicum.android.diploma.developers.DevelopersFragment"
         android:label="fragment_developers"
         tools:layout="@layout/fragment_developers" />
 </navigation>
