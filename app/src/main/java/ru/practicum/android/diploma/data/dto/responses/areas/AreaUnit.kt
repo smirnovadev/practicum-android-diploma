@@ -7,5 +7,5 @@ data class AreaUnit(
     val name: String,
     val url: String,
     val parent: String? = null,
-    @SerializedName("areas") val children: ArrayList<ru.practicum.android.diploma.data.dto.responses.areas.AreasList> = arrayListOf()
+    @SerializedName("areas") val children: ArrayList<AreasList> = arrayListOf()
 )

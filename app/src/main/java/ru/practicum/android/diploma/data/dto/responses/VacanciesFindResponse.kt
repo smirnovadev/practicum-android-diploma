@@ -10,7 +10,7 @@ import ru.practicum.android.diploma.data.dto.responses.fields.SearchVacanciesUni
 
 data class VacanciesFindResponse(
     @SerializedName("items")
-    val vacancies: List<ru.practicum.android.diploma.data.dto.responses.fields.SearchVacanciesUnit>,
+    val vacancies: List<SearchVacanciesUnit>,
     @SerializedName("found")
     val found: Int,
     @SerializedName("page")
@@ -23,4 +23,4 @@ data class VacanciesFindResponse(
     val fixes: String?,
     @SerializedName("suggests")
     val suggests: String?
-): NetworkResponse()
+) : NetworkResponse()

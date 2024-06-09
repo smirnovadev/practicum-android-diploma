@@ -1,12 +1,10 @@
-package petrova.ola.playlistmaker.search.data.network
+package ru.practicum.android.diploma.data.network
 
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
 import ru.practicum.android.diploma.BuildConfig
-import ru.practicum.android.diploma.data.dto.responses.areas.AreasList
-import ru.practicum.android.diploma.data.dto.responses.industry.IndustriesList
 import ru.practicum.android.diploma.data.dto.responses.VacanciesFindResponse
 import ru.practicum.android.diploma.data.dto.responses.VacancyByIdResponse
 
