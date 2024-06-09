@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.presentation
+package ru.practicum.android.diploma.developers
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,7 +17,7 @@ class DevelopersFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentDevelopersBinding.inflate(inflater)
+        _binding = FragmentDevelopersBinding.inflate(inflater, container, false)
         return binding.root
     }
 
