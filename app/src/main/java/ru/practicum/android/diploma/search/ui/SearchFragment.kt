@@ -43,9 +43,13 @@ class SearchFragment : Fragment() {
         }
 
         textWatcher = object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                TODO()
+            }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                TODO()
+            }
 
             override fun afterTextChanged(s: Editable?) {
                 if (!s.isNullOrEmpty()) {
@@ -78,23 +82,15 @@ class SearchFragment : Fragment() {
             }
 
             is SearchScreenState.Loading -> {
-                binding.searchScreenCover.isVisible = false
-                binding.progressBar.isVisible = true
-                binding.noInternetPlaceholder.isVisible = false
-                binding.emptySearchResultsPlaceholder.isVisible = false
-                binding.serverErrorPlaceholder.isVisible = false
-                binding.searchStatus.isVisible = false
-                binding.recyclerView.isVisible = false
+                showProgressbar()
             }
 
             is SearchScreenState.InternetConnectionError -> {
-                binding.searchScreenCover.isVisible = false
-                binding.progressBar.isVisible = false
-                binding.noInternetPlaceholder.isVisible = true
-                binding.emptySearchResultsPlaceholder.isVisible = false
-                binding.serverErrorPlaceholder.isVisible = false
-                binding.searchStatus.isVisible = false
-                binding.recyclerView.isVisible = false
+                showInternetConnectionError()
+            }
+
+            is SearchScreenState.ServerError -> {
+                showServerError()
             }
 
             is SearchScreenState.SearchError -> {
@@ -108,15 +104,37 @@ class SearchFragment : Fragment() {
                 binding.recyclerView.isVisible = false
             }
 
-            is SearchScreenState.ServerError -> {
-                binding.searchScreenCover.isVisible = false
-                binding.progressBar.isVisible = false
-                binding.noInternetPlaceholder.isVisible = false
-                binding.emptySearchResultsPlaceholder.isVisible = false
-                binding.serverErrorPlaceholder.isVisible = true
-                binding.searchStatus.isVisible = false
-                binding.recyclerView.isVisible = false
-            }
+
         }
+    }
+
+    private fun showProgressbar() {
+        binding.searchScreenCover.isVisible = false
+        binding.progressBar.isVisible = true
+        binding.noInternetPlaceholder.isVisible = false
+        binding.emptySearchResultsPlaceholder.isVisible = false
+        binding.serverErrorPlaceholder.isVisible = false
+        binding.searchStatus.isVisible = false
+        binding.recyclerView.isVisible = false
+    }
+
+    private fun showInternetConnectionError() {
+        binding.searchScreenCover.isVisible = false
+        binding.progressBar.isVisible = false
+        binding.noInternetPlaceholder.isVisible = true
+        binding.emptySearchResultsPlaceholder.isVisible = false
+        binding.serverErrorPlaceholder.isVisible = false
+        binding.searchStatus.isVisible = false
+        binding.recyclerView.isVisible = false
+    }
+
+    private fun showServerError() {
+        binding.searchScreenCover.isVisible = false
+        binding.progressBar.isVisible = false
+        binding.noInternetPlaceholder.isVisible = false
+        binding.emptySearchResultsPlaceholder.isVisible = false
+        binding.serverErrorPlaceholder.isVisible = true
+        binding.searchStatus.isVisible = false
+        binding.recyclerView.isVisible = false
     }
 }
