@@ -3,6 +3,7 @@ package ru.practicum.android.diploma.data.network
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
@@ -19,7 +20,6 @@ import java.io.IOException
 
 /**
  * Error codes:
- * -2 - UNKNOWN THROWABLE
  * -1 - IO EXCEPTION
  * 100-500 - NETWORK ERROR CODES
  */
@@ -46,8 +46,10 @@ class RetrofitNetworkClient(
                     area = dto.area
                 ).apply { resultCode = SUCCESS_STATUS }
             } catch (e: HttpException) {
+                Log.e(TAG, e.stackTraceToString())
                 NetworkResponse().apply { resultCode = e.code() }
             } catch (e: IOException) {
+                Log.e(TAG, e.stackTraceToString())
                 NetworkResponse().apply { resultCode = IO_EXCEPTION }
             }
         }
@@ -62,8 +64,10 @@ class RetrofitNetworkClient(
             try {
                 apiService.getVacancyById(dto.id).apply { resultCode = SUCCESS_STATUS }
             } catch (e: HttpException) {
+                Log.e(TAG, e.stackTraceToString())
                 NetworkResponse().apply { resultCode = e.code() }
             } catch (e: IOException) {
+                Log.e(TAG, e.stackTraceToString())
                 NetworkResponse().apply { resultCode = IO_EXCEPTION }
             }
         }
@@ -80,8 +84,10 @@ class RetrofitNetworkClient(
                     apiService.getCountries(dto.locale)
                 ).apply { resultCode = SUCCESS_STATUS }
             } catch (e: HttpException) {
+                Log.e(TAG, e.stackTraceToString())
                 NetworkResponse().apply { resultCode = e.code() }
             } catch (e: IOException) {
+                Log.e(TAG, e.stackTraceToString())
                 NetworkResponse().apply { resultCode = IO_EXCEPTION }
             }
         }
@@ -98,8 +104,10 @@ class RetrofitNetworkClient(
                     apiService.getAreas(dto.locale)
                 ).apply { resultCode = SUCCESS_STATUS }
             } catch (e: HttpException) {
+                Log.e(TAG, e.stackTraceToString())
                 NetworkResponse().apply { resultCode = e.code() }
             } catch (e: IOException) {
+                Log.e(TAG, e.stackTraceToString())
                 NetworkResponse().apply { resultCode = IO_EXCEPTION }
             }
         }
@@ -116,8 +124,10 @@ class RetrofitNetworkClient(
                     apiService.getIndustries(dto.locale)
                 ).apply { resultCode = SUCCESS_STATUS }
             } catch (e: HttpException) {
+                Log.e(TAG, e.stackTraceToString())
                 NetworkResponse().apply { resultCode = e.code() }
             } catch (e: IOException) {
+                Log.e(TAG, e.stackTraceToString())
                 NetworkResponse().apply { resultCode = IO_EXCEPTION }
             }
         }
@@ -130,10 +140,11 @@ class RetrofitNetworkClient(
         val capabilities =
             connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
         if (capabilities != null) {
-            when {
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> return true
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> return true
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> return true
+            return when {
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+                else -> false
             }
         }
         return false
@@ -143,5 +154,6 @@ class RetrofitNetworkClient(
         const val ERROR_NO_INTERNET = -1
         const val IO_EXCEPTION = -2
         const val SUCCESS_STATUS = 200
+        const val TAG = "DIPLOM_RETROFIT_CLIENT"
     }
 }
