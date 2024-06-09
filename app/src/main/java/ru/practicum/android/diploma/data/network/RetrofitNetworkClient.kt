@@ -49,6 +49,8 @@ class RetrofitNetworkClient(
             } catch (e: HttpException) {
                 NetworkResponse().apply { resultCode = e.code() }
             } catch (e: IOException) {
+                NetworkResponse().apply { resultCode = IO_EXCEPTION }
+            } catch (e: Exception) {
                 NetworkResponse().apply { resultCode = UNKNOWN_EXCEPTION }
             }
         }
@@ -65,6 +67,8 @@ class RetrofitNetworkClient(
             } catch (e: HttpException) {
                 NetworkResponse().apply { resultCode = e.code() }
             } catch (e: IOException) {
+                NetworkResponse().apply { resultCode = IO_EXCEPTION }
+            } catch (e: Exception) {
                 NetworkResponse().apply { resultCode = UNKNOWN_EXCEPTION }
             }
         }
@@ -83,6 +87,8 @@ class RetrofitNetworkClient(
             } catch (e: HttpException) {
                 NetworkResponse().apply { resultCode = e.code() }
             } catch (e: IOException) {
+                NetworkResponse().apply { resultCode = IO_EXCEPTION }
+            } catch (e: Exception) {
                 NetworkResponse().apply { resultCode = UNKNOWN_EXCEPTION }
             }
         }
@@ -101,6 +107,8 @@ class RetrofitNetworkClient(
             } catch (e: HttpException) {
                 NetworkResponse().apply { resultCode = e.code() }
             } catch (e: IOException) {
+                NetworkResponse().apply { resultCode = IO_EXCEPTION }
+            } catch (e: Exception) {
                 NetworkResponse().apply { resultCode = UNKNOWN_EXCEPTION }
             }
         }
@@ -119,6 +127,8 @@ class RetrofitNetworkClient(
             } catch (e: HttpException) {
                 NetworkResponse().apply { resultCode = e.code() }
             } catch (e: IOException) {
+                NetworkResponse().apply { resultCode = IO_EXCEPTION }
+            } catch (e: Exception) {
                 NetworkResponse().apply { resultCode = UNKNOWN_EXCEPTION }
             }
         }
@@ -142,7 +152,8 @@ class RetrofitNetworkClient(
 
     companion object {
         const val ERROR_NO_INTERNET = -1
-        const val UNKNOWN_EXCEPTION = -2
+        const val IO_EXCEPTION = -2
+        const val UNKNOWN_EXCEPTION = -10
         const val SUCCESS_STATUS = 200
     }
 }
