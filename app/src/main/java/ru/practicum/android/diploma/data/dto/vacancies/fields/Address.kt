@@ -1,7 +1,8 @@
-package ru.practicum.android.diploma.data.dto.vacancy
+package ru.practicum.android.diploma.data.dto.vacancies.fields
 
 
 import com.google.gson.annotations.SerializedName
+import ru.practicum.android.diploma.data.dto.vacancies.fields.MetroStation
 
 data class Address(
     @SerializedName("building")
@@ -15,7 +16,7 @@ data class Address(
     @SerializedName("lng")
     val lng: Double,
     @SerializedName("metro_stations")
-    val metroStations: List<MetroStation>,
+    val metroStations: List<ru.practicum.android.diploma.data.dto.vacancies.fields.MetroStation>,
     @SerializedName("street")
     val street: String
 )

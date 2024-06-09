@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.data.dto.vacancy
+package ru.practicum.android.diploma.data.dto.vacancies.fields
 
 
 import com.google.gson.annotations.SerializedName
@@ -11,7 +11,7 @@ data class Employer(
     @SerializedName("id")
     val id: String,
     @SerializedName("logo_urls")
-    val logoUrls: LogoUrls,
+    val logoUrls: ru.practicum.android.diploma.data.dto.vacancies.fields.LogoUrls,
     @SerializedName("name")
     val name: String,
     @SerializedName("trusted")

@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.data.dto.vacancy
+package ru.practicum.android.diploma.data.dto.vacancies.fields
 
 
 import com.google.gson.annotations.SerializedName
@@ -7,5 +7,5 @@ data class Gradient(
     @SerializedName("angle")
     val angle: Int,
     @SerializedName("color_list")
-    val colorList: List<Color>
+    val colorList: List<ru.practicum.android.diploma.data.dto.vacancies.fields.Color>
 )

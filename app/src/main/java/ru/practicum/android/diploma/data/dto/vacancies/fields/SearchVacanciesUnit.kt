@@ -1,6 +1,7 @@
-package ru.practicum.android.diploma.data.dto.vacancy
+package ru.practicum.android.diploma.data.dto.vacancies.fields
 
 import com.google.gson.annotations.SerializedName
+import ru.practicum.android.diploma.data.dto.vacancies.fields.Address
 
 data class SearchVacanciesUnit(
     // Ссылка на сайт HH с вакансией
@@ -13,11 +14,11 @@ data class SearchVacanciesUnit(
 
     // Регион
     @SerializedName("area")
-    val area: VacancyArea,
+    val area: ru.practicum.android.diploma.data.dto.vacancies.fields.VacancyArea,
 
     // Контактная информация
     @SerializedName("contacts")
-    val contacts: Contacts,
+    val contacts: ru.practicum.android.diploma.data.dto.vacancies.fields.Contacts,
 
     // Идентификатор Вакансии
     @SerializedName("id")
@@ -28,19 +29,19 @@ data class SearchVacanciesUnit(
     val applyAlternateUrl: String,
 
     @SerializedName("brand_snippet")
-    val brandSnippet: BrandSnippet,
+    val brandSnippet: ru.practicum.android.diploma.data.dto.vacancies.fields.BrandSnippet,
     @SerializedName("branding")
-    val branding: Branding,
+    val branding: ru.practicum.android.diploma.data.dto.vacancies.fields.Branding,
     @SerializedName("counters")
-    val counters: Counters,
+    val counters: ru.practicum.android.diploma.data.dto.vacancies.fields.Counters,
     @SerializedName("department")
-    val department: Department,
+    val department: ru.practicum.android.diploma.data.dto.vacancies.fields.Department,
     @SerializedName("employer")
-    val employer: Employer,
+    val employer: ru.practicum.android.diploma.data.dto.vacancies.fields.Employer,
     @SerializedName("has_test")
     val hasTest: Boolean,
     @SerializedName("insider_interview")
-    val insiderInterview: InsiderInterview,
+    val insiderInterview: ru.practicum.android.diploma.data.dto.vacancies.fields.InsiderInterview,
 
     // Название вакансии
     @SerializedName("name")
@@ -49,7 +50,7 @@ data class SearchVacanciesUnit(
     @SerializedName("personal_data_resale")
     val personalDataResale: Boolean,
     @SerializedName("professional_roles")
-    val professionalRoles: List<ProfessionalRole>,
+    val professionalRoles: List<ru.practicum.android.diploma.data.dto.vacancies.fields.ProfessionalRole>,
     @SerializedName("published_at")
     val publishedAt: String,
 
@@ -64,25 +65,25 @@ data class SearchVacanciesUnit(
 
     // Зарплата
     @SerializedName("salary")
-    val salary: Salary,
+    val salary: ru.practicum.android.diploma.data.dto.vacancies.fields.Salary,
 
     // График работы
     @SerializedName("schedule")
-    val schedule: Schedule,
+    val schedule: ru.practicum.android.diploma.data.dto.vacancies.fields.Schedule,
 
     @SerializedName("show_logo_in_search")
     val showLogoInSearch: Boolean,
 
     // Описание вакансии
     @SerializedName("snippet")
-    val snippet: Snippet,
+    val snippet: ru.practicum.android.diploma.data.dto.vacancies.fields.Snippet,
 
     @SerializedName("sort_point_distance")
     val sortPointDistance: Double,
 
     // Тип вакансии
     @SerializedName("type")
-    val type: Type,
+    val type: ru.practicum.android.diploma.data.dto.vacancies.fields.Type,
 
     // Ссылка на вакансию
     @SerializedName("url")

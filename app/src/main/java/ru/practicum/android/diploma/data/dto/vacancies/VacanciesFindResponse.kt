@@ -1,5 +1,4 @@
-package ru.practicum.android.diploma.data.dto.vacancy
-
+package ru.practicum.android.diploma.data.dto.vacancies
 
 import com.google.gson.annotations.SerializedName
 
@@ -9,7 +8,7 @@ import com.google.gson.annotations.SerializedName
 
 data class VacanciesFindResponse(
     @SerializedName("items")
-    val vacancies: List<SearchVacanciesUnit>,
+    val vacancies: List<ru.practicum.android.diploma.data.dto.vacancies.fields.SearchVacanciesUnit>,
     @SerializedName("found")
     val found: Int,
     @SerializedName("page")

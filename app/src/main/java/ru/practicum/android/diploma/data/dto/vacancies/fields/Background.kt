@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.data.dto.vacancy
+package ru.practicum.android.diploma.data.dto.vacancies.fields
 
 
 import com.google.gson.annotations.SerializedName
@@ -7,5 +7,5 @@ data class Background(
     @SerializedName("color")
     val color: Any,
     @SerializedName("gradient")
-    val gradient: Gradient
+    val gradient: ru.practicum.android.diploma.data.dto.vacancies.fields.Gradient
 )

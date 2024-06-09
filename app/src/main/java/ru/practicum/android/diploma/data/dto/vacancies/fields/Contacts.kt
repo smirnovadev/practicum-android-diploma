@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.data.dto.vacancy
+package ru.practicum.android.diploma.data.dto.vacancies.fields
 
 
 import com.google.gson.annotations.SerializedName
@@ -9,5 +9,5 @@ data class Contacts(
     @SerializedName("name")
     val name: String,
     @SerializedName("phones")
-    val phones: List<Phone>
+    val phones: List<ru.practicum.android.diploma.data.dto.vacancies.fields.Phone>
 )

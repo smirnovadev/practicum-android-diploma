@@ -1,9 +1,8 @@
-package ru.practicum.android.diploma.data.dto.vacancy
-
+package ru.practicum.android.diploma.data.dto.vacancies.fields
 
 import com.google.gson.annotations.SerializedName
 
-data class Schedule(
+data class Experience(
     @SerializedName("id")
     val id: String,
     @SerializedName("name")

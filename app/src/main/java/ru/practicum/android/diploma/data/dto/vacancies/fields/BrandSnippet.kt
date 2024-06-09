@@ -1,11 +1,11 @@
-package ru.practicum.android.diploma.data.dto.vacancy
+package ru.practicum.android.diploma.data.dto.vacancies.fields
 
 
 import com.google.gson.annotations.SerializedName
 
 data class BrandSnippet(
     @SerializedName("background")
-    val background: Background,
+    val background: ru.practicum.android.diploma.data.dto.vacancies.fields.Background,
     @SerializedName("logo")
     val logo: String,
     @SerializedName("logo_scalable")
