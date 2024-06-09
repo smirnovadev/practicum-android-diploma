@@ -6,6 +6,7 @@ import android.net.NetworkCapabilities
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import petrova.ola.playlistmaker.search.data.network.ApiService
+import retrofit2.HttpException
 import ru.practicum.android.diploma.data.dto.NetworkResponse
 import ru.practicum.android.diploma.data.dto.responses.AreasListResponse
 import ru.practicum.android.diploma.data.dto.responses.CountriesListResponse
@@ -38,8 +39,10 @@ class RetrofitNetworkClient(
                     industry = dto.industry,
                     area = dto.area
                 ).apply { resultCode = 200 }
+            } catch (e: HttpException) {
+                NetworkResponse().apply { resultCode = e.code() }
             } catch (e: Throwable) {
-                NetworkResponse().apply { resultCode = 500 }
+                NetworkResponse().apply { resultCode = -2 }
             }
         }
     }
@@ -52,8 +55,10 @@ class RetrofitNetworkClient(
         return withContext(Dispatchers.IO) {
             try {
                 apiService.getVacancyById(dto.id).apply { resultCode = 200 }
+            } catch (e: HttpException) {
+                NetworkResponse().apply { resultCode = e.code() }
             } catch (e: Throwable) {
-                NetworkResponse().apply { resultCode = 500 }
+                NetworkResponse().apply { resultCode = -2 }
             }
         }
     }
@@ -68,8 +73,10 @@ class RetrofitNetworkClient(
                 CountriesListResponse(
                     apiService.getCountries(dto.locale)
                 ).apply { resultCode = 200 }
+            } catch (e: HttpException) {
+                NetworkResponse().apply { resultCode = e.code() }
             } catch (e: Throwable) {
-                NetworkResponse().apply { resultCode = 500 }
+                NetworkResponse().apply { resultCode = -2 }
             }
         }
     }
@@ -84,8 +91,10 @@ class RetrofitNetworkClient(
                 AreasListResponse(
                     apiService.getAreas(dto.locale)
                 ).apply { resultCode = 200 }
+            } catch (e: HttpException) {
+                NetworkResponse().apply { resultCode = e.code() }
             } catch (e: Throwable) {
-                NetworkResponse().apply { resultCode = 500 }
+                NetworkResponse().apply { resultCode = -2 }
             }
         }
     }
@@ -100,8 +109,10 @@ class RetrofitNetworkClient(
                 IndustriesListResponse(
                     apiService.getIndustries(dto.locale)
                 ).apply { resultCode = 200 }
+            } catch (e: HttpException) {
+                NetworkResponse().apply { resultCode = e.code() }
             } catch (e: Throwable) {
-                NetworkResponse().apply { resultCode = 500 }
+                NetworkResponse().apply { resultCode = -2 }
             }
         }
     }
