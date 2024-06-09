@@ -9,6 +9,7 @@
     <string name="developer_five">Евстигнеев Станислав Юрьевич</string>
     <string name="main_fragment">Главная</string>
     <string name="vacancies_search">Поиск вакансий</string>
+    <string name="enter_search_request">Введите запрос</string>
     <string name="favorites">Избранное</string>
     <string name="filter_settings">Настройки фильтрации</string>
     <string name="choosing_place_work">Выбор места работы</string>

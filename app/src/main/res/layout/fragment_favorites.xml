@@ -9,13 +9,11 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/ToolbarStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="@string/favorites"
-        app:titleTextAppearance="@style/ToolbarTitle">
+        app:title="@string/favorites">
 
     </androidx.appcompat.widget.Toolbar>
 
