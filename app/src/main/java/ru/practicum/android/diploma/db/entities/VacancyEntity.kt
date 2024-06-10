@@ -24,7 +24,7 @@ data class VacancyEntity(
     // Департамент
     val department: String,
 
-    //Опыт работы
+    // Опыт работы
     val experience: String,
 
     // Дни работы
@@ -53,5 +53,4 @@ data class VacancyEntity(
 
     // Ссылка на сайт HH с вакансией
     val alternateUrl: String,
-
-    )
+)
