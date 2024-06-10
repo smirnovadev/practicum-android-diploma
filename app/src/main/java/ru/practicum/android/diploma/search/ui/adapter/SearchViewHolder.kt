@@ -22,9 +22,9 @@ class SearchViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
         tvVacancy.text = vacancy.name + ", " + vacancy.address.city
         tvCompany.text =
-            vacancy.department.name
+            vacancy.employer.name
         tvSalary.text = vacancy.salary.from.toString() + " " + vacancy.salary.currency
 
-        //пока поставим так, потом при рабочем запросе нужно посмотреть, что покажет и придется поправлять
+        // пока поставим так, потом при рабочем запросе нужно посмотреть, что покажет и придется поправлять
     }
 }
