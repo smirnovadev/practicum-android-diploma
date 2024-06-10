@@ -23,4 +23,5 @@
     <string name="vacancy">вакансия</string>
     <string name="vacancy_genitive">вакансии</string>
     <string name="vacancies_genitive">вакансий</string>
+    <string name="server_error">Ошибка сервера</string>
 </resources>

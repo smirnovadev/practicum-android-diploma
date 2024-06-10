@@ -3,6 +3,9 @@ package ru.practicum.android.diploma.di
 import com.google.gson.Gson
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.qualifier.named
+import android.content.Context
+import android.content.SharedPreferences
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -30,4 +33,10 @@ val dataModule = module {
     single<NetworkClient> {
         RetrofitNetworkClient(get(), androidContext())
     }
+
+    single<SharedPreferences> {
+        androidContext()
+            .getSharedPreferences("key_for_job_search_apps", Context.MODE_PRIVATE)
+    }
 }
+
