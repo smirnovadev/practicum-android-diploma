@@ -13,7 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="@string/vacancies_search"/>
+        app:title="@string/vacancies_search" />
 
     <ImageView
         android:id="@+id/icFilter"
@@ -26,7 +26,7 @@
         app:layout_constraintTop_toTopOf="@+id/toolbar" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/searchField"
         style="@style/SearchField"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_56dp"
@@ -44,9 +44,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_16dp"
         android:src="@drawable/ic_search"
-        app:layout_constraintBottom_toBottomOf="@+id/editText"
-        app:layout_constraintEnd_toEndOf="@+id/editText"
-        app:layout_constraintTop_toTopOf="@+id/editText" />
+        app:layout_constraintBottom_toBottomOf="@+id/searchField"
+        app:layout_constraintEnd_toEndOf="@+id/searchField"
+        app:layout_constraintTop_toTopOf="@+id/searchField" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -55,7 +55,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText"
+        app:layout_constraintTop_toBottomOf="@+id/searchField"
         tools:visibility="gone" />
 
     <ImageView
@@ -67,11 +67,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText"
+        app:layout_constraintTop_toBottomOf="@+id/searchField"
         tools:visibility="gone" />
 
     <TextView
-        android:id="@+id/noInternetPlaceholder"
+        android:id="@+id/errorPlaceholder"
         style="@style/ErrorPlaceholder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -81,35 +81,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText"
-        tools:visibility="gone" />
-
-    <TextView
-        android:id="@+id/emptySearchResultsPlaceholder"
-        style="@style/ErrorPlaceholder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableTop="@drawable/img_empty_search_results"
-        android:text="@string/empty_search_results"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText"
-        tools:visibility="gone" />
-
-    <TextView
-        android:id="@+id/serverErrorPlaceholder"
-        style="@style/ErrorPlaceholder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableTop="@drawable/img_server_error_placeholder"
-        android:text="@string/server_error"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText"
+        app:layout_constraintTop_toBottomOf="@+id/searchField"
         tools:visibility="gone" />
 
     <TextView
@@ -120,7 +92,7 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText"
+        app:layout_constraintTop_toBottomOf="@+id/searchField"
         tools:text="@string/no_such_vacancies"
         tools:visibility="gone" />
 
@@ -135,10 +107,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText"
+        app:layout_constraintTop_toBottomOf="@+id/searchField"
         app:layout_constraintVertical_bias="0.0"
         tools:itemCount="15"
         tools:listitem="@layout/card_item"
-        tools:visibility="visible" />
+        tools:visibility="gone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
