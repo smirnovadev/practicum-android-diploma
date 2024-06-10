@@ -11,6 +11,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import ru.practicum.android.diploma.data.network.ApiService
 import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.data.network.RetrofitNetworkClient
+import ru.practicum.android.diploma.job.data.ExternalNavigatorImpl
+import ru.practicum.android.diploma.job.domain.ExternalNavigator
 
 val dataModule = module {
     single(named("baseUrl")) {
@@ -37,5 +39,10 @@ val dataModule = module {
         androidContext()
             .getSharedPreferences("key_for_job_search_apps", Context.MODE_PRIVATE)
     }
+
+    factory<ExternalNavigator> {
+        ExternalNavigatorImpl(androidContext())
+    }
+
 }
 
