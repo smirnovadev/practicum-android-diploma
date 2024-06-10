@@ -7,4 +7,7 @@ import androidx.room.PrimaryKey
 data class AreaEntity (
     @PrimaryKey
     val id: Int,
+    val name: String,
+    val url: String,
+    val parent: String? = null,
 )

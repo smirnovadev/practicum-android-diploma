@@ -7,5 +7,5 @@ import androidx.room.PrimaryKey
 data class IndustryEntity (
     @PrimaryKey
     val id: Int,
-
+    val name: String,
 )
