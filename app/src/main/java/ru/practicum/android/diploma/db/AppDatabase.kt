@@ -4,9 +4,9 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import ru.practicum.android.diploma.db.dao.AreasDao
 import ru.practicum.android.diploma.db.dao.IndustriesDao
-import ru.practicum.android.diploma.db.entities.IndustryEntity
 import ru.practicum.android.diploma.db.dao.VacanciesDao
 import ru.practicum.android.diploma.db.entities.AreaEntity
+import ru.practicum.android.diploma.db.entities.IndustryEntity
 import ru.practicum.android.diploma.db.entities.VacancyEntity
 
 @Database(
