@@ -8,6 +8,7 @@ import ru.practicum.android.diploma.filters.domain.FiltersRepository
 import ru.practicum.android.diploma.job.data.JobRepositoryImpl
 import ru.practicum.android.diploma.job.domain.JobRepository
 import ru.practicum.android.diploma.search.data.SearchRepositoryImpl
+import ru.practicum.android.diploma.search.domain.api.SearchRepository
 
 val repositoryModule = module {
     single<FavoritesRepository> {
@@ -22,7 +23,7 @@ val repositoryModule = module {
         FiltersRepositoryImpl()
     }
 
-    single<SearchRepositoryImpl> {
-        SearchRepositoryImpl()
+    single<SearchRepository> {
+        SearchRepositoryImpl(get(), get())
     }
 }

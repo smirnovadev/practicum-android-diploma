@@ -49,7 +49,7 @@ data class SearchVacanciesUnit(
 
     // Название вакансии
     @SerializedName("name")
-    val name: String,
+    val name: String?,
 
     // Список профессиональных ролей
     @SerializedName("professional_roles")
@@ -73,7 +73,7 @@ data class SearchVacanciesUnit(
 
     // Зарплата
     @SerializedName("salary")
-    val salary: Salary,
+    val salary: Salary?,
 
     // График работы
     @SerializedName("schedule")
