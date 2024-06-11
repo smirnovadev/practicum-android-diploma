@@ -5,7 +5,7 @@ import ru.practicum.android.diploma.search.domain.api.SearchInteractor
 import ru.practicum.android.diploma.search.domain.impl.SearchInteractorImpl
 
 val interactorModule = module {
-single<SearchInteractor> {
-    SearchInteractorImpl(get())
-}
+    single<SearchInteractor> {
+        SearchInteractorImpl(get())
+    }
 }

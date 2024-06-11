@@ -16,7 +16,7 @@ class SearchRepositoryImpl(
     override fun getVacancies(query: String): Flow<List<VacancySnippet>?> = flow {
         val vacancySearchRequest = FindVacanciesRequest(query)
         val response = networkClient.findVacancies(vacancySearchRequest)
-        if (response.resultCode == 200) {
+        if (response.resultCode == SUCCESS_RESULT_CODE) {
             val vacancyResponse = response as VacanciesFindResponse
 
             val resultVacancies = vacancyResponse.vacancies.map { dto ->
@@ -27,5 +27,8 @@ class SearchRepositoryImpl(
             emit(null)
         }
 
+    }
+    companion object {
+        private const val SUCCESS_RESULT_CODE = 200
     }
 }
