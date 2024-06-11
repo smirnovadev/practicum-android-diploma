@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.util
 
 object Formatter {
+
     /** Функция для склонения существительных с числительным.
     В конструктор передаются:
     quantity - количество (Int);
