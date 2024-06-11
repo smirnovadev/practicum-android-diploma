@@ -15,7 +15,6 @@ data class EmployerEntity(
     val url: String
 )
 
-
 data class VacancyWithEmployer(
     @Embedded val vacancy: VacancyEntity,
     @Relation(
