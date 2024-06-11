@@ -24,4 +24,6 @@
     <string name="vacancy_genitive">вакансии</string>
     <string name="vacancies_genitive">вакансий</string>
     <string name="server_error">Ошибка сервера</string>
+    <string name="select_application_email">Выберите приложение для отправки email</string>
+    <string name="select_application_call">Выберите приложение для звонка</string>
 </resources>
