@@ -13,14 +13,14 @@ import ru.practicum.android.diploma.data.dto.responses.industry.IndustriesList
 interface ApiService {
     @Headers(
         "Authorization: Bearer ${BuildConfig.HH_ACCESS_TOKEN}",
-        "HH-User-Agent: YP HH Diploma ({${BuildConfig.EMAIL})"
+        "HH-User-Agent: YP HH Diploma (evstigneevstas@gmail.com)"
     )
     @GET("/vacancies/{vacancy_id}")
     suspend fun getVacancyById(@Path("vacancy_id") id: String): VacancyByIdResponse
 
     @Headers(
         "Authorization: Bearer ${BuildConfig.HH_ACCESS_TOKEN}",
-        "HH-User-Agent: YP HH Diploma ({${BuildConfig.EMAIL})"
+        "HH-User-Agent: YP HH Diploma (evstigneevstas@gmail.com)"
     )
     @GET("/vacancies")
     suspend fun findVacancies(
