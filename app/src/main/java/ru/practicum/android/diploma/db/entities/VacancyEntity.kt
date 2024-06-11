@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.db.entities
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -19,7 +20,7 @@ data class VacancyEntity(
     val salary: String,
 
     // Поля работодателя в вакансии
-    val employer: String,
+    @ColumnInfo("employer_id") val employerId: String,
 
     // Департамент
     val department: String,
@@ -28,13 +29,13 @@ data class VacancyEntity(
     val experience: String,
 
     // Дни работы
-    val workingDays: String,
+    @ColumnInfo("working_days") val workingDays: String,
 
     // График работы
     val schedule: String,
 
     // Список профессиональных ролей
-    val professionalRoles: String,
+    @ColumnInfo("professional_roles") val professionalRoles: String,
 
     // Тип вакансии
     val type: String,
@@ -46,11 +47,11 @@ data class VacancyEntity(
     val description: String,
 
     // Ключевые навыки
-    val keySkills: String,
+    @ColumnInfo("key_skills") val keySkills: String,
 
     // Контакты
     val contacts: String,
 
     // Ссылка на сайт HH с вакансией
-    val alternateUrl: String,
+    @ColumnInfo("alternate_url") val alternateUrl: String,
 )

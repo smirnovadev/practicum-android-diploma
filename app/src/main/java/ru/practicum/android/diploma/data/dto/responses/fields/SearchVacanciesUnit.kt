@@ -59,17 +59,13 @@ data class SearchVacanciesUnit(
     @SerializedName("published_at")
     val publishedAt: String,
 
-    // Связи соискателя с вакансией
-    @SerializedName("relations")
-    val relations: List<Any>,
-
     // Обязательно ли заполнять сообщение при отклике на вакансию
     @SerializedName("response_letter_required")
     val responseLetterRequired: Boolean,
 
     // URL отклика для прямых вакансий
     @SerializedName("response_url")
-    val responseUrl: Any,
+    val responseUrl: String?,
 
     // Зарплата
     @SerializedName("salary")
