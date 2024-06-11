@@ -68,82 +68,85 @@ class SearchFragment : Fragment() {
     private fun renderState(state: SearchScreenState) {
         when (state) {
             is SearchScreenState.Default -> {
-                binding.searchScreenCover.isVisible = true
-                binding.progressBar.isVisible = false
-                binding.errorPlaceholder.isVisible = false
-                binding.searchStatus.isVisible = false
-                binding.recyclerView.isVisible = false
+                showDefaultScreenState()
             }
 
-            is SearchScreenState.Loading -> {
-                showProgressbar()
-            }
-
-            is SearchScreenState.InternetConnectionError -> {
-                showInternetConnectionError()
-            }
-
-            is SearchScreenState.ServerError -> {
-                showServerError()
-            }
-
-            is SearchScreenState.SearchError -> {
-                showSearchError()
-            }
+            is SearchScreenState.Loading -> showProgressbar()
+            is SearchScreenState.InternetConnectionError -> showInternetConnectionError()
+            is SearchScreenState.ServerError -> showServerError()
+            is SearchScreenState.SearchError -> showSearchError()
         }
     }
 
     private fun showProgressbar() {
-        binding.searchScreenCover.isVisible = false
-        binding.progressBar.isVisible = true
-        binding.errorPlaceholder.isVisible = false
-        binding.searchStatus.isVisible = false
-        binding.recyclerView.isVisible = false
+        binding.apply {
+            searchScreenCover.isVisible = false
+            progressBar.isVisible = true
+            errorPlaceholder.isVisible = false
+            searchStatus.isVisible = false
+            recyclerView.isVisible = false
+        }
     }
 
     private fun showInternetConnectionError() {
-        binding.searchScreenCover.isVisible = false
-        binding.progressBar.isVisible = false
-        binding.errorPlaceholder.isVisible = true
-        binding.errorPlaceholder.setText(R.string.no_internet)
-        binding.errorPlaceholder.setCompoundDrawablesWithIntrinsicBounds(
-            0,
-            R.drawable.img_internet_connection_error,
-            0,
-            0
-        )
-        binding.searchStatus.isVisible = false
-        binding.recyclerView.isVisible = false
+        binding.apply {
+            searchScreenCover.isVisible = false
+            progressBar.isVisible = false
+            errorPlaceholder.isVisible = true
+            errorPlaceholder.setText(R.string.no_internet)
+            errorPlaceholder.setCompoundDrawablesWithIntrinsicBounds(
+                0,
+                R.drawable.img_internet_connection_error,
+                0,
+                0
+            )
+            searchStatus.isVisible = false
+            recyclerView.isVisible = false
+        }
     }
 
     private fun showServerError() {
-        binding.searchScreenCover.isVisible = false
-        binding.progressBar.isVisible = false
-        binding.errorPlaceholder.isVisible = true
-        binding.errorPlaceholder.setText(R.string.server_error)
-        binding.errorPlaceholder.setCompoundDrawablesWithIntrinsicBounds(
-            0,
-            R.drawable.img_server_error_placeholder,
-            0,
-            0
-        )
-        binding.searchStatus.isVisible = false
-        binding.recyclerView.isVisible = false
+        binding.apply {
+            searchScreenCover.isVisible = false
+            progressBar.isVisible = false
+            errorPlaceholder.isVisible = true
+            errorPlaceholder.setText(R.string.server_error)
+            errorPlaceholder.setCompoundDrawablesWithIntrinsicBounds(
+                0,
+                R.drawable.img_server_error_placeholder,
+                0,
+                0
+            )
+            searchStatus.isVisible = false
+            recyclerView.isVisible = false
+        }
     }
 
     private fun showSearchError() {
-        binding.searchScreenCover.isVisible = false
-        binding.progressBar.isVisible = false
-        binding.errorPlaceholder.isVisible = true
-        binding.errorPlaceholder.setText(R.string.empty_search_results)
-        binding.errorPlaceholder.setCompoundDrawablesWithIntrinsicBounds(
-            0,
-            R.drawable.img_empty_search_results,
-            0,
-            0
-        )
-        binding.searchStatus.isVisible = true
-        binding.searchStatus.text = getString(R.string.no_such_vacancies)
-        binding.recyclerView.isVisible = false
+        binding.apply {
+            searchScreenCover.isVisible = false
+            progressBar.isVisible = false
+            errorPlaceholder.isVisible = true
+            errorPlaceholder.setText(R.string.empty_search_results)
+            errorPlaceholder.setCompoundDrawablesWithIntrinsicBounds(
+                0,
+                R.drawable.img_empty_search_results,
+                0,
+                0
+            )
+            searchStatus.isVisible = true
+            searchStatus.text = getString(R.string.no_such_vacancies)
+            recyclerView.isVisible = false
+        }
+    }
+
+    private fun showDefaultScreenState() {
+        binding.apply {
+            searchScreenCover.isVisible = true
+            progressBar.isVisible = false
+            errorPlaceholder.isVisible = false
+            searchStatus.isVisible = false
+            recyclerView.isVisible = false
+        }
     }
 }
