@@ -18,7 +18,7 @@ data class EmployerEntity(
 data class VacancyWithEmployer(
     @Embedded val vacancy: VacancyEntity,
     @Relation(
-        parentColumn = "employer_id",
+        parentColumn = "employerId",
         entityColumn = "id",
         entity = EmployerEntity::class
     )
