@@ -23,7 +23,7 @@ object Formatter {
     fun quantityWordFormFormatter(
         quantity: Int,
         singular: String,
-        singularGenintive: String,
+        singularGenitive: String,
         pluralGenitive: String
     ): String {
         val result: String = quantity.toString()
@@ -40,7 +40,7 @@ object Formatter {
                 if (resultLastOne == ZERO || resultLastOne in FIVE..NINE) {
                     wordForm = pluralGenitive
                 } else if (resultLastOne in TWO..FOUR) {
-                    wordForm = singularGenintive
+                    wordForm = singularGenitive
                 } else {
                     wordForm = singular
                 }
