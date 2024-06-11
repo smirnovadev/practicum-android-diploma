@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import ru.practicum.android.diploma.db.entities.VacancyEntity
 import ru.practicum.android.diploma.db.entities.VacancyWithEmployer
 
@@ -14,11 +15,13 @@ interface VacanciesDao {
     suspend fun insertVacancy(vacancy: VacancyEntity)
 
     @Query("SELECT * FROM vacancy_table")
+    @Transaction
     suspend fun getVacancies(): List<VacancyWithEmployer>
 
-    @Query("SELECT id FROM vacancy_table WHERE id=:id")
-    suspend fun getVacanciesById(id: String): List<VacancyWithEmployer>
+    @Query("SELECT * FROM vacancy_table WHERE id=:id")
+    @Transaction
+    suspend fun getVacanciesById(id: Int): List<VacancyWithEmployer>
 
     @Delete(entity = VacancyEntity::class)
-    fun deleteVacancy(vacancyEntity: VacancyEntity)
+    suspend fun deleteVacancy(vacancyEntity: VacancyEntity)
 }
