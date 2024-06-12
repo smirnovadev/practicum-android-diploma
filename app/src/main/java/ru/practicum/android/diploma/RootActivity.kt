@@ -2,6 +2,7 @@ package ru.practicum.android.diploma
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -20,6 +21,16 @@ class RootActivity : AppCompatActivity() {
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomNavigationView.setupWithNavController(navController)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.jobFragment -> {
+                    bottomNavigationView.isVisible = false
+                }
+
+                else -> bottomNavigationView.isVisible = true
+            }
+        }
     }
 
     private fun networkRequestExample(accessToken: String) {

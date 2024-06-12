@@ -23,4 +23,6 @@
     <dimen name="fontWeight500">500</dimen>
     <dimen name="_48dp">48dp</dimen>
     <dimen name="_9dp">9dp</dimen>
+    <dimen name="_28dp">28dp</dimen>
+    <dimen name="_24dp">24dp</dimen>
 </resources>
