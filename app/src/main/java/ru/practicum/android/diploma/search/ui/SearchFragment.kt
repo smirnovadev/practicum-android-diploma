@@ -3,6 +3,7 @@ package ru.practicum.android.diploma.search.ui
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,7 @@ import androidx.fragment.app.Fragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
-import ru.practicum.android.diploma.search.domain.SearchScreenState
+import ru.practicum.android.diploma.search.presentation.SearchScreenState
 import ru.practicum.android.diploma.search.presentation.SearchViewModel
 
 class SearchFragment : Fragment() {
@@ -35,6 +36,9 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getScreenState().observe(viewLifecycleOwner) { state ->
             renderState(state)
+        }
+        viewModel.getVacanciesLiveData().observe(viewLifecycleOwner) {
+            Log.d("mylog", it.toString())
         }
 
         textWatcher = object : TextWatcher {

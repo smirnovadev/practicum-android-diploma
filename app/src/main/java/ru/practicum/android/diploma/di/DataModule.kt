@@ -13,6 +13,7 @@ import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.data.network.RetrofitNetworkClient
 import ru.practicum.android.diploma.job.data.ExternalNavigatorImpl
 import ru.practicum.android.diploma.job.domain.ExternalNavigator
+import ru.practicum.android.diploma.search.data.mapper.VacancyMapper
 import androidx.room.Room
 import ru.practicum.android.diploma.db.AppDatabase
 
@@ -40,6 +41,10 @@ val dataModule = module {
     single<SharedPreferences> {
         androidContext()
             .getSharedPreferences("key_for_job_search_apps", Context.MODE_PRIVATE)
+    }
+
+    single<VacancyMapper> {
+        VacancyMapper()
     }
 
     factory<ExternalNavigator> {

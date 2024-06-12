@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.search.domain
+package ru.practicum.android.diploma.search.presentation
 
 sealed class SearchScreenState {
     data object Default : SearchScreenState()
