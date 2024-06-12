@@ -5,5 +5,5 @@ import ru.practicum.android.diploma.data.network.Resource
 import ru.practicum.android.diploma.search.domain.model.VacancySnippet
 
 interface SearchRepository {
-    fun getVacancies(query: String):  Flow<Resource<List<VacancySnippet>>>
+    fun getVacancies(query: String): Flow<Resource<List<VacancySnippet>>>
 }
