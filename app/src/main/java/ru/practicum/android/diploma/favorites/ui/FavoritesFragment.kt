@@ -56,6 +56,7 @@ class FavoritesFragment : Fragment() {
 
     private fun showNoFavoritesAddedState() {
         binding.apply {
+            placeholder.isVisible = true
             placeholder.setText(R.string.empty_list)
             placeholder.setCompoundDrawablesWithIntrinsicBounds(
                 0,
@@ -69,6 +70,7 @@ class FavoritesFragment : Fragment() {
 
     private fun showLoadingErrorState() {
         binding.apply {
+            placeholder.isVisible = true
             placeholder.setText(R.string.empty_search_results)
             placeholder.setCompoundDrawablesWithIntrinsicBounds(
                 0,
