@@ -7,11 +7,13 @@ import ru.practicum.android.diploma.favorites.domain.models.FavoritesScreenState
 
 class FavoritesViewModel : ViewModel() {
 
-    private val screenState = MutableLiveData<FavoritesScreenState>(FavoritesScreenState.Default)
+    private val screenState =
+        MutableLiveData<FavoritesScreenState>(FavoritesScreenState.NoFavoritesAdded)
+
     fun getScreenState(): LiveData<FavoritesScreenState> = screenState
 
     init {
-        screenState.postValue(FavoritesScreenState.NoFavoritesAdded) // изменить State, когда будет готова база данных
+        screenState.postValue(FavoritesScreenState.NoFavoritesAdded)
     }
 
 }

@@ -13,6 +13,8 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/_64dp</item>
         <item name="titleTextAppearance">@style/ToolbarTitle</item>
+        <item name="buttonGravity">center_vertical</item>
+        <item name="contentInsetStartWithNavigation">@dimen/_12dp</item>
     </style>
 
     <style name="ToolbarTitle">
