@@ -13,6 +13,8 @@ import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.data.network.RetrofitNetworkClient
 import ru.practicum.android.diploma.job.data.ExternalNavigatorImpl
 import ru.practicum.android.diploma.job.domain.ExternalNavigator
+import androidx.room.Room
+import ru.practicum.android.diploma.db.AppDatabase
 
 val dataModule = module {
     single(named("baseUrl")) {
@@ -44,5 +46,8 @@ val dataModule = module {
         ExternalNavigatorImpl(androidContext())
     }
 
+    single<AppDatabase> {
+        Room.databaseBuilder(androidContext(), AppDatabase::class.java, "database.db")
+            .build()
+    }
 }
-
