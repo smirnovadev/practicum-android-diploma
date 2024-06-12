@@ -26,6 +26,7 @@
     <string name="server_error">Ошибка сервера</string>
     <string name="select_application_email">Выберите приложение для отправки email</string>
     <string name="select_application_call">Выберите приложение для звонка</string>
+<<<<<<< screen-vacancy
     <string name="vacancy_for_screen">Вакансия</string>
     <string name="required_experience">Требуемый опыт</string>
     <string name="job_description">Описание вакансии</string>
@@ -38,4 +39,7 @@
     <string name="e_mail">E-mail</string>
     <string name="phone">Телефон</string>
     <string name="comment">Комментарий</string>
+=======
+    <string name="empty_list">Список пуст</string>
+>>>>>>> develop
 </resources>
