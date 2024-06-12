@@ -10,8 +10,7 @@ import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.databinding.FragmentVacancyBinding
 import ru.practicum.android.diploma.job.domain.JobScreenState
-import ru.practicum.android.diploma.job.ui.viewModel.JobViewModel
-
+import ru.practicum.android.diploma.job.ui.viewmodel.JobViewModel
 
 class JobFragment : Fragment() {
 
@@ -36,7 +35,6 @@ class JobFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-
             icShape.setOnClickListener {
                 viewModel.shareLink(url)
             }
@@ -66,7 +64,6 @@ class JobFragment : Fragment() {
         viewModel.observeState().observe(viewLifecycleOwner) {
             render(it)
         }
-
 
 //        viewModel.likeState.observe(viewLifecycleOwner) { isLiked ->
 //            binding.apply {

@@ -11,5 +11,5 @@ interface JobRepository {
 
     fun setupListener(listener: FavoriteListener)
 
-    suspend fun checkLikeVacancy(vacancyId: String) : Boolean
+    suspend fun checkLikeVacancy(vacancyId: String): Boolean
 }

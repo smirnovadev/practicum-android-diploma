@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.job.ui.viewModel
+package ru.practicum.android.diploma.job.ui.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
