@@ -5,8 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.practicum.android.diploma.search.domain.model.VacancySnippet
 
-class SearchViewModel(
-) : ViewModel() {
+class SearchViewModel : ViewModel() {
 
     private var previousRequest: String = ""
 
