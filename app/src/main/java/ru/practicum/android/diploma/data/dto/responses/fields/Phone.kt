@@ -6,7 +6,7 @@ data class Phone(
     @SerializedName("city")
     val city: String,
     @SerializedName("comment")
-    val comment: Any,
+    val comment: String,
     @SerializedName("country")
     val country: String,
     @SerializedName("number")

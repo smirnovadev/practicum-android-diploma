@@ -10,5 +10,5 @@ data class Salary(
     @SerializedName("gross")
     val gross: Boolean,
     @SerializedName("to")
-    val to: Any
+    val to: Int
 )
