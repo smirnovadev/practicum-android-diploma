@@ -26,4 +26,5 @@
     <string name="server_error">Ошибка сервера</string>
     <string name="select_application_email">Выберите приложение для отправки email</string>
     <string name="select_application_call">Выберите приложение для звонка</string>
+    <string name="empty_list">Список пуст</string>
 </resources>

@@ -109,6 +109,6 @@
         app:layout_constraintTop_toBottomOf="@+id/searchField"
         tools:itemCount="15"
         tools:listitem="@layout/card_item"
-        tools:visibility="gone" />
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
