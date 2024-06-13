@@ -42,5 +42,10 @@
     <string name="found_f">Найдена</string>
     <string name="found_f_genitive">Найдено</string>
     <string name="found_f_genitive_pl">Найдено</string>
+    <string name="place_work">Место работы</string>
+    <string name="industry">Отрасль</string>
+    <string name="expected_salary">Ожидаемая зарплата</string>
+    <string name="input_salary">Введите сумму</string>
+    <string name="show_salary">Не показывать без зарплаты</string>
 
 </resources>

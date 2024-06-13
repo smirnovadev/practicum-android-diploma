@@ -14,4 +14,5 @@
         app:title="@string/choosing_place_work">
 
     </androidx.appcompat.widget.Toolbar>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
