@@ -10,7 +10,7 @@ import retrofit2.HttpException
 import ru.practicum.android.diploma.data.dto.NetworkResponse
 import ru.practicum.android.diploma.data.dto.requests.AreaRequest
 import ru.practicum.android.diploma.data.dto.requests.CountriesRequest
-import ru.practicum.android.diploma.data.dto.requests.FindVacanciesRequest
+import ru.practicum.android.diploma.data.dto.requests.VacanciesSearchRequest
 import ru.practicum.android.diploma.data.dto.requests.IndustriesRequest
 import ru.practicum.android.diploma.data.dto.requests.VacancyByIdRequest
 import ru.practicum.android.diploma.data.dto.responses.AreasListResponse
@@ -29,7 +29,7 @@ class RetrofitNetworkClient(
     private val context: Context
 ) : NetworkClient {
 
-    override suspend fun findVacancies(dto: FindVacanciesRequest): NetworkResponse {
+    override suspend fun findVacancies(dto: VacanciesSearchRequest): NetworkResponse {
         if (!isConnected()) {
             return NetworkResponse().apply { resultCode = ERROR_NO_INTERNET }
         }

@@ -5,10 +5,10 @@ import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
 import ru.practicum.android.diploma.BuildConfig
-import ru.practicum.android.diploma.data.dto.responses.VacanciesFindResponse
+import ru.practicum.android.diploma.data.dto.responses.VacanciesSearchResponse
 import ru.practicum.android.diploma.data.dto.responses.VacancyByIdResponse
-import ru.practicum.android.diploma.data.dto.responses.areas.AreasList
-import ru.practicum.android.diploma.data.dto.responses.industry.IndustriesList
+import ru.practicum.android.diploma.data.dto.responses.areas.AreasListDAO
+import ru.practicum.android.diploma.data.dto.responses.industry.IndustriesListDAO
 
 interface ApiService {
     @Headers(
@@ -31,20 +31,20 @@ interface ApiService {
         @Query("only_with_salary") onlyWithSalary: Boolean = false,
         @Query("industry") industry: String? = null,
         @Query("area") area: String? = null
-    ): VacanciesFindResponse
+    ): VacanciesSearchResponse
 
     @GET("/areas/countries")
     suspend fun getCountries(
         @Query("locale") locale: String = "RU"
-    ): AreasList
+    ): AreasListDAO
 
     @GET("/areas")
     suspend fun getAreas(
         @Query("locale") locale: String = "RU"
-    ): AreasList
+    ): AreasListDAO
 
     @GET("/salary_statistics/dictionaries/salary_industries")
     suspend fun getIndustries(
         @Query("locale") locale: String = "RU"
-    ): IndustriesList
+    ): IndustriesListDAO
 }
