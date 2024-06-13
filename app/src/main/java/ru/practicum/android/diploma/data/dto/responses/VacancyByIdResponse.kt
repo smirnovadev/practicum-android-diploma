@@ -2,21 +2,21 @@ package ru.practicum.android.diploma.data.dto.responses
 
 import com.google.gson.annotations.SerializedName
 import ru.practicum.android.diploma.data.dto.NetworkResponse
-import ru.practicum.android.diploma.data.dto.responses.fields.Address
-import ru.practicum.android.diploma.data.dto.responses.fields.Contacts
-import ru.practicum.android.diploma.data.dto.responses.fields.Department
-import ru.practicum.android.diploma.data.dto.responses.fields.Employer
-import ru.practicum.android.diploma.data.dto.responses.fields.Experience
-import ru.practicum.android.diploma.data.dto.responses.fields.InsiderInterview
-import ru.practicum.android.diploma.data.dto.responses.fields.KeySkill
-import ru.practicum.android.diploma.data.dto.responses.fields.Manager
-import ru.practicum.android.diploma.data.dto.responses.fields.ProfessionalRole
-import ru.practicum.android.diploma.data.dto.responses.fields.Salary
-import ru.practicum.android.diploma.data.dto.responses.fields.Schedule
-import ru.practicum.android.diploma.data.dto.responses.fields.Type
-import ru.practicum.android.diploma.data.dto.responses.fields.VacancyArea
-import ru.practicum.android.diploma.data.dto.responses.fields.WorkingDay
-import ru.practicum.android.diploma.data.dto.responses.fields.WorkingTimeInterval
+import ru.practicum.android.diploma.data.dto.responses.fields.AddressDTO
+import ru.practicum.android.diploma.data.dto.responses.fields.ContactsDTO
+import ru.practicum.android.diploma.data.dto.responses.fields.DepartmentDTO
+import ru.practicum.android.diploma.data.dto.responses.fields.EmployerDTO
+import ru.practicum.android.diploma.data.dto.responses.fields.ExperienceDTO
+import ru.practicum.android.diploma.data.dto.responses.fields.InsiderInterviewDTO
+import ru.practicum.android.diploma.data.dto.responses.fields.KeySkillDTO
+import ru.practicum.android.diploma.data.dto.responses.fields.ManagerDTO
+import ru.practicum.android.diploma.data.dto.responses.fields.ProfessionalRoleDTO
+import ru.practicum.android.diploma.data.dto.responses.fields.SalaryDTO
+import ru.practicum.android.diploma.data.dto.responses.fields.ScheduleDTO
+import ru.practicum.android.diploma.data.dto.responses.fields.TypeDTO
+import ru.practicum.android.diploma.data.dto.responses.fields.VacancyAreaDTO
+import ru.practicum.android.diploma.data.dto.responses.fields.WorkingDayDTO
+import ru.practicum.android.diploma.data.dto.responses.fields.WorkingTimeIntervalDTO
 
 /**
  * https://api.hh.ru/openapi/redoc#tag/Vakansii/operation/get-vacancy
@@ -24,7 +24,7 @@ import ru.practicum.android.diploma.data.dto.responses.fields.WorkingTimeInterva
 
 data class VacancyByIdResponse(
     @SerializedName("address")
-    val address: Address,
+    val address: AddressDTO,
     @SerializedName("alternate_url")
     val alternateUrl: String,
     @SerializedName("apply_alternate_url")
@@ -34,29 +34,29 @@ data class VacancyByIdResponse(
     @SerializedName("archived")
     val archived: Boolean,
     @SerializedName("area")
-    val area: VacancyArea,
+    val area: VacancyAreaDTO,
     @SerializedName("code")
     val code: String,
     @SerializedName("contacts")
-    val contacts: Contacts,
+    val contacts: ContactsDTO,
     @SerializedName("department")
-    val department: Department,
+    val department: DepartmentDTO,
     @SerializedName("description")
     val description: String,
     @SerializedName("employer")
-    val employer: Employer,
+    val employer: EmployerDTO,
     @SerializedName("experience")
-    val experience: Experience,
+    val experience: ExperienceDTO,
     @SerializedName("has_test")
     val hasTest: Boolean,
     @SerializedName("id")
     val id: String,
     @SerializedName("insider_interview")
-    val insiderInterview: InsiderInterview,
+    val insiderInterview: InsiderInterviewDTO,
     @SerializedName("key_skills")
-    val keySkills: List<KeySkill>,
+    val keySkills: List<KeySkillDTO>,
     @SerializedName("manager")
-    val manager: Manager,
+    val manager: ManagerDTO,
     @SerializedName("name")
     val name: String,
     @SerializedName("premium")
@@ -64,7 +64,7 @@ data class VacancyByIdResponse(
     @SerializedName("previous_id")
     val previousId: String,
     @SerializedName("professional_roles")
-    val professionalRoles: List<ProfessionalRole>,
+    val professionalRoles: List<ProfessionalRoleDTO>,
     @SerializedName("published_at")
     val publishedAt: String,
     @SerializedName("response_letter_required")
@@ -74,13 +74,13 @@ data class VacancyByIdResponse(
     @SerializedName("response_url")
     val responseUrl: String?,
     @SerializedName("salary")
-    val salary: Salary,
+    val salary: SalaryDTO,
     @SerializedName("schedule")
-    val schedule: Schedule,
+    val schedule: ScheduleDTO,
     @SerializedName("type")
-    val type: Type,
+    val type: TypeDTO,
     @SerializedName("working_days")
-    val workingDays: List<WorkingDay>,
+    val workingDays: List<WorkingDayDTO>,
     @SerializedName("working_time_intervals")
-    val workingTimeIntervals: List<WorkingTimeInterval>,
+    val workingTimeIntervals: List<WorkingTimeIntervalDTO>
 ) : NetworkResponse()

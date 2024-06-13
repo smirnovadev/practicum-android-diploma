@@ -47,7 +47,7 @@ object Formatter {
             }
         }
 
-        return "$result $wordForm"
+        return "$wordForm"
     }
 
 }

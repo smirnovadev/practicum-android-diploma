@@ -39,5 +39,8 @@
     <string name="phone">Телефон</string>
     <string name="comment">Комментарий</string>
     <string name="empty_list">Список пуст</string>
+    <string name="found_f">Найдена</string>
+    <string name="found_f_genitive">Найдено</string>
+    <string name="found_f_genitive_pl">Найдено</string>
 
 </resources>
