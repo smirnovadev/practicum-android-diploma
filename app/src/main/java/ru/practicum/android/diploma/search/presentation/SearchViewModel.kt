@@ -58,7 +58,6 @@ class SearchViewModel(private val searchInteractor: SearchInteractor) : ViewMode
                 }
 
                 IO_EXCEPTION -> {
-                    //уточнить в ТЗ
                     screenState.postValue(SearchScreenState.ServerError)
                     unprocessedRequest = searchRequest
                 }

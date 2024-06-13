@@ -11,7 +11,6 @@ import ru.practicum.android.diploma.search.domain.api.SearchRepository
 import ru.practicum.android.diploma.search.domain.model.Resource
 import ru.practicum.android.diploma.search.domain.model.Vacancies
 
-
 class SearchRepositoryImpl(
     private val networkClient: NetworkClient,
     private val responseToVacanciesMapper: ResponseToVacanciesMapper

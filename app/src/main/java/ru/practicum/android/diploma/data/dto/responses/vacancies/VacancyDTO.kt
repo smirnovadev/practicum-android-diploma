@@ -18,7 +18,6 @@ import ru.practicum.android.diploma.data.dto.responses.fields.VacancyAreaDTO
 import ru.practicum.android.diploma.data.dto.responses.fields.WorkingDayDTO
 import ru.practicum.android.diploma.data.dto.responses.fields.WorkingTimeIntervalDTO
 
-
 /**
  * https://api.hh.ru/openapi/redoc#tag/Vakansii/operation/get-vacancy
  */

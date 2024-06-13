@@ -108,7 +108,7 @@ class SearchFragment : Fragment(), SearchClickListener {
             is SearchScreenState.ServerError -> showServerError()
             is SearchScreenState.SearchError -> showSearchError()
             is SearchScreenState.ShowContent -> showContent(state.vacancies, state.found)
-            is SearchScreenState.uploadNextPage -> showProgressbar()//дополнить
+            is SearchScreenState.uploadNextPage -> showProgressbar()
         }
     }
 
