@@ -18,7 +18,7 @@ data class VacancyEntity(
     val salary: String,
 
     // Поля работодателя в вакансии
-    val employerId: Int,
+    var employerId: Int,
 
     // Департамент
     val department: String,
