@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import ru.practicum.android.diploma.data.dto.responses.fields.SearchVacanciesUnit
 import ru.practicum.android.diploma.databinding.FragmentVacancyBinding
 import ru.practicum.android.diploma.job.domain.JobScreenState
 import ru.practicum.android.diploma.job.ui.viewmodel.JobViewModel
@@ -20,7 +22,7 @@ class JobFragment : Fragment() {
     private val viewModel by viewModel<JobViewModel>()
 
     val url = "" // врменно, заменить на получаемую ссылку с сервера
-    val email = "i.lozgkina@yandex.ru" // также
+    val email = "" // также
     val phoneNumber = "" // и тут
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -82,7 +84,7 @@ class JobFragment : Fragment() {
         when (state) {
             is JobScreenState.Loading -> showLoading()
             is JobScreenState.Error -> showError()
-            is JobScreenState.Content -> showContent()
+            is JobScreenState.Content -> showContent(state.vacancies)
         }
     }
 
@@ -114,7 +116,7 @@ class JobFragment : Fragment() {
         }
     }
 
-    private fun showContent() {
+    private fun showContent(vacancy: SearchVacanciesUnit) {
         binding.apply {
             progressBar.isVisible = false
             icFavorites.isVisible = true // нужно будет уточнить у наставника
@@ -125,7 +127,18 @@ class JobFragment : Fragment() {
             scrollView.isVisible = true
             imgErrorServer.isVisible = false
             errorServer.isVisible = false
+//            tvNameVacancy.text = requireArguments().getString(EXTRA_NAME_VACANCY)
+//            if (EXTRA_CONTACTS == null) {
+//                tvContactPerson.isVisible = false
+//            }
         }
     }
 
+    companion object {
+        fun createArgs(
+
+        ): Bundle = bundleOf(
+
+        )
+    }
 }

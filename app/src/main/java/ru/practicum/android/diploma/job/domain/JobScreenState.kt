@@ -1,9 +1,12 @@
 package ru.practicum.android.diploma.job.domain
 
-sealed class JobScreenState {
-    data object Loading : JobScreenState()
+import ru.practicum.android.diploma.data.dto.responses.fields.SearchVacanciesUnit
+import ru.practicum.android.diploma.search.domain.model.VacancySnippet
 
-    data object Error : JobScreenState()
+sealed interface JobScreenState {
+    data object Loading : JobScreenState
 
-    data object Content : JobScreenState() // дописать
+    data object Error : JobScreenState
+
+    data class Content(val vacancies: SearchVacanciesUnit) : JobScreenState // дописать
 }
