@@ -19,10 +19,56 @@ interface VacanciesDao {
     suspend fun insertEmployer(vacancy: EmployerEntity)
 
     @Transaction
-    suspend fun insertVacancyWithEmployer(vacancyWithEmployer: VacancyWithEmployer) {
-        vacancyWithEmployer.vacancy.employerId = vacancyWithEmployer.vacancy.id
-        insertEmployer(vacancyWithEmployer.employer)
-        insertVacancy(vacancyWithEmployer.vacancy)
+    suspend fun insertVacancyWithEmployer(
+        id: Int,
+        name: String,
+        address: String,
+        salary: String,
+        department: String,
+        experience: String,
+        workingDays: String,
+        schedule: String,
+        professionalRoles: String,
+        type: String,
+        area: String,
+        description: String,
+        keySkills: String,
+        contacts: String,
+        alternateUrl: String,
+        employerId: Int,
+        employerLogoUrls: String,
+        employerName: String,
+        employerUrl: String
+    ) {
+        insertEmployer(
+            EmployerEntity(
+                employerId,
+                employerLogoUrls,
+                employerName,
+                employerUrl
+            )
+        )
+
+        insertVacancy(
+            VacancyEntity(
+                id = id,
+                name = name,
+                address = address,
+                salary = salary,
+                department = department,
+                experience = experience,
+                workingDays = workingDays,
+                schedule = schedule,
+                professionalRoles = professionalRoles,
+                type = type,
+                area = area,
+                description = description,
+                keySkills = keySkills,
+                contacts = contacts,
+                alternateUrl = alternateUrl,
+                employerId = employerId
+            )
+        )
     }
 
     @Query("SELECT * FROM vacancy_table")
