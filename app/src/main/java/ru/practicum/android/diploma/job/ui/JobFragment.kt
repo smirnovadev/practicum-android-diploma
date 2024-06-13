@@ -9,7 +9,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import ru.practicum.android.diploma.data.dto.responses.fields.SearchVacanciesUnit
 import ru.practicum.android.diploma.databinding.FragmentVacancyBinding
 import ru.practicum.android.diploma.job.domain.JobScreenState
 import ru.practicum.android.diploma.job.ui.viewmodel.JobViewModel
@@ -84,7 +83,7 @@ class JobFragment : Fragment() {
         when (state) {
             is JobScreenState.Loading -> showLoading()
             is JobScreenState.Error -> showError()
-            is JobScreenState.Content -> showContent(state.vacancies)
+            is JobScreenState.Content -> showContent()
         }
     }
 
@@ -116,7 +115,7 @@ class JobFragment : Fragment() {
         }
     }
 
-    private fun showContent(vacancy: SearchVacanciesUnit) {
+    private fun showContent() {
         binding.apply {
             progressBar.isVisible = false
             icFavorites.isVisible = true // нужно будет уточнить у наставника
