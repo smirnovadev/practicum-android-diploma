@@ -16,6 +16,7 @@ class FiltersFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel by viewModel<FiltersViewModel>()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
@@ -29,6 +30,10 @@ class FiltersFragment : Fragment() {
         binding.placeWorkText.setOnClickListener { openPlaceToWorkFragment() }
         binding.industryText.setOnClickListener { openIndustryFragment() }
         binding.industryBtn.setOnClickListener { openIndustryFragment() }
+
+        binding.reset.setOnClickListener {
+
+        }
     }
 
     private fun openIndustryFragment() {

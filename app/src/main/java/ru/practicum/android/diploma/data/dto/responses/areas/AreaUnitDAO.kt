@@ -7,5 +7,5 @@ data class AreaUnitDAO(
     val name: String,
     val url: String,
     val parent: String? = null,
-    @SerializedName("areas") val children: ArrayList<AreasListDAO> = arrayListOf()
+    @SerializedName("areas") val children: ArrayList<AreaUnitDAO> = arrayListOf()
 )

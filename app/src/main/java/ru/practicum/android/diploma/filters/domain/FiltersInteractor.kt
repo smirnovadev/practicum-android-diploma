@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import ru.practicum.android.diploma.search.domain.model.fields.Area
 import ru.practicum.android.diploma.search.domain.model.fields.Industry
 
-interface FiltersRepository {
+interface FiltersInteractor {
     suspend fun insertIndustries(industry: Industry)
     suspend fun deleteIndustry(industry: Industry)
     fun getIndustry(): Flow<List<Industry>>
