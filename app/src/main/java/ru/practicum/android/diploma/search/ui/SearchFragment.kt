@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import debounce
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -87,6 +88,11 @@ class SearchFragment : Fragment(), SearchClickListener {
             binding.searchField.setText("")
             viewModel.clearSearchField()
         }
+
+        binding.icFilter.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_filtersFragment)
+        }
+
     }
 
     override fun onDestroyView() {
