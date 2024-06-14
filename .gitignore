@@ -13,6 +13,7 @@
 /.idea/codeStyles
 /.idea/migrations.xml
 /.idea/deploymentTargetSelector.xml
+/.idea/other.xml
 
 # Gradle files
 .gradle/
