@@ -40,7 +40,8 @@ class RegionFragment : Fragment() {
         }
         recycler = binding.recyclerView
         rvAdapter = AreaAdapter(regions) {
-//            TODO()
+            viewModel.save(it.id)
+            findNavController().navigateUp()
         }
         recycler.adapter = rvAdapter
         recycler.layoutManager = LinearLayoutManager(requireContext())

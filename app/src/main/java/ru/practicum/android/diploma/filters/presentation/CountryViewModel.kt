@@ -5,13 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import ru.practicum.android.diploma.filters.data.FiltersLocalStorage
 import ru.practicum.android.diploma.filters.domain.FiltersInteractor
 import ru.practicum.android.diploma.filters.ui.area.AreasState
 import ru.practicum.android.diploma.search.data.mapper.AreaMapper
 
 class CountryViewModel(
     private val interactor: FiltersInteractor,
-    private val mapper: AreaMapper
+    private val mapper: AreaMapper,
+    private val sharedInteractor: FiltersLocalStorage
 ) : ViewModel() {
     private val stateMutableLiveData = MutableLiveData<AreasState>()
     private val countriesScreenState: LiveData<AreasState> = stateMutableLiveData
@@ -60,6 +62,9 @@ class CountryViewModel(
         }
     }
 
+    fun save(country: Int) {
+        sharedInteractor.saveCountry(country)
+    }
 
     private fun renderState(state: AreasState) {
         stateMutableLiveData.postValue(state)

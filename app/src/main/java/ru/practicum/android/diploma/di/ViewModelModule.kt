@@ -31,12 +31,12 @@ val viewModelModule = module {
         PlaceToWorkViewModel()
     }
     viewModel<RegionViewModel> {
-        RegionViewModel(get(), get())
+        RegionViewModel(get(), get(), get())
     }
     viewModel<CountryViewModel> {
-        CountryViewModel(get(), get())
+        CountryViewModel(get(), get(), get())
     }
     viewModel<IndustryViewModel> {
-        IndustryViewModel(get(), get())
+        IndustryViewModel(get(), get(), get())
     }
 }

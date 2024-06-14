@@ -40,7 +40,8 @@ class IndustryFragment : Fragment() {
         }
         recycler = binding.recyclerView
         rvAdapter = IndustryAdapter(industries) {
-//            TODO()
+            viewModel.save(it.id)
+            findNavController().navigateUp()
         }
         recycler.adapter = rvAdapter
         recycler.layoutManager = LinearLayoutManager(requireContext())

@@ -5,13 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import ru.practicum.android.diploma.filters.data.FiltersLocalStorage
 import ru.practicum.android.diploma.filters.domain.FiltersInteractor
 import ru.practicum.android.diploma.filters.ui.industry.IndustryState
 import ru.practicum.android.diploma.search.data.mapper.IndustryMapper
 
 class IndustryViewModel(
     private val interactor: FiltersInteractor,
-    private val mapper: IndustryMapper
+    private val mapper: IndustryMapper,
+    private val sharedInteractor: FiltersLocalStorage
 ) : ViewModel() {
     private val stateMutableLiveData = MutableLiveData<IndustryState>()
     private val industryScreenState: LiveData<IndustryState> = stateMutableLiveData
@@ -54,6 +56,10 @@ class IndustryViewModel(
                     }
                 }
         }
+    }
+
+    fun save(industry: Int) {
+        sharedInteractor.saveIndustry(industry)
     }
 
     private fun renderState(state: IndustryState) {
