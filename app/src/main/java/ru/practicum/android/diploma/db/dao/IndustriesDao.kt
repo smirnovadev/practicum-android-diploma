@@ -13,6 +13,9 @@ interface IndustriesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertIndustry(industry: IndustryEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertIndustries(industries: List<IndustryEntity>)
+
     @Query("SELECT * FROM industries_table")
     suspend fun getIndustries(): List<IndustryEntity>
 

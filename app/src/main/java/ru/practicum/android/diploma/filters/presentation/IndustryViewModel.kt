@@ -7,8 +7,12 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.filters.domain.FiltersInteractor
 import ru.practicum.android.diploma.filters.ui.industry.IndustryState
+import ru.practicum.android.diploma.search.data.mapper.IndustryMapper
 
-class IndustryViewModel(private val interactor: FiltersInteractor) : ViewModel() {
+class IndustryViewModel(
+    private val interactor: FiltersInteractor,
+    private val mapper: IndustryMapper
+) : ViewModel() {
 
     private val stateMutableLiveData = MutableLiveData<IndustryState>()
     private val industryScreenState: LiveData<IndustryState> = stateMutableLiveData
@@ -16,6 +20,20 @@ class IndustryViewModel(private val interactor: FiltersInteractor) : ViewModel()
 
     init {
         loadIndustry()
+    }
+
+    private suspend fun downloadIndustriesToBase() {
+        interactor.downloadIndustries().collect {
+            if (it.first == null) renderState(IndustryState.Error(it.second))
+            else {
+                val industries = mapper.map(it.first!!)
+                if (industries.isNotEmpty()) {
+                    interactor.insertIndustries(industries)
+                    renderState(IndustryState.Content(industries))
+                } else
+                    renderState(IndustryState.Empty)
+            }
+        }
     }
 
     fun loadIndustry() {
@@ -26,8 +44,9 @@ class IndustryViewModel(private val interactor: FiltersInteractor) : ViewModel()
                 .collect {
                     if (it.isNotEmpty())
                         renderState(IndustryState.Content(it))
-                    else
-                        renderState(IndustryState.Empty)
+                    else {
+                        downloadIndustriesToBase()
+                    }
                 }
         }
     }

@@ -2,6 +2,10 @@ package ru.practicum.android.diploma.filters.data
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import ru.practicum.android.diploma.data.dto.NetworkResponse
+import ru.practicum.android.diploma.data.dto.requests.AreaRequest
+import ru.practicum.android.diploma.data.dto.requests.IndustriesRequest
+import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.db.AppDatabase
 import ru.practicum.android.diploma.db.entities.AreaEntity
 import ru.practicum.android.diploma.db.entities.IndustryEntity
@@ -10,15 +14,28 @@ import ru.practicum.android.diploma.search.domain.model.fields.Area
 import ru.practicum.android.diploma.search.domain.model.fields.Industry
 
 class FiltersRepositoryImpl(
+    private val networkClient: NetworkClient,
     private val appDatabase: AppDatabase,
 ) : FiltersRepository {
-    override suspend fun insertIndustries(industry: Industry) {
+    override suspend fun insertIndustry(industry: Industry) {
         appDatabase.industriesDao().insertIndustry(
             IndustryEntity(
                 industry.id,
                 industry.name,
                 industry.parent
             )
+        )
+    }
+
+    override suspend fun insertIndustries(industries: List<Industry>) {
+        appDatabase.industriesDao().insertIndustries(
+            industries.map {
+                IndustryEntity(
+                    it.id,
+                    it.name,
+                    it.parent
+                )
+            }
         )
     }
 
@@ -75,6 +92,18 @@ class FiltersRepositoryImpl(
                 it.parent
             )
         })
+    }
+
+    override suspend fun downloadAreas(): Flow<NetworkResponse> = flow {
+        emit(
+            networkClient.getAreas(AreaRequest())
+        )
+    }
+
+    override suspend fun downloadIndustries(): Flow<NetworkResponse> = flow {
+        emit(
+            networkClient.getIndustries(IndustriesRequest())
+        )
     }
 
 }
