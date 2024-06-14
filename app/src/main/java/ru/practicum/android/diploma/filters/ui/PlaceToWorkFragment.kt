@@ -17,8 +17,7 @@ class PlaceToWorkFragment : Fragment() {
 
     private val viewModel by viewModel<PlaceToWorkViewModel>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPlaceToWorkBinding.inflate(inflater, container, false)

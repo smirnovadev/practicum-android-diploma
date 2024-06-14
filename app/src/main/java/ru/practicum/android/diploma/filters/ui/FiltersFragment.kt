@@ -16,9 +16,7 @@ class FiltersFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel by viewModel<FiltersViewModel>()
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFilterBinding.inflate(inflater, container, false)
@@ -31,7 +29,6 @@ class FiltersFragment : Fragment() {
         binding.placeWorkText.setOnClickListener { openPlaceToWorkFragment() }
         binding.industryText.setOnClickListener { openIndustryFragment() }
         binding.industryBtn.setOnClickListener { openIndustryFragment() }
-
     }
 
     private fun openIndustryFragment() {
@@ -42,13 +39,8 @@ class FiltersFragment : Fragment() {
         findNavController().navigate(R.id.action_filtersFragment_to_placeToWorkFragment)
     }
 
-
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-    }
-
-    companion object {
-
     }
 }

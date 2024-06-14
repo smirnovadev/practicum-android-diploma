@@ -15,8 +15,7 @@ class RegionFragment : Fragment() {
 
     private val viewModel by viewModel<RegionViewModel>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSelectRegionBinding.inflate(inflater, container, false)

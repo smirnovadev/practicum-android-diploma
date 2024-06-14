@@ -15,8 +15,7 @@ class IndustryFragment : Fragment() {
 
     private val viewModel by viewModel<IndustryViewModel>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentIndustryBinding.inflate(inflater, container, false)
