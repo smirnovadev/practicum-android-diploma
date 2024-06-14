@@ -17,6 +17,9 @@ class RegionViewModel(
     private val regionsScreenState: LiveData<AreasState> = stateMutableLiveData
     fun getScreenStateLiveData() = regionsScreenState
 
+    // TODO LOAD FROM SHARED
+    val region = 113
+
     init {
         loadRegions()
     }
@@ -49,7 +52,7 @@ class RegionViewModel(
         renderState(AreasState.Loading)
         viewModelScope.launch {
             interactor
-                .getRegions()
+                .getRegions(region)
                 .collect {
                     if (it.isNotEmpty())
                         renderState(AreasState.Content(it))

@@ -1,7 +1,6 @@
 package ru.practicum.android.diploma.search.data.mapper
 
 import ru.practicum.android.diploma.data.dto.responses.industry.IndustryUnitDAO
-import ru.practicum.android.diploma.search.domain.model.fields.Area
 import ru.practicum.android.diploma.search.domain.model.fields.Industry
 
 class IndustryMapper {

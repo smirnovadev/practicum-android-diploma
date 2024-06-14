@@ -18,7 +18,7 @@ interface AreasDao {
     @Query("SELECT * FROM areas_table")
     suspend fun getAreas(): List<AreaEntity>
 
-    @Query("SELECT * FROM areas_table WHERE parent=null")
+    @Query("SELECT * FROM areas_table WHERE parent IS NULL")
     suspend fun getCountries(): List<AreaEntity>
 
     @Query("SELECT * FROM areas_table WHERE parent==:parent")

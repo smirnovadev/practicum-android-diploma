@@ -5,9 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.databinding.FragmentSelectRegionBinding
 import ru.practicum.android.diploma.filters.presentation.RegionViewModel
+import ru.practicum.android.diploma.search.domain.model.fields.Area
 
 class RegionFragment : Fragment() {
     private var _binding: FragmentSelectRegionBinding? = null
@@ -15,7 +19,13 @@ class RegionFragment : Fragment() {
 
     private val viewModel by viewModel<RegionViewModel>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+    private var rvAdapter: AreaAdapter? = null
+    private lateinit var recycler: RecyclerView
+
+    private val regions = mutableListOf<Area>()
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSelectRegionBinding.inflate(inflater, container, false)
@@ -25,11 +35,50 @@ class RegionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.toolbar.setOnClickListener {
+            findNavController().navigateUp()
+        }
+        recycler = binding.recyclerView
+        rvAdapter = AreaAdapter(regions) {
+//            TODO()
+        }
+        recycler.adapter = rvAdapter
+        recycler.layoutManager = LinearLayoutManager(requireContext())
+
+        viewModel.getScreenStateLiveData().observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is AreasState.Content -> showContent(state.areasList)
+                AreasState.Empty -> showEmpty()
+                is AreasState.Error -> showError(state.code)
+                AreasState.Loading -> showLoading()
+            }
+        }
+    }
+
+    private fun showContent(countriesList: List<Area>) {
+        regions.clear()
+        regions.addAll(countriesList)
+        binding.recyclerView.visibility = View.VISIBLE
+        rvAdapter!!.notifyItemRangeChanged(0, countriesList.size)
+    }
+
+    private fun showEmpty() {
+//        TODO()
+    }
+
+    private fun showError(code: Int) {
+//        TODO()
+    }
+
+    private fun showLoading() {
+//        TODO()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+        rvAdapter = null
+        recycler.adapter = null
     }
 
 }
