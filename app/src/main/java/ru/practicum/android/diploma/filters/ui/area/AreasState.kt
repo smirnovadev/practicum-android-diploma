@@ -5,7 +5,7 @@ import ru.practicum.android.diploma.search.domain.model.fields.Area
 sealed interface AreasState {
     data object Loading : AreasState
     data class Content(
-        val industryList: List<Area>
+        val areasList: List<Area>
     ) : AreasState
 
     data object Empty : AreasState

@@ -17,7 +17,7 @@ interface FiltersInteractor {
     suspend fun deleteArea(area: Area)
     fun getArea(): Flow<List<Area>>
     fun getCountries(): Flow<List<Area>>
-    fun getRegions(): Flow<List<Area>>
+    fun getRegions(parent: Int): Flow<List<Area>>
 
     suspend fun downloadAreas(): Flow<Pair<AreasListDAO?, Int>>
 

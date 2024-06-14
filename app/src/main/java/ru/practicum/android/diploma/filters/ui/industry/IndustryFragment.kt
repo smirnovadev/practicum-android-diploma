@@ -50,7 +50,7 @@ class IndustryFragment : Fragment() {
             when (state) {
                 is IndustryState.Content -> showContent(state.industryList)
                 IndustryState.Empty -> showEmpty()
-                is IndustryState.Error -> showError()
+                is IndustryState.Error -> showError(state.code)
                 IndustryState.Loading -> showLoading()
             }
         }
@@ -67,7 +67,7 @@ class IndustryFragment : Fragment() {
 //        TODO()
     }
 
-    private fun showError() {
+    private fun showError(code: Int) {
 //        TODO()
     }
 

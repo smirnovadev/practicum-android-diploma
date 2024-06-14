@@ -65,7 +65,6 @@ class FiltersRepositoryImpl(
             AreaEntity(
                 area.id,
                 area.name,
-                area.url,
                 area.parent
             )
         )
@@ -76,7 +75,6 @@ class FiltersRepositoryImpl(
             AreaEntity(
                 it.id,
                 it.name,
-                it.url,
                 it.parent
             )
         })
@@ -87,7 +85,6 @@ class FiltersRepositoryImpl(
             AreaEntity(
                 area.id,
                 area.name,
-                area.url,
                 area.parent
             )
         )
@@ -99,7 +96,6 @@ class FiltersRepositoryImpl(
             Area(
                 it.id,
                 it.name,
-                it.url,
                 it.parent
             )
         })
@@ -110,18 +106,16 @@ class FiltersRepositoryImpl(
             Area(
                 it.id,
                 it.name,
-                it.url,
                 it.parent
             )
         })
     }
 
-    override fun getRegions(): Flow<List<Area>> = flow {
-        emit(appDatabase.areasDao().getRegions().map {
+    override fun getRegions(parent: Int): Flow<List<Area>> = flow {
+        emit(appDatabase.areasDao().getRegions(parent).map {
             Area(
                 it.id,
                 it.name,
-                it.url,
                 it.parent
             )
         })

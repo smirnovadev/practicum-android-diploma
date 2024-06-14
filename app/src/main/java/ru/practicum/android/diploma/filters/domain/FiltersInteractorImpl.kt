@@ -46,7 +46,7 @@ class FiltersInteractorImpl(
 
     override fun getCountries(): Flow<List<Area>> = filtersRepository.getCountries()
 
-    override fun getRegions(): Flow<List<Area>> = filtersRepository.getRegions()
+    override fun getRegions(parent: Int): Flow<List<Area>> = filtersRepository.getRegions(parent)
 
     override suspend fun downloadAreas(): Flow<Pair<AreasListDAO?, Int>> = filtersRepository.downloadAreas().map {
         when (it) {
