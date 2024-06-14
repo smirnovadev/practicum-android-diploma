@@ -28,7 +28,11 @@ class FiltersInteractorImpl(
         return filtersRepository.getIndustry()
     }
 
-    override suspend fun insertAreas(area: Area) {
+    override suspend fun insertArea(area: Area) {
+        return filtersRepository.insertArea(area)
+    }
+
+    override suspend fun insertAreas(area: List<Area>) {
         return filtersRepository.insertAreas(area)
     }
 
@@ -39,6 +43,10 @@ class FiltersInteractorImpl(
     override fun getArea(): Flow<List<Area>> {
         return filtersRepository.getArea()
     }
+
+    override fun getCountries(): Flow<List<Area>> = filtersRepository.getCountries()
+
+    override fun getRegions(): Flow<List<Area>> = filtersRepository.getRegions()
 
     override suspend fun downloadAreas(): Flow<Pair<AreasListDAO?, Int>> = filtersRepository.downloadAreas().map {
         when (it) {

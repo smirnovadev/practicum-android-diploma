@@ -60,7 +60,7 @@ class FiltersRepositoryImpl(
         })
     }
 
-    override suspend fun insertAreas(area: Area) {
+    override suspend fun insertArea(area: Area) {
         appDatabase.areasDao().insertArea(
             AreaEntity(
                 area.id,
@@ -69,6 +69,17 @@ class FiltersRepositoryImpl(
                 area.parent
             )
         )
+    }
+
+    override suspend fun insertAreas(area: List<Area>) {
+        appDatabase.areasDao().insertAreas(area.map {
+            AreaEntity(
+                it.id,
+                it.name,
+                it.url,
+                it.parent
+            )
+        })
     }
 
     override suspend fun deleteArea(area: Area) {
@@ -85,6 +96,28 @@ class FiltersRepositoryImpl(
     override fun getArea(): Flow<List<Area>> = flow {
         val areas = appDatabase.areasDao().getAreas()
         emit(areas.map {
+            Area(
+                it.id,
+                it.name,
+                it.url,
+                it.parent
+            )
+        })
+    }
+
+    override fun getCountries(): Flow<List<Area>> = flow {
+        emit(appDatabase.areasDao().getCountries().map {
+            Area(
+                it.id,
+                it.name,
+                it.url,
+                it.parent
+            )
+        })
+    }
+
+    override fun getRegions(): Flow<List<Area>> = flow {
+        emit(appDatabase.areasDao().getRegions().map {
             Area(
                 it.id,
                 it.name,

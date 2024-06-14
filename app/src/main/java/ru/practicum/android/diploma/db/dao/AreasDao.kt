@@ -12,8 +12,17 @@ interface AreasDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertArea(area: AreaEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAreas(areas: List<AreaEntity>)
+
     @Query("SELECT * FROM areas_table")
     suspend fun getAreas(): List<AreaEntity>
+
+    @Query("SELECT * FROM areas_table WHERE parent=null")
+    suspend fun getCountries(): List<AreaEntity>
+
+    @Query("SELECT * FROM areas_table WHERE parent!=null")
+    suspend fun getRegions(): List<AreaEntity>
 
     @Query("SELECT id FROM areas_table")
     suspend fun getAreasId(): List<Int>

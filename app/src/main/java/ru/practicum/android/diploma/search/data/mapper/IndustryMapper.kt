@@ -11,11 +11,13 @@ class IndustryMapper {
         parent: String? = null
     ): List<IndustryUnitDAO> {
         val result = mutableListOf<IndustryUnitDAO>()
-        if (limit > 0) {
-            src.forEach {
-                result.add(
-                    it.copy(parent = parent)
-                )
+        src.forEach {
+            if (parent == null)
+                println()
+            result.add(
+                it.copy(parent = parent)
+            )
+            if (limit > 0 && it.industries != null) {
                 result.addAll(
                     recursiveMap(it.industries, limit - 1, it.id)
                 )
@@ -33,7 +35,8 @@ class IndustryMapper {
         src: List<IndustryUnitDAO>,
         recursiveLimit: Int = 0
     ): List<Industry> {
-        return recursiveMap(src, recursiveLimit).map { dto ->
+        val recursiveMap = recursiveMap(src, recursiveLimit)
+        return recursiveMap.map { dto ->
             Industry(
                 dto.id.toInt(),
                 dto.name,

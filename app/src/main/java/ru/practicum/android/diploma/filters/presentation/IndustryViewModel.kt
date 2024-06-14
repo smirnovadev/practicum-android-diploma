@@ -13,7 +13,6 @@ class IndustryViewModel(
     private val interactor: FiltersInteractor,
     private val mapper: IndustryMapper
 ) : ViewModel() {
-
     private val stateMutableLiveData = MutableLiveData<IndustryState>()
     private val industryScreenState: LiveData<IndustryState> = stateMutableLiveData
     fun getScreenStateLiveData() = industryScreenState
@@ -23,10 +22,16 @@ class IndustryViewModel(
     }
 
     private suspend fun downloadIndustriesToBase() {
-        interactor.downloadIndustries().collect {
-            if (it.first == null) renderState(IndustryState.Error(it.second))
-            else {
-                val industries = mapper.map(it.first!!)
+        interactor.downloadIndustries().collect { result ->
+            if (result.first == null) {
+                renderState(
+                    if (result.second == 200)
+                        IndustryState.Empty
+                    else
+                        IndustryState.Error(result.second)
+                )
+            } else {
+                val industries = mapper.map(result.first!!)
                 if (industries.isNotEmpty()) {
                     interactor.insertIndustries(industries)
                     renderState(IndustryState.Content(industries))
@@ -36,7 +41,7 @@ class IndustryViewModel(
         }
     }
 
-    fun loadIndustry() {
+    private fun loadIndustry() {
         renderState(IndustryState.Loading)
         viewModelScope.launch {
             interactor

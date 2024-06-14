@@ -6,9 +6,9 @@ import ru.practicum.android.diploma.search.domain.model.fields.Area
 class AreaMapper {
     private fun recursiveMap(src: List<AreaUnitDAO>, limit: Int): List<AreaUnitDAO> {
         val result = mutableListOf<AreaUnitDAO>()
-        result.addAll(src)
-        if (limit > 0) {
-            src.forEach {
+        src.forEach {
+            result.add(it)
+            if (limit > 0 && it.children != null) {
                 result.addAll(
                     recursiveMap(it.children, limit - 1)
                 )

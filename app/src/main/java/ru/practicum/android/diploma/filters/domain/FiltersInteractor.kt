@@ -12,9 +12,12 @@ interface FiltersInteractor {
     suspend fun deleteIndustry(industry: Industry)
     fun getIndustry(): Flow<List<Industry>>
 
-    suspend fun insertAreas(area: Area)
+    suspend fun insertArea(area: Area)
+    suspend fun insertAreas(area: List<Area>)
     suspend fun deleteArea(area: Area)
     fun getArea(): Flow<List<Area>>
+    fun getCountries(): Flow<List<Area>>
+    fun getRegions(): Flow<List<Area>>
 
     suspend fun downloadAreas(): Flow<Pair<AreasListDAO?, Int>>
 
