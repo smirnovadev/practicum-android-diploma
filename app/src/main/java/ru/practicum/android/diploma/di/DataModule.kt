@@ -13,6 +13,7 @@ import ru.practicum.android.diploma.data.network.ApiService
 import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.data.network.RetrofitNetworkClient
 import ru.practicum.android.diploma.db.AppDatabase
+import ru.practicum.android.diploma.filters.data.FiltersLocalStorage
 import ru.practicum.android.diploma.job.data.ExternalNavigatorImpl
 import ru.practicum.android.diploma.job.domain.ExternalNavigator
 import ru.practicum.android.diploma.search.data.mapper.AddressMapper
@@ -173,5 +174,9 @@ val dataModule = module {
 
     single<AreaMapper> {
         AreaMapper()
+    }
+
+    single<FiltersLocalStorage> {
+        FiltersLocalStorage(get())
     }
 }
