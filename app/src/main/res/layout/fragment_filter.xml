@@ -27,14 +27,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="190dp" />
+        app:layout_constraintGuide_end="@dimen/_48dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="16dp" />
+        app:layout_constraintGuide_begin="@dimen/_16dp" />
 
     <TextView
         android:id="@+id/place_work_text"
@@ -53,6 +53,16 @@
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
         app:layout_constraintTop_toTopOf="@id/place_work_text" />
 
+    <ImageButton
+        android:id="@+id/place_work_btn_close"
+        style="@style/image_filter"
+        android:contentDescription="@string/place_work"
+        android:src="@drawable/ic_close"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/place_work_text"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintTop_toTopOf="@id/place_work_text" />
+
     <TextView
         android:id="@+id/industry_text"
         style="@style/text_filter_empty"
@@ -66,6 +76,16 @@
         style="@style/image_filter"
         android:contentDescription="@string/place_work"
         android:src="@drawable/ic_arrow_forward"
+        app:layout_constraintBottom_toBottomOf="@id/industry_text"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintTop_toTopOf="@id/industry_text" />
+
+    <ImageButton
+        android:id="@+id/industry_btn_close"
+        style="@style/image_filter"
+        android:contentDescription="@string/place_work"
+        android:src="@drawable/ic_close"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/industry_text"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
         app:layout_constraintTop_toTopOf="@id/industry_text" />
@@ -104,9 +124,50 @@
 
     <CheckBox
         android:id="@+id/salary_checkBox"
-        style="@style/image_filter"
+        style="@style/check"
+        android:buttonTint="@color/blue"
+        android:checked="false"
         app:layout_constraintBottom_toBottomOf="@id/show_salary_text"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
         app:layout_constraintTop_toTopOf="@id/show_salary_text" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="salary_checkBox,show_salary_text" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_apply"
+        style="@style/button_apply"
+        android:layout_marginHorizontal="@dimen/_16dp"
+        android:background="@drawable/bg_search_status"
+        android:text="@string/choose"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/reset"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barrier"
+        app:layout_constraintVertical_bias="1"
+        app:layout_goneMarginBottom="@dimen/_20dp"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/reset"
+        style="mediumText_16mediumText_16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingVertical="@dimen/_20dp"
+        android:text="@string/reset"
+        android:textColor="@color/red"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="1"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
