@@ -177,6 +177,6 @@ val dataModule = module {
     }
 
     single<FiltersLocalStorage> {
-        FiltersLocalStorage(get())
+        FiltersLocalStorage(get(), get())
     }
 }

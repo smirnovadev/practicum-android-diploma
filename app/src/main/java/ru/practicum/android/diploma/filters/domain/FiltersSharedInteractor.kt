@@ -1,10 +1,13 @@
 package ru.practicum.android.diploma.filters.domain
 
+import ru.practicum.android.diploma.search.domain.model.fields.Area
+import ru.practicum.android.diploma.search.domain.model.fields.Industry
+
 interface FiltersSharedInteractor {
-    fun saveCountry(country: Int?)
-    fun saveRegion(region: Int?)
-    fun saveIndustry(industry: Int?)
-    fun getCountry(): Int?
-    fun getRegion(): Int?
-    fun getIndustry(): Int?
+    fun saveCountry(country: Area?)
+    fun saveRegion(region: Area?)
+    fun saveIndustry(industry: Industry?)
+    fun getCountry(): Area?
+    fun getRegion(): Area?
+    fun getIndustry(): Industry?
 }

@@ -1,48 +1,54 @@
 package ru.practicum.android.diploma.filters.data
 
 import android.content.SharedPreferences
+import com.google.gson.Gson
+import ru.practicum.android.diploma.search.domain.model.fields.Area
+import ru.practicum.android.diploma.search.domain.model.fields.Industry
 
-class FiltersLocalStorage(private val sharedPreferences: SharedPreferences) {
-    fun saveCountry(country: Int?) {
+class FiltersLocalStorage(
+    private val sharedPreferences: SharedPreferences,
+    private val gson: Gson
+) {
+    fun saveCountry(country: Area?) {
         sharedPreferences.edit().apply {
             if (country == null)
                 remove(COUNTRY_KEY)
             else
-                putInt(COUNTRY_KEY, country)
+                putString(COUNTRY_KEY, gson.toJson(country))
         }.apply()
     }
 
-    fun saveRegion(region: Int?) {
+    fun saveRegion(region: Area?) {
         sharedPreferences.edit().apply {
             if (region == null)
                 remove(REGION_KEY)
             else
-                putInt(REGION_KEY, region)
+                putString(REGION_KEY, gson.toJson(region))
         }.apply()
     }
 
-    fun saveIndustry(industry: Int?) {
+    fun saveIndustry(industry: Industry?) {
         sharedPreferences.edit().apply {
             if (industry == null)
                 remove(INDUSTRY_KEY)
             else
-                putInt(INDUSTRY_KEY, industry)
+                putString(INDUSTRY_KEY, gson.toJson(industry))
         }.apply()
     }
 
-    fun getCountry(): Int? {
-        val int = sharedPreferences.getInt(COUNTRY_KEY, -1)
-        return if (int == -1) null else int
+    fun getCountry(): Area? {
+        val s = sharedPreferences.getString(COUNTRY_KEY, null) ?: return null
+        return gson.fromJson(s, Area::class.java)
     }
 
-    fun getRegion(): Int? {
-        val int = sharedPreferences.getInt(REGION_KEY, -1)
-        return if (int == -1) null else int
+    fun getRegion(): Area? {
+        val s = sharedPreferences.getString(REGION_KEY, null) ?: return null
+        return gson.fromJson(s, Area::class.java)
     }
 
-    fun getIndustry(): Int? {
-        val int = sharedPreferences.getInt(INDUSTRY_KEY, -1)
-        return if (int == -1) null else int
+    fun getIndustry(): Industry? {
+        val s = sharedPreferences.getString(INDUSTRY_KEY, null) ?: return null
+        return gson.fromJson(s, Industry::class.java)
     }
 
 

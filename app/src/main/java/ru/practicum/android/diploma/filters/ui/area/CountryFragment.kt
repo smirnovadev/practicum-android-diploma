@@ -9,7 +9,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSelectCountryBinding
 import ru.practicum.android.diploma.filters.presentation.CountryViewModel
 import ru.practicum.android.diploma.search.domain.model.fields.Area
@@ -41,7 +40,7 @@ class CountryFragment : Fragment() {
         }
         recycler = binding.recyclerView
         rvAdapter = AreaAdapter(countries) {
-            viewModel.save(it.id)
+            viewModel.save(it)
             findNavController().navigateUp()
         }
         recycler.adapter = rvAdapter
@@ -81,9 +80,5 @@ class CountryFragment : Fragment() {
         _binding = null
         rvAdapter = null
         recycler.adapter = null
-    }
-
-    companion object {
-        const val COUNTRY_KEY = "selected_country"
     }
 }

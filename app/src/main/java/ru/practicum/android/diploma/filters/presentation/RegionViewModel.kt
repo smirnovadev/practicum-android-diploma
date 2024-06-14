@@ -5,22 +5,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import ru.practicum.android.diploma.filters.data.FiltersLocalStorage
 import ru.practicum.android.diploma.filters.domain.FiltersInteractor
+import ru.practicum.android.diploma.filters.domain.FiltersSharedInteractor
 import ru.practicum.android.diploma.filters.ui.area.AreasState
 import ru.practicum.android.diploma.search.data.mapper.AreaMapper
+import ru.practicum.android.diploma.search.domain.model.fields.Area
 
 class RegionViewModel(
     private val interactor: FiltersInteractor,
     private val mapper: AreaMapper,
-    private val sharedInteractor: FiltersLocalStorage
+    private val sharedInteractor: FiltersSharedInteractor
 ) : ViewModel() {
     private val stateMutableLiveData = MutableLiveData<AreasState>()
     private val regionsScreenState: LiveData<AreasState> = stateMutableLiveData
     fun getScreenStateLiveData() = regionsScreenState
-
-    // TODO LOAD FROM SHARED
-    val region = 113
 
     init {
         loadRegions()
@@ -51,10 +49,15 @@ class RegionViewModel(
     }
 
     private fun loadRegions() {
+        val country = sharedInteractor.getCountry()
+        if (country == null) {
+            renderState(AreasState.Empty)
+            return
+        }
         renderState(AreasState.Loading)
         viewModelScope.launch {
             interactor
-                .getRegions(region)
+                .getRegions(country.id)
                 .collect {
                     if (it.isNotEmpty())
                         renderState(AreasState.Content(it))
@@ -65,8 +68,8 @@ class RegionViewModel(
         }
     }
 
-    fun save(region: Int) {
-        sharedInteractor.saveIndustry(region)
+    fun save(region: Area) {
+        sharedInteractor.saveRegion(region)
     }
 
     private fun renderState(state: AreasState) {

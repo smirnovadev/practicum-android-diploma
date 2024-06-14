@@ -40,7 +40,7 @@ class IndustryFragment : Fragment() {
         }
         recycler = binding.recyclerView
         rvAdapter = IndustryAdapter(industries) {
-            viewModel.save(it.id)
+            viewModel.save(it)
             findNavController().navigateUp()
         }
         recycler.adapter = rvAdapter

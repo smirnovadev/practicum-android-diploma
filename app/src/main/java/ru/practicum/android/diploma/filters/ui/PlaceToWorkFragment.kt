@@ -17,7 +17,8 @@ class PlaceToWorkFragment : Fragment() {
 
     private val viewModel by viewModel<PlaceToWorkViewModel>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPlaceToWorkBinding.inflate(inflater, container, false)
@@ -29,12 +30,19 @@ class PlaceToWorkFragment : Fragment() {
         binding.toolbar.setOnClickListener {
             findNavController().navigateUp()
         }
-        binding.countryText.setOnClickListener{
+        binding.countryText.setOnClickListener {
             findNavController().navigate(R.id.action_placeToWorkFragment_to_countryFragment)
         }
         binding.regionText.setOnClickListener {
             findNavController().navigate(R.id.action_placeToWorkFragment_to_regionFragment)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        binding.countryText.setText(viewModel.getCountryName())
+        binding.regionText.setText(viewModel.getRegionName())
     }
 
     override fun onDestroy() {
