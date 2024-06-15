@@ -19,6 +19,7 @@ import ru.practicum.android.diploma.search.data.mapper.AddressMapper
 import ru.practicum.android.diploma.search.data.mapper.ContactsMapper
 import ru.practicum.android.diploma.search.data.mapper.DepartmentMapper
 import ru.practicum.android.diploma.search.data.mapper.EmployerMapper
+import ru.practicum.android.diploma.search.data.mapper.EmploymentMapper
 import ru.practicum.android.diploma.search.data.mapper.ExperienceMapper
 import ru.practicum.android.diploma.search.data.mapper.InsiderInterviewMapper
 import ru.practicum.android.diploma.search.data.mapper.KeySkillMapper
@@ -29,6 +30,7 @@ import ru.practicum.android.diploma.search.data.mapper.PhoneMapper
 import ru.practicum.android.diploma.search.data.mapper.ProfessionalRoleMapper
 import ru.practicum.android.diploma.search.data.mapper.ResponseToVacanciesMapper
 import ru.practicum.android.diploma.search.data.mapper.ScheduleMapper
+import ru.practicum.android.diploma.search.data.mapper.SnippetMapper
 import ru.practicum.android.diploma.search.data.mapper.TypeMapper
 import ru.practicum.android.diploma.search.data.mapper.VacanciesMapper
 import ru.practicum.android.diploma.search.data.mapper.VacancyAreaMapper
@@ -77,6 +79,8 @@ val dataModule = module {
             get(),
             get(),
             get(),
+            get(),
+            get(),
             get()
         )
     }
@@ -104,6 +108,10 @@ val dataModule = module {
 
     single<EmployerMapper> {
         EmployerMapper(get())
+    }
+
+    single<EmploymentMapper> {
+        EmploymentMapper()
     }
 
     single<ExperienceMapper> {
@@ -140,6 +148,10 @@ val dataModule = module {
 
     single<ScheduleMapper> {
         ScheduleMapper()
+    }
+
+    single<SnippetMapper> {
+        SnippetMapper()
     }
 
     single<TypeMapper> {

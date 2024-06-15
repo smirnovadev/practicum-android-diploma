@@ -4,16 +4,19 @@ import ru.practicum.android.diploma.search.domain.model.fields.Address
 import ru.practicum.android.diploma.search.domain.model.fields.Contacts
 import ru.practicum.android.diploma.search.domain.model.fields.Department
 import ru.practicum.android.diploma.search.domain.model.fields.Employer
+import ru.practicum.android.diploma.search.domain.model.fields.Employment
 import ru.practicum.android.diploma.search.domain.model.fields.Experience
 import ru.practicum.android.diploma.search.domain.model.fields.InsiderInterview
 import ru.practicum.android.diploma.search.domain.model.fields.KeySkill
 import ru.practicum.android.diploma.search.domain.model.fields.Manager
 import ru.practicum.android.diploma.search.domain.model.fields.ProfessionalRole
 import ru.practicum.android.diploma.search.domain.model.fields.Schedule
+import ru.practicum.android.diploma.search.domain.model.fields.Snippet
 import ru.practicum.android.diploma.search.domain.model.fields.Type
 import ru.practicum.android.diploma.search.domain.model.fields.VacancyArea
 import ru.practicum.android.diploma.search.domain.model.fields.WorkingDay
 import ru.practicum.android.diploma.search.domain.model.fields.WorkingTimeInterval
+import java.io.Serializable
 
 data class Vacancy(
     val address: Address,
@@ -27,6 +30,7 @@ data class Vacancy(
     val department: Department,
     val description: String,
     val employer: Employer,
+    val employment: Employment,
     val experience: Experience,
     val hasTest: Boolean,
     val id: String,
@@ -43,7 +47,8 @@ data class Vacancy(
     val responseUrl: String?,
     val salary: String,
     val schedule: Schedule,
+    val snippet: Snippet,
     val type: Type,
     val workingDays: List<WorkingDay>,
     val workingTimeIntervals: List<WorkingTimeInterval>
-)
+) : Serializable
