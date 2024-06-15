@@ -5,14 +5,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="?attr/backgroundColor"
-    android:paddingHorizontal="@dimen/_16dp"
     android:paddingVertical="@dimen/_9dp">
 
     <TextView
         android:id="@+id/area_text"
         style="@style/text_filter_empty"
         tools:text="@string/empty_list"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/filter_text"
+        app:layout_constraintEnd_toStartOf="@id/area_btn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
