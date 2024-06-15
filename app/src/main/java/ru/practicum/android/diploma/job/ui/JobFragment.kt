@@ -247,7 +247,7 @@ class JobFragment : Fragment() {
         }
     }
 
-    private fun viewCompanyLogo(){
+    private fun viewCompanyLogo() {
         val cornerSize = resources.getDimensionPixelSize(R.dimen._12dp)
         Glide.with(this)
             .load(requireArguments().getString(EXTRA_LOGO_COMPANY))

@@ -5,7 +5,7 @@ import ru.practicum.android.diploma.search.domain.model.fields.Employment
 
 class EmploymentMapper {
 
-    fun map(dto: EmploymentDTO?) : Employment {
+    fun map(dto: EmploymentDTO?): Employment {
         return Employment(
             id = dto?.id ?: EMPTY_STRING,
             name = dto?.name ?: EMPTY_STRING,

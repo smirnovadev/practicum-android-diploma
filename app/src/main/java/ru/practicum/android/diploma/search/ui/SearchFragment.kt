@@ -204,7 +204,8 @@ class SearchFragment : Fragment(), SearchClickListener {
 
     override fun onVacancyClick(vacancy: Vacancy) {
         findNavController().navigate(
-            R.id.action_searchFragment_to_jobFragment, JobFragment.createArgs(
+            R.id.action_searchFragment_to_jobFragment,
+            JobFragment.createArgs(
                 vacancy.id,
                 vacancy.name,
                 vacancy.salary,
@@ -218,7 +219,7 @@ class SearchFragment : Fragment(), SearchClickListener {
                 vacancy.contacts.phones.joinToString(separator = " + ") {
                     "+${it?.country} (${it?.city ?: ""})  ${it?.number ?: ""}"
                 },
-                vacancy.employer.logoUrls?.original, // нужно поставить на прием, картинки нужного размера, ни больше ни меньше
+                vacancy.employer.logoUrls?.original, // нужно поставить на прием, картинки нужного размера
                 vacancy.professionalRoles.joinToString(" \n") { it.name ?: "" },
                 vacancy.area.name,
                 vacancy.snippet.requirement,
