@@ -76,4 +76,6 @@ class IndustryViewModel(
                 }
         }
     }
+
+    fun getIndustry(): Industry? = sharedInteractor.getIndustry()
 }

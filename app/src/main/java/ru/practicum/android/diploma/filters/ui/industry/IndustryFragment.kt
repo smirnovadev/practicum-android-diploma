@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.filters.ui.industry
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -56,20 +57,23 @@ class IndustryFragment : Fragment() {
         groupNotFound.visibility = View.GONE
         groupEmpty.visibility = View.GONE
         recycler = binding.recyclerView
-        rvAdapter = IndustryAdapter(industries) {
+
+        rvAdapter = IndustryAdapter(
+            industries,
+            null
+        ) {
             viewModel.save(it)
-            findNavController().navigateUp()
         }
         recycler.adapter = rvAdapter
         recycler.layoutManager = LinearLayoutManager(requireContext())
-        searchDebounce = debounce<String>(
+        searchDebounce = debounce(
             SEARCH_DEBOUNCE_DELAY,
             viewLifecycleOwner.lifecycleScope,
             false
         ) { request -> viewModel.search(request) }
 
         inputIndustry.addTextChangedListener(
-            onTextChanged = {s: CharSequence?, start: Int, before: Int, count: Int->
+            onTextChanged = { s: CharSequence?, start: Int, before: Int, count: Int ->
                 viewModel.search(s?.toString().orEmpty())
             },
             afterTextChanged =
@@ -107,9 +111,15 @@ class IndustryFragment : Fragment() {
         searchDebounce?.let { it(request) }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun showContent(industryList: List<Industry>) {
         industries.clear()
         industries.addAll(industryList)
+
+        val industry = viewModel.getIndustry()
+        val selectedId = industries.indexOfFirst { it == industry }
+        rvAdapter!!.selectedId = if (selectedId != -1) selectedId else null
+
         binding.recyclerView.isVisible = true
         rvAdapter!!.notifyDataSetChanged()
         binding.apply {
