@@ -36,6 +36,7 @@
             android:drawablePadding="@dimen/_8dp"
             android:hint="@string/enter_region"
             android:maxLines="1"
+            android:imeOptions="actionDone"
             android:paddingBottom="@dimen/_20dp" />
     </com.google.android.material.textfield.TextInputLayout>
 

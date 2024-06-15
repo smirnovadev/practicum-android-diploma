@@ -51,6 +51,23 @@ class FiltersLocalStorage(
         return gson.fromJson(s, Industry::class.java)
     }
 
+    fun deleteCountry() {
+        sharedPreferences.edit().apply {
+            remove(COUNTRY_KEY)
+        }.apply()
+    }
+
+    fun deleteRegion() {
+        sharedPreferences.edit().apply {
+            remove(REGION_KEY)
+        }.apply()
+    }
+
+    fun deleteIndustry() {
+        sharedPreferences.edit().apply {
+            remove(INDUSTRY_KEY)
+        }.apply()
+    }
 
     private companion object {
         const val COUNTRY_KEY = "filters_country"

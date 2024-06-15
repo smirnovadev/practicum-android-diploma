@@ -8,6 +8,10 @@ class PlaceToWorkViewModel(
     private val sharedInteractor: FiltersLocalStorage
 ) : ViewModel() {
     private val emptyArea = Area(-1, "")
+
     fun getCountryName(): String = (sharedInteractor.getCountry() ?: emptyArea).name
     fun getRegionName(): String = (sharedInteractor.getRegion() ?: emptyArea).name
+
+    fun clearCountryName() = (sharedInteractor.deleteCountry())
+    fun clearRegionName() = (sharedInteractor.deleteRegion())
 }
