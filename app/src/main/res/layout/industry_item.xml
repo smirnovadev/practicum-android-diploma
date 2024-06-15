@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:button="@drawable/radio_button_selected"
         android:buttonTintMode="add"
-        android:checked="true"
+        android:checked="false"
         android:foregroundTint="#0000"
         app:layout_constraintBottom_toBottomOf="@id/industry_text"
         app:layout_constraintEnd_toEndOf="parent"

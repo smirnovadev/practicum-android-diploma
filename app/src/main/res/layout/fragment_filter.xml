@@ -39,6 +39,7 @@
     <TextView
         android:id="@+id/place_work_text"
         style="@style/text_filter_empty"
+        android:textColor="@color/gray"
         android:text="@string/place_work"
         app:layout_constraintEnd_toEndOf="@id/guideline"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
@@ -66,6 +67,7 @@
     <TextView
         android:id="@+id/industry_text"
         style="@style/text_filter_empty"
+        android:textColor="@color/gray"
         android:text="@string/industry"
         app:layout_constraintEnd_toEndOf="@id/guideline"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"

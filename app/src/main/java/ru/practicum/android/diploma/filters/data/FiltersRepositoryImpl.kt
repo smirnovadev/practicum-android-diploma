@@ -133,4 +133,24 @@ class FiltersRepositoryImpl(
         )
     }
 
+    override fun getRegion(name: String, parent: Int): Flow<List<Area>> = flow {
+        emit(appDatabase.areasDao().getRegion(name, parent).map {
+            Area(
+                it.id,
+                it.name,
+                it.parent
+            )
+        })
+    }
+
+    override fun findIndustry(name: String): Flow<List<Industry>> = flow {
+        emit(appDatabase.industriesDao().findIndustry(name).map {
+            Industry(
+                it.id,
+                it.name,
+                it.parent
+            )
+        })
+    }
+
 }

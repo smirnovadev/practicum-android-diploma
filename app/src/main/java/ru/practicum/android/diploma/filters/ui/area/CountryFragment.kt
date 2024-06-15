@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.Group
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,6 +26,8 @@ class CountryFragment : Fragment() {
 
     private val countries = mutableListOf<Area>()
 
+    private lateinit var groupEmpty: Group
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,6 +38,9 @@ class CountryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        groupEmpty = binding.groupEmpty
+        groupEmpty.visibility = View.GONE
 
         binding.toolbar.setOnClickListener {
             findNavController().navigateUp()
@@ -59,20 +66,36 @@ class CountryFragment : Fragment() {
     private fun showContent(countriesList: List<Area>) {
         countries.clear()
         countries.addAll(countriesList)
-        binding.recyclerView.visibility = View.VISIBLE
+        binding.recyclerView.isVisible = true
         rvAdapter!!.notifyItemRangeChanged(0, countriesList.size)
+        binding.apply {
+            groupEmpty.isVisible = false
+            progressBar.isVisible = false
+        }
     }
 
     private fun showEmpty() {
-//        TODO()
+        binding.apply {
+            groupEmpty.isVisible = true
+            progressBar.isVisible = false
+            recyclerView.isVisible = false
+        }
     }
 
     private fun showError(code: Int) {
-//        TODO()
+        binding.apply {
+            groupEmpty.isVisible = true
+            progressBar.isVisible = false
+            recyclerView.isVisible = false
+        }
     }
 
     private fun showLoading() {
-//        TODO()
+        binding.apply {
+            groupEmpty.isVisible = false
+            progressBar.isVisible = true
+            recyclerView.isVisible = false
+        }
     }
 
     override fun onDestroy() {

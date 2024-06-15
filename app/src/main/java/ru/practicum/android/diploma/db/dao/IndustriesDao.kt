@@ -25,4 +25,7 @@ interface IndustriesDao {
     @Delete(entity = IndustryEntity::class)
     fun deleteIndustry(industryEntity: IndustryEntity)
 
+    @Query("SELECT * FROM industries_table WHERE name LIKE '%' || :name || '%' ")
+    suspend fun findIndustry(name:String): List<IndustryEntity>
+
 }

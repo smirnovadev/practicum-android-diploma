@@ -26,6 +26,11 @@ class FiltersFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.toolbar.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
         binding.placeWorkBtn.setOnClickListener { openPlaceToWorkFragment() }
         binding.placeWorkText.setOnClickListener { openPlaceToWorkFragment() }
         binding.industryText.setOnClickListener { openIndustryFragment() }

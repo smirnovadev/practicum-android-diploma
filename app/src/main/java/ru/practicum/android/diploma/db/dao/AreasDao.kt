@@ -27,6 +27,9 @@ interface AreasDao {
     @Query("SELECT id FROM areas_table")
     suspend fun getAreasId(): List<Int>
 
+    @Query("SELECT * FROM areas_table WHERE name LIKE '%' || :name || '%' AND parent=:parent")
+    suspend fun getRegion(name:String, parent: Int): List<AreaEntity>
+
     @Delete(entity = AreaEntity::class)
     fun deleteArea(areaEntity: AreaEntity)
 

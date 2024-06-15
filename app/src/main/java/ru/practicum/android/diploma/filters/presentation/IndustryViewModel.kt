@@ -67,4 +67,13 @@ class IndustryViewModel(
         stateMutableLiveData.postValue(state)
     }
 
+    fun search(request: String) {
+        viewModelScope.launch {
+            interactor
+                .findIndustry(request)
+                .collect {
+                    renderState(IndustryState.Content(it))
+                }
+        }
+    }
 }

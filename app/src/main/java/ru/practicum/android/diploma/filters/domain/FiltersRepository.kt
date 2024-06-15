@@ -21,4 +21,7 @@ interface FiltersRepository {
     suspend fun downloadAreas(): Flow<NetworkResponse>
 
     suspend fun downloadIndustries(): Flow<NetworkResponse>
+
+    fun getRegion(name: String, parent: Int): Flow<List<Area>>
+    fun findIndustry(name: String): Flow<List<Industry>>
 }

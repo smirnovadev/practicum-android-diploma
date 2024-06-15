@@ -75,4 +75,20 @@ class RegionViewModel(
     private fun renderState(state: AreasState) {
         stateMutableLiveData.postValue(state)
     }
+
+    fun search(request: String) {
+        val country = sharedInteractor.getCountry()
+        if (country == null) {
+            renderState(AreasState.Empty)
+            return
+        }
+
+        viewModelScope.launch {
+            interactor
+                .getRegion(request, country.id)
+                .collect {
+                    renderState(AreasState.Content(it))
+                }
+        }
+    }
 }
