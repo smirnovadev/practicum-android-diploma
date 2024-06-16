@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -29,13 +28,12 @@ class FiltersFragment : Fragment() {
     private var salary: String = EMPTY
     private var salaryFlag: Boolean = false
 
-    private lateinit var inputPlaceToWork: TextInputEditText
-    private lateinit var inputIndustry: TextInputEditText
-    private lateinit var inputSalary: TextInputEditText
+    private val inputPlaceToWork: TextInputEditText by lazy { binding.placeWorkText }
+    private val inputIndustry: TextInputEditText by lazy { binding.industryText }
+    private val inputSalary: TextInputEditText by lazy { binding.salaryText }
 
-    private lateinit var bottomNavView: BottomNavigationView
-    private lateinit var applyBtn: Button
-    private lateinit var reset: TextView
+    private val bottomNavView: BottomNavigationView by lazy { requireActivity().findViewById(R.id.bottomNavigationView) }
+    private val applyBtn: Button by lazy { binding.buttonApply }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,12 +45,6 @@ class FiltersFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        inputPlaceToWork = binding.placeWorkText
-        inputIndustry = binding.industryText
-        inputSalary = binding.salaryText
-        applyBtn = binding.buttonApply
-        reset = binding.reset
-
 
         binding.toolbar.setOnClickListener {
             clearIndustry()
@@ -61,7 +53,6 @@ class FiltersFragment : Fragment() {
             clearSalary()
             findNavController().navigateUp()
         }
-        bottomNavView = requireActivity().findViewById(R.id.bottomNavigationView)
         bottomNavView.isVisible = false
 
         country = viewModel.getCountryName()
@@ -74,25 +65,27 @@ class FiltersFragment : Fragment() {
         inputIndustry.setText(industry)
 
         inputPlaceToWork.setOnClickListener {
-            if (inputPlaceToWork.text?.isEmpty() == true)
+            if (inputPlaceToWork.text?.isEmpty() == true) {
                 openPlaceToWorkFragment()
+            }
         }
         binding.placeWorkBtn.setOnClickListener {
-            if (inputPlaceToWork.text?.isEmpty() == true)
+            if (inputPlaceToWork.text?.isEmpty() == true) {
                 openPlaceToWorkFragment()
-            else {
+            } else {
                 clearPlaceToWork()
             }
         }
 
         inputIndustry.setOnClickListener {
-            if (inputIndustry.text?.isEmpty() == true)
+            if (inputIndustry.text?.isEmpty() == true) {
                 openIndustryFragment()
+            }
         }
         binding.industryBtn.setOnClickListener {
-            if (inputIndustry.text?.isEmpty() == true)
+            if (inputIndustry.text?.isEmpty() == true) {
                 openIndustryFragment()
-            else {
+            } else {
                 clearIndustry()
             }
         }
@@ -123,12 +116,10 @@ class FiltersFragment : Fragment() {
     }
 
     private fun checkButtonsState() {
-        val visible = (
-            !inputPlaceToWork.text.isNullOrEmpty() ||
-                !inputIndustry.text.isNullOrEmpty() ||
-                !inputSalary.text.isNullOrEmpty() ||
-                viewModel.getSalaryFlagN() != null
-            )
+        val visible = !inputPlaceToWork.text.isNullOrEmpty() ||
+            !inputIndustry.text.isNullOrEmpty() ||
+            !inputSalary.text.isNullOrEmpty() ||
+            viewModel.getSalaryFlagN() != null
         binding.buttonApply.isVisible = visible
         binding.reset.isVisible = visible
     }
