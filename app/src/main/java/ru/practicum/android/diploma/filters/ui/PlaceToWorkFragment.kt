@@ -23,11 +23,12 @@ class PlaceToWorkFragment : Fragment() {
 
     private var country: String = EMPTY
     private var region: String = EMPTY
-    private lateinit var inputCountry: TextInputEditText
-    private lateinit var inputRegion: TextInputEditText
-    private lateinit var applyBtn: Button
+    private val inputCountry: TextInputEditText by lazy { binding.countryText }
+    private val inputRegion: TextInputEditText by lazy { binding.regionText }
+    private val applyBtn: Button by lazy { binding.buttonApply }
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPlaceToWorkBinding.inflate(inflater, container, false)
@@ -36,52 +37,54 @@ class PlaceToWorkFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        inputCountry = binding.countryText
-        inputRegion = binding.regionText
-        applyBtn = binding.buttonApply
-
-        binding.toolbar.setOnClickListener {
-            findNavController().navigateUp()
-            clearCountry()
-            clearRegion()
-        }
-
         country = viewModel.getCountryName()
         inputCountry.setText(country)
 
         region = viewModel.getRegionName()
         inputRegion.setText(region)
 
+        initListeners()
         checkButtonsState()
+    }
+
+    private fun initListeners() {
+        binding.toolbar.setOnClickListener {
+            findNavController().navigateUp()
+            clearCountry()
+            clearRegion()
+        }
+
         applyBtn.setOnClickListener {
             findNavController().navigateUp()
         }
 
         inputCountry.setOnClickListener {
-            if (inputCountry.text?.isEmpty() == true)
+            if (inputCountry.text?.isEmpty() == true) {
                 navigateToCountry()
+            }
         }
         binding.actionCountry.setOnClickListener {
-            if (inputCountry.text?.isEmpty() == true)
+            if (inputCountry.text?.isEmpty() == true) {
                 navigateToCountry()
-            else {
+            } else {
                 clearCountry()
                 clearRegion()
             }
         }
 
         inputRegion.setOnClickListener {
-            if (inputRegion.text?.isEmpty() == true)
+            if (inputRegion.text?.isEmpty() == true) {
                 navigateToRegion()
-        }
-        binding.actionRegion.setOnClickListener {
-            if (inputRegion.text?.isEmpty() == true)
-                navigateToRegion()
-            else {
-                clearRegion()
             }
         }
 
+        binding.actionRegion.setOnClickListener {
+            if (inputRegion.text?.isEmpty() == true) {
+                navigateToRegion()
+            } else {
+                clearRegion()
+            }
+        }
     }
 
     private fun checkButtonsState() {
@@ -124,10 +127,11 @@ class PlaceToWorkFragment : Fragment() {
         binding.actionCountry.setImageDrawable(
             ResourcesCompat.getDrawable(
                 resources,
-                if (inputCountry.text?.isEmpty() == true)
+                if (inputCountry.text?.isEmpty() == true) {
                     R.drawable.ic_arrow_forward
-                else
-                    R.drawable.ic_close,
+                } else {
+                    R.drawable.ic_close
+                },
                 activity?.theme
             )
         )
@@ -137,10 +141,11 @@ class PlaceToWorkFragment : Fragment() {
         binding.actionRegion.setImageDrawable(
             ResourcesCompat.getDrawable(
                 resources,
-                if (inputRegion.text?.isEmpty() == true)
+                if (inputRegion.text?.isEmpty() == true) {
                     R.drawable.ic_arrow_forward
-                else
-                    R.drawable.ic_close,
+                } else {
+                    R.drawable.ic_close
+                },
                 activity?.theme
             )
         )

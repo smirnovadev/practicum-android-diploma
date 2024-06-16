@@ -32,11 +32,14 @@ class FiltersFragment : Fragment() {
     private val inputIndustry: TextInputEditText by lazy { binding.industryText }
     private val inputSalary: TextInputEditText by lazy { binding.salaryText }
 
-    private val bottomNavView: BottomNavigationView by lazy { requireActivity().findViewById(R.id.bottomNavigationView) }
+    private val bottomNavView: BottomNavigationView by lazy {
+        requireActivity().findViewById(R.id.bottomNavigationView)
+    }
     private val applyBtn: Button by lazy { binding.buttonApply }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFilterBinding.inflate(inflater, container, false)
@@ -64,6 +67,10 @@ class FiltersFragment : Fragment() {
         inputPlaceToWork.setText(getString(R.string.place_to_work_text, country, region))
         inputIndustry.setText(industry)
 
+        initListeners()
+    }
+
+    private fun initListeners() {
         inputPlaceToWork.setOnClickListener {
             if (inputPlaceToWork.text?.isEmpty() == true) {
                 openPlaceToWorkFragment()
@@ -112,7 +119,6 @@ class FiltersFragment : Fragment() {
         applyBtn.setOnClickListener {
             findNavController().navigateUp()
         }
-
     }
 
     private fun checkButtonsState() {
@@ -151,10 +157,11 @@ class FiltersFragment : Fragment() {
         binding.placeWorkBtn.setImageDrawable(
             ResourcesCompat.getDrawable(
                 resources,
-                if (inputPlaceToWork.text?.isEmpty() == true)
+                if (inputPlaceToWork.text?.isEmpty() == true) {
                     R.drawable.ic_arrow_forward
-                else
-                    R.drawable.ic_close,
+                } else {
+                    R.drawable.ic_close
+                },
                 activity?.theme
             )
         )
@@ -164,15 +171,15 @@ class FiltersFragment : Fragment() {
         binding.industryBtn.setImageDrawable(
             ResourcesCompat.getDrawable(
                 resources,
-                if (inputIndustry.text?.isEmpty() == true)
+                if (inputIndustry.text?.isEmpty() == true) {
                     R.drawable.ic_arrow_forward
-                else
-                    R.drawable.ic_close,
+                } else {
+                    R.drawable.ic_close
+                },
                 activity?.theme
             )
         )
     }
-
 
     private fun openIndustryFragment() {
         findNavController().navigate(R.id.action_filtersFragment_to_industryFragment)
@@ -181,7 +188,6 @@ class FiltersFragment : Fragment() {
     private fun openPlaceToWorkFragment() {
         findNavController().navigate(R.id.action_filtersFragment_to_placeToWorkFragment)
     }
-
 
     override fun onResume() {
         super.onResume()
