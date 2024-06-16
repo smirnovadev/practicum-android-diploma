@@ -31,16 +31,17 @@ class IndustryFragment : Fragment() {
     private val viewModel by viewModel<IndustryViewModel>()
 
     private var rvAdapter: IndustryAdapter? = null
-    private lateinit var recycler: RecyclerView
+    private val recycler: RecyclerView by lazy { binding.recyclerView }
 
     private val industries = mutableListOf<Industry>()
     private var searchDebounce: ((String) -> Unit)? = null
-    private lateinit var inputIndustry: TextInputEditText
-    private lateinit var groupNotFound: Group
-    private lateinit var groupEmpty: Group
-    private lateinit var applyBtn: Button
+    private val inputIndustry: TextInputEditText by lazy { binding.inputIndustry }
+    private val groupNotFound: Group by lazy { binding.groupNotFound }
+    private val groupEmpty: Group by lazy { binding.groupEmpty }
+    private val applyBtn: Button by lazy { binding.buttonApply }
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentIndustryBinding.inflate(inflater, container, false)
@@ -54,13 +55,8 @@ class IndustryFragment : Fragment() {
             findNavController().navigateUp()
             clearIndustry()
         }
-        inputIndustry = binding.inputIndustry
-        groupNotFound = binding.groupNotFound
-        groupEmpty = binding.groupEmpty
         groupNotFound.visibility = View.GONE
         groupEmpty.visibility = View.GONE
-        recycler = binding.recyclerView
-        applyBtn = binding.buttonApply
         rvAdapter = IndustryAdapter(industries) {
             viewModel.save(it)
             applyBtn.isVisible = true
@@ -73,6 +69,14 @@ class IndustryFragment : Fragment() {
             false
         ) { request -> viewModel.search(request) }
 
+        initListeners()
+
+        applyBtn.setOnClickListener {
+            findNavController().navigateUp()
+        }
+    }
+
+    private fun initListeners() {
         inputIndustry.addTextChangedListener(
             onTextChanged = { s: CharSequence?, start: Int, before: Int, count: Int ->
                 viewModel.search(s?.toString().orEmpty())
@@ -105,9 +109,6 @@ class IndustryFragment : Fragment() {
                 is IndustryState.Error -> showError(state.code)
                 IndustryState.Loading -> showLoading()
             }
-        }
-        applyBtn.setOnClickListener {
-            findNavController().navigateUp()
         }
     }
 
@@ -161,7 +162,6 @@ class IndustryFragment : Fragment() {
     }
 
     private fun clearIndustry() {
-
         viewModel.clearIndustry()
     }
 
