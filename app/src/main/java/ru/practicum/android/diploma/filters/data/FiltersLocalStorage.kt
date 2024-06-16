@@ -60,29 +60,32 @@ class FiltersLocalStorage(
     }
 
     fun getCountry(): Area? {
-        if (sharedPreferences.contains(COUNTRY_KEY))
+        if (sharedPreferences.contains(COUNTRY_KEY)) {
             return gson.fromJson(
                 sharedPreferences.getString(COUNTRY_KEY, null),
                 Area::class.java
             )
+        }
         return null
     }
 
     fun getRegion(): Area? {
-        if (sharedPreferences.contains(REGION_KEY))
+        if (sharedPreferences.contains(REGION_KEY)) {
             return gson.fromJson(
                 sharedPreferences.getString(REGION_KEY, null),
                 Area::class.java
             )
+        }
         return null
     }
 
     fun getIndustry(): Industry? {
-        if (sharedPreferences.contains(INDUSTRY_KEY))
+        if (sharedPreferences.contains(INDUSTRY_KEY)) {
             return gson.fromJson(
                 sharedPreferences.getString(INDUSTRY_KEY, null),
                 Industry::class.java
             )
+        }
         return null
     }
 

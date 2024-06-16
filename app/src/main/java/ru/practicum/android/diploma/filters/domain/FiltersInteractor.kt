@@ -7,9 +7,7 @@ import ru.practicum.android.diploma.search.domain.model.fields.Area
 import ru.practicum.android.diploma.search.domain.model.fields.Industry
 
 interface FiltersInteractor {
-    suspend fun insertIndustry(industry: Industry)
     suspend fun insertIndustries(industries: List<Industry>)
-    suspend fun deleteIndustry(industry: Industry)
     fun getIndustry(): Flow<List<Industry>>
 
     fun findIndustry(name: String): Flow<List<Industry>>

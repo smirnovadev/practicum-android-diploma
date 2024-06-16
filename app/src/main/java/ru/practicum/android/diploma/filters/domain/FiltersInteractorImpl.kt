@@ -12,16 +12,8 @@ import ru.practicum.android.diploma.search.domain.model.fields.Industry
 class FiltersInteractorImpl(
     private val filtersRepository: FiltersRepository
 ) : FiltersInteractor {
-    override suspend fun insertIndustry(industry: Industry) {
-        return filtersRepository.insertIndustry(industry)
-    }
-
     override suspend fun insertIndustries(industries: List<Industry>) {
         return filtersRepository.insertIndustries(industries)
-    }
-
-    override suspend fun deleteIndustry(industry: Industry) {
-        return filtersRepository.deleteIndustry(industry)
     }
 
     override fun getIndustry(): Flow<List<Industry>> {
@@ -32,20 +24,8 @@ class FiltersInteractorImpl(
         return filtersRepository.findIndustry(name)
     }
 
-    override suspend fun insertArea(area: Area) {
-        return filtersRepository.insertArea(area)
-    }
-
     override suspend fun insertAreas(area: List<Area>) {
         return filtersRepository.insertAreas(area)
-    }
-
-    override suspend fun deleteArea(area: Area) {
-        return filtersRepository.deleteArea(area)
-    }
-
-    override fun getArea(): Flow<List<Area>> {
-        return filtersRepository.getArea()
     }
 
     override fun getCountries(): Flow<List<Area>> = filtersRepository.getCountries()
