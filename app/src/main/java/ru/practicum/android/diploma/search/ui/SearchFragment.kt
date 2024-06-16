@@ -6,22 +6,22 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import debounce
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
+import ru.practicum.android.diploma.job.ui.JobFragment
 import ru.practicum.android.diploma.search.domain.model.Vacancy
 import ru.practicum.android.diploma.search.presentation.SearchScreenState
 import ru.practicum.android.diploma.search.presentation.SearchViewModel
 import ru.practicum.android.diploma.search.ui.adapter.SearchAdapter
 import ru.practicum.android.diploma.search.ui.adapter.SearchClickListener
 import ru.practicum.android.diploma.util.Formatter
+import debounce
 
 class SearchFragment : Fragment(), SearchClickListener {
 
@@ -208,7 +208,32 @@ class SearchFragment : Fragment(), SearchClickListener {
     }
 
     override fun onVacancyClick(vacancy: Vacancy) {
-        Toast.makeText(requireContext(), "Click!", Toast.LENGTH_SHORT).show()
+        findNavController().navigate(
+            R.id.action_searchFragment_to_jobFragment,
+            JobFragment.createArgs(
+                vacancy.id,
+                vacancy.name,
+                vacancy.salary,
+                vacancy.experience.name,
+                vacancy.address.city,
+                vacancy.employer.name.toString(),
+                vacancy.keySkills.joinToString(separator = "\n") { "- ${it.name}" },
+                vacancy.contacts.name,
+                vacancy.contacts.email,
+                vacancy.alternateUrl,
+                vacancy.contacts.phones.joinToString(separator = " + ") {
+                    "+${it?.country} (${it?.city ?: ""})  ${it?.number ?: ""}"
+                },
+                vacancy.employer.logoUrls?.original, // нужно поставить на прием, картинки нужного размера
+                vacancy.professionalRoles.joinToString(" \n") { it.name ?: "" },
+                vacancy.area.name,
+                vacancy.snippet.requirement,
+                vacancy.snippet.responsibility,
+                vacancy.employment.name,
+                vacancy.schedule.name,
+                vacancy
+            )
+        )
     }
 
     private fun getVacanciesWordForm(quantity: Int): String {
@@ -234,5 +259,24 @@ class SearchFragment : Fragment(), SearchClickListener {
     companion object {
         private const val SEARCH_DEBOUNCE_DELAY = 3000L
         private const val CLICK_DEBOUNCE_DELAY = 1000L
+        const val EXTRA_ID = "vacancy_id"
+        const val EXTRA_VACANCY_NAME = "vacancy_name"
+        const val EXTRA_VACANCY = "vacancy_vacancy"
+        const val EXTRA_SALARY = "vacancy_salary"
+        const val EXTRA_EXPERIENCE = "vacancy_experience"
+        const val EXTRA_CITY = "vacancy_city"
+        const val EXTRA_NAME_COMPANY = "name_company"
+        const val EXTRA_KEY_SKILLS = "key_skills"
+        const val EXTRA_CONTACTS_NAME = "contacts_name"
+        const val EXTRA_EMAIL = "email"
+        const val EXTRA_PHONE_NUMBER = "phone_number"
+        const val EXTRA_URL = "vacancy_url"
+        const val EXTRA_LOGO_COMPANY = "logo_company"
+        const val EXTRA_PROFESSIONAL_ROLES = "professional_roles"
+        const val EXTRA_REGION = "region"
+        const val EXTRA_REQUIREMENT = "requirement"
+        const val EXTRA_RESPONSIBILITY = "responsibility"
+        const val EXTRA_EMPLOYMENT = "employment"
+        const val EXTRA_SCHEDULE = "schedule"
     }
 }

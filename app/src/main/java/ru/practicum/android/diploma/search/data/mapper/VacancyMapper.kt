@@ -21,7 +21,9 @@ class VacancyMapper(
     private val scheduleMapper: ScheduleMapper,
     private val typeMapper: TypeMapper,
     private val workingDayMapper: WorkingDayMapper,
-    private val workingTimeIntervalMapper: WorkingTimeIntervalMapper
+    private val workingTimeIntervalMapper: WorkingTimeIntervalMapper,
+    private val snippetMapper: SnippetMapper,
+    private val employmentMapper: EmploymentMapper,
 ) {
     private fun formatSalary(dto: SalaryDTO?): String {
         if (dto == null) {
@@ -75,6 +77,7 @@ class VacancyMapper(
             department = departmentMapper.map(dto?.department),
             description = dto?.description ?: EMPTY_STRING,
             employer = employerMapper.map(dto?.employer),
+            employment = employmentMapper.map(dto?.employment),
             experience = experienceMapper.map(dto?.experience),
             hasTest = dto?.hasTest ?: EMPTY_BOOLEAN,
             id = dto?.id ?: EMPTY_STRING,
@@ -90,8 +93,9 @@ class VacancyMapper(
             responseNotifications = dto?.responseNotifications ?: EMPTY_BOOLEAN,
             responseUrl = dto?.responseUrl ?: EMPTY_STRING,
             salary = formatSalary(dto?.salary),
-            type = typeMapper.map(dto?.type),
             schedule = scheduleMapper.map(dto?.schedule),
+            snippet = snippetMapper.map(dto?.snippet),
+            type = typeMapper.map(dto?.type),
             workingDays = dto?.workingDays?.map { dto -> workingDayMapper.map(dto) } ?: listOf(),
             workingTimeIntervals = dto?.workingTimeIntervals?.map { dto -> workingTimeIntervalMapper.map(dto) }
                 ?: listOf()
