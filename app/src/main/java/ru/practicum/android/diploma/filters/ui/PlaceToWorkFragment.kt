@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
@@ -23,7 +25,7 @@ class PlaceToWorkFragment : Fragment() {
     private var region: String = EMPTY
     private lateinit var inputCountry: TextInputEditText
     private lateinit var inputRegion: TextInputEditText
-
+    private lateinit var applyBtn: Button
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,9 +38,12 @@ class PlaceToWorkFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         inputCountry = binding.countryText
         inputRegion = binding.regionText
+        applyBtn = binding.buttonApply
 
         binding.toolbar.setOnClickListener {
             findNavController().navigateUp()
+            clearCountry()
+            clearRegion()
         }
 
         country = viewModel.getCountryName()
@@ -46,6 +51,11 @@ class PlaceToWorkFragment : Fragment() {
 
         region = viewModel.getRegionName()
         inputRegion.setText(region)
+
+        checkButtonsState()
+        applyBtn.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
         inputCountry.setOnClickListener {
             if (inputCountry.text?.isEmpty() == true)
@@ -72,6 +82,12 @@ class PlaceToWorkFragment : Fragment() {
             }
         }
 
+    }
+
+    private fun checkButtonsState() {
+        if (!inputCountry.text.isNullOrEmpty()) {
+            applyBtn.isVisible = true
+        }
     }
 
     private fun clearCountry() {
@@ -101,6 +117,7 @@ class PlaceToWorkFragment : Fragment() {
         refreshCountryIcon()
         inputRegion.setText(viewModel.getRegionName())
         refreshRegionIcon()
+        checkButtonsState()
     }
 
     private fun refreshCountryIcon() {
