@@ -10,7 +10,6 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.textfield.TextInputEditText
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterBinding
@@ -26,10 +25,6 @@ class FiltersFragment : Fragment() {
     private var industry: String = EMPTY
     private var salary: String = EMPTY
     private var salaryFlag: Boolean = false
-
-    private val inputPlaceToWork: TextInputEditText by lazy { binding.placeWorkText }
-    private val inputIndustry: TextInputEditText by lazy { binding.industryText }
-    private val inputSalary: TextInputEditText by lazy { binding.salaryText }
 
     private val bottomNavView: BottomNavigationView by lazy {
         requireActivity().findViewById(R.id.bottomNavigationView)
@@ -62,33 +57,33 @@ class FiltersFragment : Fragment() {
         salary = viewModel.getSalary()
         salaryFlag = viewModel.getSalaryFlag()
 
-        inputPlaceToWork.setText(getString(R.string.place_to_work_text, country, region))
-        inputIndustry.setText(industry)
+        binding.placeWorkText.setText(getString(R.string.place_to_work_text, country, region))
+        binding.industryText.setText(industry)
 
         initListeners()
         bottomListeners()
     }
 
     private fun initListeners() {
-        inputPlaceToWork.setOnClickListener {
-            if (inputPlaceToWork.text?.isEmpty() == true) {
+        binding.placeWorkText.setOnClickListener {
+            if (binding.placeWorkText.text?.isEmpty() == true) {
                 openPlaceToWorkFragment()
             }
         }
         binding.placeWorkBtn.setOnClickListener {
-            if (inputPlaceToWork.text?.isEmpty() == true) {
+            if (binding.placeWorkText.text?.isEmpty() == true) {
                 openPlaceToWorkFragment()
             } else {
                 clearPlaceToWork()
             }
         }
-        inputIndustry.setOnClickListener {
-            if (inputIndustry.text?.isEmpty() == true) {
+        binding.industryText.setOnClickListener {
+            if (binding.industryText.text?.isEmpty() == true) {
                 openIndustryFragment()
             }
         }
         binding.industryBtn.setOnClickListener {
-            if (inputIndustry.text?.isEmpty() == true) {
+            if (binding.industryText.text?.isEmpty() == true) {
                 openIndustryFragment()
             } else {
                 clearIndustry()
@@ -117,29 +112,29 @@ class FiltersFragment : Fragment() {
     }
 
     private fun checkButtonsState() {
-        val visible = !inputPlaceToWork.text.isNullOrEmpty() ||
-            !inputIndustry.text.isNullOrEmpty() ||
-            !inputSalary.text.isNullOrEmpty() ||
+        val visible = !binding.placeWorkText.text.isNullOrEmpty() ||
+            !binding.industryText.text.isNullOrEmpty() ||
+            !binding.salaryText.text.isNullOrEmpty() ||
             viewModel.getSalaryFlagN() != null
         binding.buttonApply.isVisible = visible
         binding.reset.isVisible = visible
     }
 
     private fun clearPlaceToWork() {
-        inputPlaceToWork.setText(EMPTY)
+        binding.placeWorkText.setText(EMPTY)
         viewModel.clearCountryName()
         viewModel.clearRegionName()
         refreshPlaceToWorkIcon()
     }
 
     private fun clearIndustry() {
-        inputIndustry.setText(EMPTY)
+        binding.industryText.setText(EMPTY)
         viewModel.clearIndustryName()
         refreshIndustryIcon()
     }
 
     private fun clearSalary() {
-        inputSalary.setText(EMPTY)
+        binding.salaryText.setText(EMPTY)
         viewModel.clearSalary()
     }
 
@@ -152,7 +147,7 @@ class FiltersFragment : Fragment() {
         binding.placeWorkBtn.setImageDrawable(
             ResourcesCompat.getDrawable(
                 resources,
-                if (inputPlaceToWork.text?.isEmpty() == true) {
+                if (binding.placeWorkText.text?.isEmpty() == true) {
                     R.drawable.ic_arrow_forward
                 } else {
                     R.drawable.ic_close
@@ -166,7 +161,7 @@ class FiltersFragment : Fragment() {
         binding.industryBtn.setImageDrawable(
             ResourcesCompat.getDrawable(
                 resources,
-                if (inputIndustry.text?.isEmpty() == true) {
+                if (binding.industryText.text?.isEmpty() == true) {
                     R.drawable.ic_arrow_forward
                 } else {
                     R.drawable.ic_close
@@ -189,9 +184,9 @@ class FiltersFragment : Fragment() {
         country = viewModel.getCountryName()
         region = viewModel.getRegionName()
         if (country.isEmpty() && region.isEmpty()) {
-            inputPlaceToWork.setText(EMPTY)
+            binding.placeWorkText.setText(EMPTY)
         } else {
-            inputPlaceToWork.setText(
+            binding.placeWorkText.setText(
                 getString(
                     R.string.place_to_work_text,
                     country,
@@ -200,7 +195,7 @@ class FiltersFragment : Fragment() {
             )
         }
         refreshPlaceToWorkIcon()
-        inputIndustry.setText(viewModel.getIndustryName())
+        binding.industryText.setText(viewModel.getIndustryName())
         refreshIndustryIcon()
 
         binding.salaryText.setText(viewModel.getSalary())
