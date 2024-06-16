@@ -53,11 +53,9 @@ class PlaceToWorkFragment : Fragment() {
             clearCountry()
             clearRegion()
         }
-
         applyBtn.setOnClickListener {
             findNavController().navigateUp()
         }
-
         inputCountry.setOnClickListener {
             if (inputCountry.text?.isEmpty() == true) {
                 navigateToCountry()
@@ -71,13 +69,11 @@ class PlaceToWorkFragment : Fragment() {
                 clearRegion()
             }
         }
-
         inputRegion.setOnClickListener {
             if (inputRegion.text?.isEmpty() == true) {
                 navigateToRegion()
             }
         }
-
         binding.actionRegion.setOnClickListener {
             if (inputRegion.text?.isEmpty() == true) {
                 navigateToRegion()

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -35,7 +34,6 @@ class FiltersFragment : Fragment() {
     private val bottomNavView: BottomNavigationView by lazy {
         requireActivity().findViewById(R.id.bottomNavigationView)
     }
-    private val applyBtn: Button by lazy { binding.buttonApply }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -68,6 +66,7 @@ class FiltersFragment : Fragment() {
         inputIndustry.setText(industry)
 
         initListeners()
+        bottomListeners()
     }
 
     private fun initListeners() {
@@ -83,7 +82,6 @@ class FiltersFragment : Fragment() {
                 clearPlaceToWork()
             }
         }
-
         inputIndustry.setOnClickListener {
             if (inputIndustry.text?.isEmpty() == true) {
                 openIndustryFragment()
@@ -96,28 +94,25 @@ class FiltersFragment : Fragment() {
                 clearIndustry()
             }
         }
-        binding.buttonApply.setOnClickListener {
-            findNavController().navigateUp()
-        }
-
         binding.salaryText.addTextChangedListener(onTextChanged = { text, _, _, _ ->
             viewModel.saveSalary(text?.toString())
             checkButtonsState()
         })
+        binding.salaryCheckBox.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.saveSalaryFlag(isChecked)
+            checkButtonsState()
+        }
+    }
 
+    private fun bottomListeners() {
+        binding.buttonApply.setOnClickListener {
+            findNavController().navigateUp()
+        }
         binding.reset.setOnClickListener {
             clearPlaceToWork()
             clearIndustry()
             clearSalaryFlag()
             clearSalary()
-        }
-
-        binding.salaryCheckBox.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.saveSalaryFlag(isChecked)
-            checkButtonsState()
-        }
-        applyBtn.setOnClickListener {
-            findNavController().navigateUp()
         }
     }
 

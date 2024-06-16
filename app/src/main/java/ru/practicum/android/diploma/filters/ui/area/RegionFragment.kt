@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.filters.ui.area
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -33,11 +34,12 @@ class RegionFragment : Fragment() {
 
     private val regions = mutableListOf<Area>()
     private var searchDebounce: ((String) -> Unit)? = null
-    private lateinit var inputRegion: TextInputEditText
-    private lateinit var groupNotFound: Group
-    private lateinit var groupEmpty: Group
+    private val inputRegion: TextInputEditText by lazy { binding.inputRegion }
+    private val groupNotFound: Group by lazy { binding.groupNotFound }
+    private val groupEmpty: Group by lazy { binding.groupEmpty }
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSelectRegionBinding.inflate(inflater, container, false)
@@ -46,21 +48,16 @@ class RegionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        inputRegion = binding.inputRegion
-        groupNotFound = binding.groupNotFound
-        groupEmpty = binding.groupEmpty
         groupNotFound.visibility = View.GONE
         groupEmpty.visibility = View.GONE
         binding.toolbar.setOnClickListener {
             findNavController().navigateUp()
         }
-
-        searchDebounce = debounce<String>(
+        searchDebounce = debounce(
             SEARCH_DEBOUNCE_DELAY,
             viewLifecycleOwner.lifecycleScope,
             false
         ) { request -> viewModel.search(request) }
-
         recycler = binding.recyclerView
         rvAdapter = AreaAdapter(regions) {
             viewModel.save(it)
@@ -68,7 +65,18 @@ class RegionFragment : Fragment() {
         }
         recycler.adapter = rvAdapter
         recycler.layoutManager = LinearLayoutManager(requireContext())
+        initListeners()
+        viewModel.getScreenStateLiveData().observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is AreasState.Content -> showContent(state.areasList)
+                AreasState.Empty -> showEmpty()
+                is AreasState.Error -> showError()
+                AreasState.Loading -> showLoading()
+            }
+        }
+    }
 
+    private fun initListeners() {
         inputRegion.addTextChangedListener(
             afterTextChanged =
             { editable ->
@@ -91,22 +99,13 @@ class RegionFragment : Fragment() {
                 .getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(it.windowToken, 0)
         }
-
-
-        viewModel.getScreenStateLiveData().observe(viewLifecycleOwner) { state ->
-            when (state) {
-                is AreasState.Content -> showContent(state.areasList)
-                AreasState.Empty -> showEmpty()
-                is AreasState.Error -> showError(state.code)
-                AreasState.Loading -> showLoading()
-            }
-        }
     }
 
     private fun search(request: String) {
         searchDebounce?.let { it(request) }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun showContent(countriesList: List<Area>) {
         regions.clear()
         regions.addAll(countriesList)
@@ -128,7 +127,7 @@ class RegionFragment : Fragment() {
         }
     }
 
-    private fun showError(code: Int) {
+    private fun showError() {
         binding.apply {
             binding.recyclerView.isVisible = false
             binding.groupEmpty.isVisible = false
