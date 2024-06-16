@@ -28,7 +28,7 @@ class IndustryViewModel(
         interactor.downloadIndustries().collect { result ->
             if (result.first == null) {
                 renderState(
-                    if (result.second == 200) {
+                    if (result.second == STATUS_OK) {
                         IndustryState.Empty
                     } else {
                         IndustryState.Error(result.second)
@@ -82,4 +82,8 @@ class IndustryViewModel(
     fun getIndustry(): Industry? = sharedInteractor.getIndustry()
 
     fun clearIndustry() = sharedInteractor.saveIndustry(null)
+
+    companion object {
+        const val STATUS_OK = 200
+    }
 }

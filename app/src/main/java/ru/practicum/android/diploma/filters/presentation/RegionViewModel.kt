@@ -28,10 +28,11 @@ class RegionViewModel(
         interactor.downloadAreas().collect { result ->
             if (result.first == null) {
                 renderState(
-                    if (result.second == 200)
+                    if (result.second == STATUS_OK) {
                         AreasState.Empty
-                    else
+                    } else {
                         AreasState.Error(result.second)
+                    }
                 )
             } else {
                 val areas = mapper.map(result.first!!, 1)
@@ -42,8 +43,9 @@ class RegionViewModel(
                             area.parent != null
                         }
                     ))
-                } else
+                } else {
                     renderState(AreasState.Empty)
+                }
             }
         }
     }
@@ -59,9 +61,9 @@ class RegionViewModel(
             interactor
                 .getRegions(country.id)
                 .collect {
-                    if (it.isNotEmpty())
+                    if (it.isNotEmpty()) {
                         renderState(AreasState.Content(it))
-                    else {
+                    } else {
                         downloadAreasToBase()
                     }
                 }
@@ -90,5 +92,9 @@ class RegionViewModel(
                     renderState(AreasState.Content(it))
                 }
         }
+    }
+
+    companion object {
+        const val STATUS_OK = 200
     }
 }

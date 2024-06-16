@@ -30,7 +30,7 @@ class RegionFragment : Fragment() {
     private val viewModel by viewModel<RegionViewModel>()
 
     private var rvAdapter: AreaAdapter? = null
-    private lateinit var recycler: RecyclerView
+    private val recycler: RecyclerView by lazy { binding.recyclerView }
 
     private val regions = mutableListOf<Area>()
     private var searchDebounce: ((String) -> Unit)? = null
@@ -58,7 +58,6 @@ class RegionFragment : Fragment() {
             viewLifecycleOwner.lifecycleScope,
             false
         ) { request -> viewModel.search(request) }
-        recycler = binding.recyclerView
         rvAdapter = AreaAdapter(regions) {
             viewModel.save(it)
             findNavController().navigateUp()
