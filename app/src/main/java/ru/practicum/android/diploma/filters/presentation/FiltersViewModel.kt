@@ -11,6 +11,7 @@ class FiltersViewModel(private val sharedInteractor: FiltersSharedInteractor) : 
     fun getIndustryName(): String = (sharedInteractor.getIndustry() ?: EMPTY_INDUSTRY).name
     fun getSalary(): String = sharedInteractor.getSalary()?.toString() ?: ""
     fun getSalaryFlag(): Boolean = sharedInteractor.getSalaryFlag() ?: DEFAULT_SALARY_FLAG
+    fun getSalaryFlagN(): Boolean? = sharedInteractor.getSalaryFlag()
 
     fun saveSalary(salary: String?) = sharedInteractor.saveSalary(salary?.toIntOrNull())
     fun saveSalaryFlag(flag: Boolean) = sharedInteractor.saveSalaryFlag(flag)

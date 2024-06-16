@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -24,11 +26,16 @@ class FiltersFragment : Fragment() {
     private var country: String = EMPTY
     private var region: String = EMPTY
     private var industry: String = EMPTY
+    private var salary: String = EMPTY
+    private var salaryFlag: Boolean = false
+
     private lateinit var inputPlaceToWork: TextInputEditText
     private lateinit var inputIndustry: TextInputEditText
     private lateinit var inputSalary: TextInputEditText
 
     private lateinit var bottomNavView: BottomNavigationView
+    private lateinit var applyBtn: Button
+    private lateinit var reset: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,8 +50,15 @@ class FiltersFragment : Fragment() {
         inputPlaceToWork = binding.placeWorkText
         inputIndustry = binding.industryText
         inputSalary = binding.salaryText
+        applyBtn = binding.buttonApply
+        reset = binding.reset
+
 
         binding.toolbar.setOnClickListener {
+            clearIndustry()
+            clearSalaryFlag()
+            clearPlaceToWork()
+            clearSalary()
             findNavController().navigateUp()
         }
         bottomNavView = requireActivity().findViewById(R.id.bottomNavigationView)
@@ -53,6 +67,8 @@ class FiltersFragment : Fragment() {
         country = viewModel.getCountryName()
         region = viewModel.getRegionName()
         industry = viewModel.getIndustryName()
+        salary = viewModel.getSalary()
+        salaryFlag = viewModel.getSalaryFlag()
 
         inputPlaceToWork.setText(getString(R.string.place_to_work_text, country, region))
         inputIndustry.setText(industry)
@@ -68,7 +84,6 @@ class FiltersFragment : Fragment() {
                 clearPlaceToWork()
             }
         }
-
 
         inputIndustry.setOnClickListener {
             if (inputIndustry.text?.isEmpty() == true)
@@ -87,16 +102,35 @@ class FiltersFragment : Fragment() {
 
         binding.salaryText.addTextChangedListener(onTextChanged = { text, _, _, _ ->
             viewModel.saveSalary(text?.toString())
+            checkButtonsState()
         })
 
         binding.reset.setOnClickListener {
             clearPlaceToWork()
             clearIndustry()
+            clearSalaryFlag()
+            clearSalary()
         }
 
         binding.salaryCheckBox.setOnCheckedChangeListener { _, isChecked ->
             viewModel.saveSalaryFlag(isChecked)
+            checkButtonsState()
         }
+        applyBtn.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
+    }
+
+    private fun checkButtonsState() {
+        val visible = (
+            !inputPlaceToWork.text.isNullOrEmpty() ||
+                !inputIndustry.text.isNullOrEmpty() ||
+                !inputSalary.text.isNullOrEmpty() ||
+                viewModel.getSalaryFlagN() != null
+            )
+        binding.buttonApply.isVisible = visible
+        binding.reset.isVisible = visible
     }
 
     private fun clearPlaceToWork() {
@@ -118,7 +152,7 @@ class FiltersFragment : Fragment() {
     }
 
     private fun clearSalaryFlag() {
-        binding.salaryCheckBox.isChecked = true
+        binding.salaryCheckBox.isChecked = false
         viewModel.clearSalaryFlag()
     }
 
@@ -179,6 +213,8 @@ class FiltersFragment : Fragment() {
 
         binding.salaryText.setText(viewModel.getSalary())
         binding.salaryCheckBox.isChecked = viewModel.getSalaryFlag()
+
+        checkButtonsState()
     }
 
     override fun onDestroy() {
