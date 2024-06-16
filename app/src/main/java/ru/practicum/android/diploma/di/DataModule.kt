@@ -13,13 +13,16 @@ import ru.practicum.android.diploma.data.network.ApiService
 import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.data.network.RetrofitNetworkClient
 import ru.practicum.android.diploma.db.AppDatabase
+import ru.practicum.android.diploma.filters.data.FiltersLocalStorage
 import ru.practicum.android.diploma.job.data.ExternalNavigatorImpl
 import ru.practicum.android.diploma.job.domain.ExternalNavigator
 import ru.practicum.android.diploma.search.data.mapper.AddressMapper
+import ru.practicum.android.diploma.search.data.mapper.AreaMapper
 import ru.practicum.android.diploma.search.data.mapper.ContactsMapper
 import ru.practicum.android.diploma.search.data.mapper.DepartmentMapper
 import ru.practicum.android.diploma.search.data.mapper.EmployerMapper
 import ru.practicum.android.diploma.search.data.mapper.ExperienceMapper
+import ru.practicum.android.diploma.search.data.mapper.IndustryMapper
 import ru.practicum.android.diploma.search.data.mapper.InsiderInterviewMapper
 import ru.practicum.android.diploma.search.data.mapper.KeySkillMapper
 import ru.practicum.android.diploma.search.data.mapper.LogoUrlsMapper
@@ -165,4 +168,15 @@ val dataModule = module {
         ResponseToVacanciesMapper(get())
     }
 
+    single<IndustryMapper> {
+        IndustryMapper()
+    }
+
+    single<AreaMapper> {
+        AreaMapper()
+    }
+
+    single<FiltersLocalStorage> {
+        FiltersLocalStorage(get(), get())
+    }
 }

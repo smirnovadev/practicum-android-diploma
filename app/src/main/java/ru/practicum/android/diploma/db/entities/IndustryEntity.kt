@@ -8,4 +8,5 @@ data class IndustryEntity(
     @PrimaryKey
     val id: Int,
     val name: String,
+    val parent: Int? = null
 )
