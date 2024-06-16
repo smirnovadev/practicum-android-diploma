@@ -30,13 +30,13 @@
             android:id="@+id/input_industry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:imeOptions="actionDone"
             android:layout_marginHorizontal="@dimen/_16dp"
             android:background="@drawable/bg_searchfield"
             android:drawableEnd="@drawable/ic_search"
             android:drawablePadding="@dimen/_8dp"
             android:hint="@string/enter_industry"
+            android:imeOptions="actionDone"
+            android:maxLines="1"
             android:paddingBottom="@dimen/_20dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -92,8 +92,8 @@
         android:text="@string/not_found_region"
         android:textAlignment="center"
         android:textColor="@color/filter_text"
-        android:textFontWeight="500"
         android:textSize="@dimen/_22sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/empty_search" />
@@ -126,9 +126,24 @@
         android:text="@string/empty_region"
         android:textAlignment="center"
         android:textColor="@color/filter_text"
-        android:textFontWeight="500"
         android:textSize="@dimen/_22sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/empty_industry" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_apply"
+        style="@style/button_apply"
+        android:layout_marginHorizontal="@dimen/_16dp"
+        android:layout_marginBottom="@dimen/_8dp"
+        android:background="@drawable/bg_search_status"
+        android:text="@string/choose"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="1"
+        tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

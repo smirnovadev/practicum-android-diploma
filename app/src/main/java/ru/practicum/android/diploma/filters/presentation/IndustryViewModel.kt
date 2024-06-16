@@ -14,7 +14,7 @@ import ru.practicum.android.diploma.search.domain.model.fields.Industry
 class IndustryViewModel(
     private val interactor: FiltersInteractor,
     private val mapper: IndustryMapper,
-    private val sharedInteractor: FiltersSharedInteractor
+    private val sharedInteractor: FiltersSharedInteractor,
 ) : ViewModel() {
     private val stateMutableLiveData = MutableLiveData<IndustryState>()
     private val industryScreenState: LiveData<IndustryState> = stateMutableLiveData
@@ -78,4 +78,6 @@ class IndustryViewModel(
     }
 
     fun getIndustry(): Industry? = sharedInteractor.getIndustry()
+
+    fun clearIndustry() = sharedInteractor.deleteIndustry()
 }

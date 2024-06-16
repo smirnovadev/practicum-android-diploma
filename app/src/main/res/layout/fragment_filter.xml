@@ -119,7 +119,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_searchfield"
-            android:inputType="numberDecimal"
+            android:inputType="number"
             android:paddingBottom="@dimen/_8dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -154,7 +154,7 @@
         style="@style/button_apply"
         android:layout_marginHorizontal="@dimen/_16dp"
         android:background="@drawable/bg_search_status"
-        android:text="@string/choose"
+        android:text="@string/apply"
         android:textColor="@color/white"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/reset"

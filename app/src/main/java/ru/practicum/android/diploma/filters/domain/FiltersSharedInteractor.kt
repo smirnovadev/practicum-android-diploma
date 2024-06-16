@@ -7,7 +7,13 @@ interface FiltersSharedInteractor {
     fun saveCountry(country: Area?)
     fun saveRegion(region: Area?)
     fun saveIndustry(industry: Industry?)
+    fun saveSalary(salary: Int?)
     fun getCountry(): Area?
     fun getRegion(): Area?
     fun getIndustry(): Industry?
+    fun getSalary(): Int?
+    fun deleteIndustry()
+    fun deleteCountry()
+    fun deleteRegion()
+    fun deleteSalary()
 }

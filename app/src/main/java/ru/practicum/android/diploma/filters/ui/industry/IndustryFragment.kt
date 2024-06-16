@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import androidx.constraintlayout.widget.Group
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -37,6 +38,7 @@ class IndustryFragment : Fragment() {
     private lateinit var inputIndustry: TextInputEditText
     private lateinit var groupNotFound: Group
     private lateinit var groupEmpty: Group
+    private lateinit var applyBtn: Button
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,6 +52,7 @@ class IndustryFragment : Fragment() {
 
         binding.toolbar.setOnClickListener {
             findNavController().navigateUp()
+            clearIndustry()
         }
         inputIndustry = binding.inputIndustry
         groupNotFound = binding.groupNotFound
@@ -57,12 +60,10 @@ class IndustryFragment : Fragment() {
         groupNotFound.visibility = View.GONE
         groupEmpty.visibility = View.GONE
         recycler = binding.recyclerView
-
-        rvAdapter = IndustryAdapter(
-            industries,
-            null
-        ) {
+        applyBtn = binding.buttonApply
+        rvAdapter = IndustryAdapter(industries) {
             viewModel.save(it)
+            applyBtn.isVisible = true
         }
         recycler.adapter = rvAdapter
         recycler.layoutManager = LinearLayoutManager(requireContext())
@@ -105,6 +106,9 @@ class IndustryFragment : Fragment() {
                 IndustryState.Loading -> showLoading()
             }
         }
+        applyBtn.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     private fun search(request: String) {
@@ -131,18 +135,18 @@ class IndustryFragment : Fragment() {
 
     private fun showEmpty() {
         binding.apply {
-            binding.recyclerView.isVisible = false
-            binding.groupEmpty.isVisible = true
-            binding.groupNotFound.isVisible = false
+            recyclerView.isVisible = false
+            groupEmpty.isVisible = true
+            groupNotFound.isVisible = false
             progressBar.isVisible = false
         }
     }
 
     private fun showError(code: Int) {
         binding.apply {
-            binding.recyclerView.isVisible = false
-            binding.groupEmpty.isVisible = false
-            binding.groupNotFound.isVisible = true
+            recyclerView.isVisible = false
+            groupEmpty.isVisible = false
+            groupNotFound.isVisible = true
             progressBar.isVisible = false
         }
     }
@@ -150,10 +154,15 @@ class IndustryFragment : Fragment() {
     private fun showLoading() {
         binding.apply {
             progressBar.isVisible = true
-            binding.recyclerView.isVisible = false
-            binding.groupEmpty.isVisible = false
-            binding.groupNotFound.isVisible = false
+            recyclerView.isVisible = false
+            groupEmpty.isVisible = false
+            groupNotFound.isVisible = false
         }
+    }
+
+    private fun clearIndustry() {
+
+        viewModel.clearIndustry()
     }
 
     override fun onDestroy() {

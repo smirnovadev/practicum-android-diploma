@@ -19,9 +19,31 @@ class FiltersSharedInteractorImpl(
         filtersLocalStorage.saveIndustry(industry)
     }
 
+    override fun saveSalary(salary: Int?) {
+        filtersLocalStorage.saveSalary(salary)
+    }
+
     override fun getCountry(): Area? = filtersLocalStorage.getCountry()
 
     override fun getRegion(): Area? = filtersLocalStorage.getRegion()
 
     override fun getIndustry(): Industry? = filtersLocalStorage.getIndustry()
+
+    override fun getSalary(): Int? = filtersLocalStorage.getSalary()
+
+    override fun deleteIndustry() {
+        filtersLocalStorage.deleteIndustry()
+    }
+
+    override fun deleteCountry() {
+        filtersLocalStorage.deleteCountry()
+    }
+
+    override fun deleteRegion() {
+        filtersLocalStorage.deleteRegion()
+    }
+
+    override fun deleteSalary() {
+        filtersLocalStorage.deleteSalary()
+    }
 }

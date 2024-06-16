@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -23,7 +24,6 @@ class FiltersFragment : Fragment() {
     private var country: String = EMPTY
     private var region: String = EMPTY
     private var industry: String = EMPTY
-    private var salary: String = EMPTY
     private lateinit var inputPlaceToWork: TextInputEditText
     private lateinit var inputIndustry: TextInputEditText
     private lateinit var inputSalary: TextInputEditText
@@ -85,6 +85,9 @@ class FiltersFragment : Fragment() {
             findNavController().navigateUp()
         }
 
+        binding.salaryText.addTextChangedListener(onTextChanged = { text, _, _, _ ->
+            viewModel.saveSalary(text?.toString())
+        })
 
         binding.reset.setOnClickListener {
             clearPlaceToWork()
@@ -107,7 +110,7 @@ class FiltersFragment : Fragment() {
 
     private fun clearSalary() {
         inputSalary.setText(EMPTY)
-//        viewModel.clearSalary()
+        viewModel.clearSalary()
     }
 
     private fun refreshPlaceToWorkIcon() {
@@ -164,6 +167,8 @@ class FiltersFragment : Fragment() {
         refreshPlaceToWorkIcon()
         inputIndustry.setText(viewModel.getIndustryName())
         refreshIndustryIcon()
+
+        binding.salaryText.setText(viewModel.getSalary())
     }
 
     override fun onDestroy() {

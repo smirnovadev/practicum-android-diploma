@@ -10,9 +10,9 @@ import ru.practicum.android.diploma.search.domain.model.fields.Industry
 
 class IndustryAdapter(
     val list: MutableList<Industry> = mutableListOf(),
-    var selectedId: Int? = null,
     private val onClickListener: IndustryOnClickListener,
 ) : RecyclerView.Adapter<IndustryViewHolder>() {
+    var selectedId: Int? = null
     private var lastChecked: IndustryViewHolder? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IndustryViewHolder {

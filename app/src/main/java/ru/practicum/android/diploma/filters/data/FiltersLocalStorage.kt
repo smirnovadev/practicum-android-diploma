@@ -36,6 +36,15 @@ class FiltersLocalStorage(
         }.apply()
     }
 
+    fun saveSalary(salary: Int?) {
+        sharedPreferences.edit().apply {
+            if (salary == null)
+                remove(SALARY_KEY)
+            else
+                putInt(SALARY_KEY, salary)
+        }.apply()
+    }
+
     fun getCountry(): Area? {
         val s = sharedPreferences.getString(COUNTRY_KEY, null) ?: return null
         return gson.fromJson(s, Area::class.java)
@@ -49,6 +58,11 @@ class FiltersLocalStorage(
     fun getIndustry(): Industry? {
         val s = sharedPreferences.getString(INDUSTRY_KEY, null) ?: return null
         return gson.fromJson(s, Industry::class.java)
+    }
+
+    fun getSalary(): Int? {
+        val s = sharedPreferences.getInt(SALARY_KEY, -1)
+        return if (s == -1) null else s
     }
 
     fun deleteCountry() {
@@ -69,9 +83,16 @@ class FiltersLocalStorage(
         }.apply()
     }
 
+    fun deleteSalary() {
+        sharedPreferences.edit().apply {
+            remove(SALARY_KEY)
+        }.apply()
+    }
+
     private companion object {
         const val COUNTRY_KEY = "filters_country"
         const val REGION_KEY = "filters_region"
         const val INDUSTRY_KEY = "filters_industry"
+        const val SALARY_KEY = "filters_salary"
     }
 }
