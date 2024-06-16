@@ -12,6 +12,6 @@ class PlaceToWorkViewModel(
     fun getCountryName(): String = (sharedInteractor.getCountry() ?: emptyArea).name
     fun getRegionName(): String = (sharedInteractor.getRegion() ?: emptyArea).name
 
-    fun clearCountryName() = (sharedInteractor.deleteCountry())
-    fun clearRegionName() = (sharedInteractor.deleteRegion())
+    fun clearCountryName() = sharedInteractor.saveCountry(null)
+    fun clearRegionName() = sharedInteractor.saveRegion(null)
 }

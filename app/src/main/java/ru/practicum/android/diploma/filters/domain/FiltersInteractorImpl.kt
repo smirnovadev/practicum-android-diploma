@@ -36,7 +36,7 @@ class FiltersInteractorImpl(
 
     override suspend fun downloadAreas(): Flow<Pair<AreasListDAO?, Int>> = filtersRepository.downloadAreas().map {
         when (it) {
-            is AreasListResponse -> Pair(it.areas, 200)
+            is AreasListResponse -> Pair(it.areas, STATUS_OK)
             else -> Pair(null, it.resultCode)
         }
     }
@@ -44,8 +44,12 @@ class FiltersInteractorImpl(
     override suspend fun downloadIndustries(): Flow<Pair<IndustriesListDAO?, Int>> =
         filtersRepository.downloadIndustries().map {
             when (it) {
-                is IndustriesListResponse -> Pair(it.industries, 200)
+                is IndustriesListResponse -> Pair(it.industries, STATUS_OK)
                 else -> Pair(null, it.resultCode)
             }
         }
+
+    companion object {
+        const val STATUS_OK = 200
+    }
 }

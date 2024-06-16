@@ -22,14 +22,15 @@ class CountryFragment : Fragment() {
     private val viewModel by viewModel<CountryViewModel>()
 
     private var rvAdapter: AreaAdapter? = null
-    private lateinit var recycler: RecyclerView
+    private val recycler: RecyclerView by lazy { binding.recyclerView }
 
     private val countries = mutableListOf<Area>()
 
-    private lateinit var groupEmpty: Group
+    private val groupEmpty: Group by lazy { binding.groupEmpty }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSelectCountryBinding.inflate(inflater, container, false)
@@ -39,13 +40,11 @@ class CountryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        groupEmpty = binding.groupEmpty
         groupEmpty.visibility = View.GONE
 
         binding.toolbar.setOnClickListener {
             findNavController().navigateUp()
         }
-        recycler = binding.recyclerView
         rvAdapter = AreaAdapter(countries) {
             viewModel.save(it)
             findNavController().navigateUp()
@@ -57,7 +56,7 @@ class CountryFragment : Fragment() {
             when (state) {
                 is AreasState.Content -> showContent(state.areasList)
                 AreasState.Empty -> showEmpty()
-                is AreasState.Error -> showError(state.code)
+                is AreasState.Error -> showError()
                 AreasState.Loading -> showLoading()
             }
         }
@@ -82,7 +81,7 @@ class CountryFragment : Fragment() {
         }
     }
 
-    private fun showError(code: Int) {
+    private fun showError() {
         binding.apply {
             groupEmpty.isVisible = true
             progressBar.isVisible = false

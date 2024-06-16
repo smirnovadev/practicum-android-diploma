@@ -28,7 +28,7 @@ class CountryViewModel(
         interactor.downloadAreas().collect { result ->
             if (result.first == null) {
                 renderState(
-                    if (result.second == 200) {
+                    if (result.second == STATUS_OK) {
                         AreasState.Empty
                     } else {
                         AreasState.Error(result.second)
@@ -71,5 +71,9 @@ class CountryViewModel(
 
     private fun renderState(state: AreasState) {
         stateMutableLiveData.postValue(state)
+    }
+
+    companion object {
+        const val STATUS_OK = 200
     }
 }

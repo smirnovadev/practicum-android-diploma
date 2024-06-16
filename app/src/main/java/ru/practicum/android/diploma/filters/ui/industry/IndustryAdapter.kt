@@ -36,8 +36,9 @@ class IndustryAdapter(
         }
         holder.itemView.setOnClickListener(listener)
         holder.check(position == selectedId)
-        if (position == selectedId)
+        if (position == selectedId) {
             lastChecked = holder
+        }
     }
 
     override fun getItemCount() = list.size
