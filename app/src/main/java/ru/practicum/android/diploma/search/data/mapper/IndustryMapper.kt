@@ -4,21 +4,17 @@ import ru.practicum.android.diploma.data.dto.responses.industry.IndustryUnitDAO
 import ru.practicum.android.diploma.search.domain.model.fields.Industry
 
 class IndustryMapper {
-    private fun recursiveMap(
+    private fun recursiveFlatmap(
         src: List<IndustryUnitDAO>,
         limit: Int,
         parent: String? = null
     ): List<IndustryUnitDAO> {
         val result = mutableListOf<IndustryUnitDAO>()
         src.forEach {
-            if (parent == null)
-                println()
-            result.add(
-                it.copy(parent = parent)
-            )
+            result.add(it.copy(parent = parent))
             if (limit > 0 && it.industries != null) {
                 result.addAll(
-                    recursiveMap(it.industries, limit - 1, it.id)
+                    recursiveFlatmap(it.industries, limit - 1, it.id)
                 )
             }
         }
@@ -34,7 +30,7 @@ class IndustryMapper {
         src: List<IndustryUnitDAO>,
         recursiveLimit: Int = 0
     ): List<Industry> {
-        val recursiveMap = recursiveMap(src, recursiveLimit)
+        val recursiveMap = recursiveFlatmap(src, recursiveLimit)
         return recursiveMap.map { dto ->
             Industry(
                 dto.id.toInt(),

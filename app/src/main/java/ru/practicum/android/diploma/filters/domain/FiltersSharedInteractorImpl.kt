@@ -35,24 +35,4 @@ class FiltersSharedInteractorImpl(
 
     override fun getSalary(): Int? = filtersLocalStorage.getSalary()
     override fun getSalaryFlag(): Boolean? = filtersLocalStorage.getSalaryFlag()
-
-    override fun deleteIndustry() {
-        filtersLocalStorage.deleteIndustry()
-    }
-
-    override fun deleteCountry() {
-        filtersLocalStorage.deleteCountry()
-    }
-
-    override fun deleteRegion() {
-        filtersLocalStorage.deleteRegion()
-    }
-
-    override fun deleteSalary() {
-        filtersLocalStorage.deleteSalary()
-    }
-
-    override fun deleteSalaryFlag() {
-        filtersLocalStorage.deleteSalaryFlag()
-    }
 }

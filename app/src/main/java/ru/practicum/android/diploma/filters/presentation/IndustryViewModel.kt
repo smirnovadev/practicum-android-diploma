@@ -28,18 +28,20 @@ class IndustryViewModel(
         interactor.downloadIndustries().collect { result ->
             if (result.first == null) {
                 renderState(
-                    if (result.second == 200)
+                    if (result.second == 200) {
                         IndustryState.Empty
-                    else
+                    } else {
                         IndustryState.Error(result.second)
+                    }
                 )
             } else {
                 val industries = mapper.map(result.first!!)
                 if (industries.isNotEmpty()) {
                     interactor.insertIndustries(industries)
                     renderState(IndustryState.Content(industries))
-                } else
+                } else {
                     renderState(IndustryState.Empty)
+                }
             }
         }
     }
@@ -50,9 +52,9 @@ class IndustryViewModel(
             interactor
                 .getIndustry()
                 .collect {
-                    if (it.isNotEmpty())
+                    if (it.isNotEmpty()) {
                         renderState(IndustryState.Content(it))
-                    else {
+                    } else {
                         downloadIndustriesToBase()
                     }
                 }
@@ -79,5 +81,5 @@ class IndustryViewModel(
 
     fun getIndustry(): Industry? = sharedInteractor.getIndustry()
 
-    fun clearIndustry() = sharedInteractor.deleteIndustry()
+    fun clearIndustry() = sharedInteractor.saveIndustry(null)
 }

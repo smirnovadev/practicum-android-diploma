@@ -7,19 +7,22 @@ class AreaMapper {
     /**
      * HH криво присылает поле parent - перезаписывание по ходу итерации
      */
-    private fun recursiveMap(src: List<AreaUnitDAO>, limit: Int, parent: String? = null): List<AreaUnitDAO> {
+    private fun recursiveFlatmap(
+        src: List<AreaUnitDAO>,
+        limit: Int,
+        parent: String? = null
+    ): List<AreaUnitDAO> {
         val result = mutableListOf<AreaUnitDAO>()
         src.forEach {
             result.add(it.copy(children = arrayListOf(), parent = parent))
             if (limit > 0 && it.children != null) {
                 result.addAll(
-                    recursiveMap(it.children, limit - 1, it.id)
+                    recursiveFlatmap(it.children, limit - 1, it.id)
                 )
             }
         }
         return result
     }
-
 
     /**
      * @param recursiveLimit отвечает за глубину прохода по входным area.
@@ -27,7 +30,7 @@ class AreaMapper {
      * а так-же детей. 2 - входной, дети, и дети детей. И так далее
      */
     fun map(src: List<AreaUnitDAO>, recursiveLimit: Int = 0): List<Area> {
-        val recursiveMap = recursiveMap(src, recursiveLimit)
+        val recursiveMap = recursiveFlatmap(src, recursiveLimit)
         return recursiveMap.map { dto ->
             Area(
                 dto.id.toInt(),

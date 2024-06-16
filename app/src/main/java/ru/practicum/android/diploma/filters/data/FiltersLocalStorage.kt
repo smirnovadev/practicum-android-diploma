@@ -100,36 +100,6 @@ class FiltersLocalStorage(
         return null
     }
 
-    fun deleteCountry() {
-        sharedPreferences.edit().apply {
-            remove(COUNTRY_KEY)
-        }.apply()
-    }
-
-    fun deleteRegion() {
-        sharedPreferences.edit().apply {
-            remove(REGION_KEY)
-        }.apply()
-    }
-
-    fun deleteIndustry() {
-        sharedPreferences.edit().apply {
-            remove(INDUSTRY_KEY)
-        }.apply()
-    }
-
-    fun deleteSalary() {
-        sharedPreferences.edit().apply {
-            remove(SALARY_KEY)
-        }.apply()
-    }
-
-    fun deleteSalaryFlag() {
-        sharedPreferences.edit().apply {
-            remove(SALARY_FLAG_KEY)
-        }.apply()
-    }
-
     private companion object {
         const val COUNTRY_KEY = "filters_country"
         const val REGION_KEY = "filters_region"

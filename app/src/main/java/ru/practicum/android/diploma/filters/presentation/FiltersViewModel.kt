@@ -16,11 +16,11 @@ class FiltersViewModel(private val sharedInteractor: FiltersSharedInteractor) : 
     fun saveSalary(salary: String?) = sharedInteractor.saveSalary(salary?.toIntOrNull())
     fun saveSalaryFlag(flag: Boolean) = sharedInteractor.saveSalaryFlag(flag)
 
-    fun clearCountryName() = sharedInteractor.deleteCountry()
-    fun clearRegionName() = sharedInteractor.deleteRegion()
-    fun clearIndustryName() = sharedInteractor.deleteIndustry()
-    fun clearSalary() = sharedInteractor.deleteSalary()
-    fun clearSalaryFlag() = sharedInteractor.deleteSalaryFlag()
+    fun clearCountryName() = sharedInteractor.saveCountry(null)
+    fun clearRegionName() = sharedInteractor.saveRegion(null)
+    fun clearIndustryName() = sharedInteractor.saveIndustry(null)
+    fun clearSalary() = sharedInteractor.saveSalary(null)
+    fun clearSalaryFlag() = sharedInteractor.saveSalaryFlag(null)
 
     companion object {
         const val DEFAULT_SALARY_FLAG = false

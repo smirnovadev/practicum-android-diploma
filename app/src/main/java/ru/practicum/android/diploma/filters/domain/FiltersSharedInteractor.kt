@@ -14,9 +14,4 @@ interface FiltersSharedInteractor {
     fun getIndustry(): Industry?
     fun getSalary(): Int?
     fun getSalaryFlag(): Boolean?
-    fun deleteIndustry()
-    fun deleteCountry()
-    fun deleteRegion()
-    fun deleteSalary()
-    fun deleteSalaryFlag()
 }

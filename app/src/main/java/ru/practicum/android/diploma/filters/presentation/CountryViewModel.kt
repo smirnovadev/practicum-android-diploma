@@ -28,10 +28,11 @@ class CountryViewModel(
         interactor.downloadAreas().collect { result ->
             if (result.first == null) {
                 renderState(
-                    if (result.second == 200)
+                    if (result.second == 200) {
                         AreasState.Empty
-                    else
+                    } else {
                         AreasState.Error(result.second)
+                    }
                 )
             } else {
                 val areas = mapper.map(result.first!!, 1)
@@ -42,8 +43,9 @@ class CountryViewModel(
                             area.parent == null
                         }
                     ))
-                } else
+                } else {
                     renderState(AreasState.Empty)
+                }
             }
         }
     }
@@ -54,9 +56,9 @@ class CountryViewModel(
             interactor
                 .getCountries()
                 .collect {
-                    if (it.isNotEmpty())
+                    if (it.isNotEmpty()) {
                         renderState(AreasState.Content(it))
-                    else {
+                    } else {
                         downloadAreasToBase()
                     }
                 }
