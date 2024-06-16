@@ -27,13 +27,10 @@ class RegionFragment : Fragment() {
     private val viewModel by viewModel<RegionViewModel>()
 
     private var rvAdapter: AreaAdapter? = null
-//    private val recycler: RecyclerView by lazy { binding.recyclerView }
 
     private val regions = mutableListOf<Area>()
     private var searchDebounce: ((String) -> Unit)? = null
-//    private val inputRegion: TextInputEditText by lazy { binding.inputRegion }
-//    private val groupNotFound: Group by lazy { binding.groupNotFound }
-//    private val groupEmpty: Group by lazy { binding.groupEmpty }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -143,7 +140,6 @@ class RegionFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        binding.recyclerView.adapter = null
         _binding = null
         rvAdapter = null
     }

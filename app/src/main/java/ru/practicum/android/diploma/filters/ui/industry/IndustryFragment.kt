@@ -159,7 +159,6 @@ class IndustryFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        binding.recyclerView.adapter = null
         _binding = null
         rvAdapter = null
     }
