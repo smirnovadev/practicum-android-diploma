@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.Group
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.databinding.FragmentSelectCountryBinding
 import ru.practicum.android.diploma.filters.presentation.CountryViewModel
@@ -22,11 +20,7 @@ class CountryFragment : Fragment() {
     private val viewModel by viewModel<CountryViewModel>()
 
     private var rvAdapter: AreaAdapter? = null
-    private val recycler: RecyclerView by lazy { binding.recyclerView }
-
     private val countries = mutableListOf<Area>()
-
-    private val groupEmpty: Group by lazy { binding.groupEmpty }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +34,7 @@ class CountryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        groupEmpty.visibility = View.GONE
+        binding.groupEmpty.visibility = View.GONE
 
         binding.toolbar.setOnClickListener {
             findNavController().navigateUp()
@@ -49,8 +43,8 @@ class CountryFragment : Fragment() {
             viewModel.save(it)
             findNavController().navigateUp()
         }
-        recycler.adapter = rvAdapter
-        recycler.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.adapter = rvAdapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         viewModel.getScreenStateLiveData().observe(viewLifecycleOwner) { state ->
             when (state) {
@@ -99,8 +93,8 @@ class CountryFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        _binding = null
+        binding.recyclerView.adapter = null
         rvAdapter = null
-        recycler.adapter = null
+        _binding = null
     }
 }

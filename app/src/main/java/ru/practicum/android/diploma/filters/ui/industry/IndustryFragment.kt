@@ -8,16 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import androidx.constraintlayout.widget.Group
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.textfield.TextInputEditText
 import debounce
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.databinding.FragmentIndustryBinding
@@ -31,14 +27,10 @@ class IndustryFragment : Fragment() {
     private val viewModel by viewModel<IndustryViewModel>()
 
     private var rvAdapter: IndustryAdapter? = null
-    private val recycler: RecyclerView by lazy { binding.recyclerView }
 
     private val industries = mutableListOf<Industry>()
     private var searchDebounce: ((String) -> Unit)? = null
-    private val inputIndustry: TextInputEditText by lazy { binding.inputIndustry }
-    private val groupNotFound: Group by lazy { binding.groupNotFound }
-    private val groupEmpty: Group by lazy { binding.groupEmpty }
-    private val applyBtn: Button by lazy { binding.buttonApply }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -55,14 +47,14 @@ class IndustryFragment : Fragment() {
             findNavController().navigateUp()
             clearIndustry()
         }
-        groupNotFound.visibility = View.GONE
-        groupEmpty.visibility = View.GONE
+        binding.groupNotFound.visibility = View.GONE
+        binding.groupEmpty.visibility = View.GONE
         rvAdapter = IndustryAdapter(industries) {
             viewModel.save(it)
-            applyBtn.isVisible = true
+            binding.buttonApply.isVisible = true
         }
-        recycler.adapter = rvAdapter
-        recycler.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.adapter = rvAdapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         searchDebounce = debounce(
             SEARCH_DEBOUNCE_DELAY,
             viewLifecycleOwner.lifecycleScope,
@@ -71,14 +63,14 @@ class IndustryFragment : Fragment() {
 
         initListeners()
 
-        applyBtn.setOnClickListener {
+        binding.buttonApply.setOnClickListener {
             findNavController().navigateUp()
         }
     }
 
     private fun initListeners() {
-        inputIndustry.addTextChangedListener(
-            onTextChanged = { s: CharSequence?, start: Int, before: Int, count: Int ->
+        binding.inputIndustry.addTextChangedListener(
+            onTextChanged = { s: CharSequence?, _: Int, _: Int, _: Int ->
                 viewModel.search(s?.toString().orEmpty())
             },
             afterTextChanged =
@@ -88,15 +80,15 @@ class IndustryFragment : Fragment() {
                 }
             }
         )
-        inputIndustry.setOnEditorActionListener { _, actionId, _ ->
+        binding.inputIndustry.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                search(inputIndustry.text.toString())
-                inputIndustry.clearFocus()
+                search(binding.inputIndustry.text.toString())
+                binding.inputIndustry.clearFocus()
             }
             false
         }
         binding.inputLayoutIndustry.setEndIconOnClickListener {
-            inputIndustry.setText(EMPTY)
+            binding.inputIndustry.setText(EMPTY)
             val inputMethodManager = requireContext()
                 .getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(it.windowToken, 0)
@@ -106,7 +98,7 @@ class IndustryFragment : Fragment() {
             when (state) {
                 is IndustryState.Content -> showContent(state.industryList)
                 IndustryState.Empty -> showEmpty()
-                is IndustryState.Error -> showError(state.code)
+                is IndustryState.Error -> showError()
                 IndustryState.Loading -> showLoading()
             }
         }
@@ -128,8 +120,8 @@ class IndustryFragment : Fragment() {
         binding.recyclerView.isVisible = true
         rvAdapter!!.notifyDataSetChanged()
         binding.apply {
-            groupEmpty.isVisible = false
-            groupNotFound.isVisible = false
+            binding.groupEmpty.isVisible = false
+            binding.groupNotFound.isVisible = false
             progressBar.isVisible = false
         }
     }
@@ -137,17 +129,17 @@ class IndustryFragment : Fragment() {
     private fun showEmpty() {
         binding.apply {
             recyclerView.isVisible = false
-            groupEmpty.isVisible = true
-            groupNotFound.isVisible = false
+            binding.groupEmpty.isVisible = true
+            binding.groupNotFound.isVisible = false
             progressBar.isVisible = false
         }
     }
 
-    private fun showError(code: Int) {
+    private fun showError() {
         binding.apply {
             recyclerView.isVisible = false
-            groupEmpty.isVisible = false
-            groupNotFound.isVisible = true
+            binding.groupEmpty.isVisible = false
+            binding.groupNotFound.isVisible = true
             progressBar.isVisible = false
         }
     }
@@ -156,8 +148,8 @@ class IndustryFragment : Fragment() {
         binding.apply {
             progressBar.isVisible = true
             recyclerView.isVisible = false
-            groupEmpty.isVisible = false
-            groupNotFound.isVisible = false
+            binding.groupEmpty.isVisible = false
+            binding.groupNotFound.isVisible = false
         }
     }
 
@@ -167,9 +159,9 @@ class IndustryFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+        binding.recyclerView.adapter = null
         _binding = null
         rvAdapter = null
-        recycler.adapter = null
     }
 
     companion object {

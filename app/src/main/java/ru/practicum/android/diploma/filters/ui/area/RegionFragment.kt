@@ -8,15 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import androidx.constraintlayout.widget.Group
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.textfield.TextInputEditText
 import debounce
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.databinding.FragmentSelectRegionBinding
@@ -30,13 +27,13 @@ class RegionFragment : Fragment() {
     private val viewModel by viewModel<RegionViewModel>()
 
     private var rvAdapter: AreaAdapter? = null
-    private val recycler: RecyclerView by lazy { binding.recyclerView }
+//    private val recycler: RecyclerView by lazy { binding.recyclerView }
 
     private val regions = mutableListOf<Area>()
     private var searchDebounce: ((String) -> Unit)? = null
-    private val inputRegion: TextInputEditText by lazy { binding.inputRegion }
-    private val groupNotFound: Group by lazy { binding.groupNotFound }
-    private val groupEmpty: Group by lazy { binding.groupEmpty }
+//    private val inputRegion: TextInputEditText by lazy { binding.inputRegion }
+//    private val groupNotFound: Group by lazy { binding.groupNotFound }
+//    private val groupEmpty: Group by lazy { binding.groupEmpty }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -48,8 +45,8 @@ class RegionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        groupNotFound.visibility = View.GONE
-        groupEmpty.visibility = View.GONE
+        binding.groupNotFound.visibility = View.GONE
+        binding.groupEmpty.visibility = View.GONE
         binding.toolbar.setOnClickListener {
             findNavController().navigateUp()
         }
@@ -62,8 +59,8 @@ class RegionFragment : Fragment() {
             viewModel.save(it)
             findNavController().navigateUp()
         }
-        recycler.adapter = rvAdapter
-        recycler.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.adapter = rvAdapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         initListeners()
         viewModel.getScreenStateLiveData().observe(viewLifecycleOwner) { state ->
             when (state) {
@@ -76,7 +73,7 @@ class RegionFragment : Fragment() {
     }
 
     private fun initListeners() {
-        inputRegion.addTextChangedListener(
+        binding.inputRegion.addTextChangedListener(
             afterTextChanged =
             { editable ->
                 if (editable.toString().isNotEmpty()) {
@@ -84,16 +81,16 @@ class RegionFragment : Fragment() {
                 }
             }
         )
-        inputRegion.setOnEditorActionListener { _, actionId, _ ->
+        binding.inputRegion.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                search(inputRegion.text.toString())
-                inputRegion.clearFocus()
+                search(binding.inputRegion.text.toString())
+                binding.inputRegion.clearFocus()
             }
             false
         }
 
         binding.inputLayoutRegion.setEndIconOnClickListener {
-            inputRegion.setText(EMPTY)
+            binding.inputRegion.setText(EMPTY)
             val inputMethodManager = requireContext()
                 .getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(it.windowToken, 0)
@@ -146,9 +143,9 @@ class RegionFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+        binding.recyclerView.adapter = null
         _binding = null
         rvAdapter = null
-        recycler.adapter = null
     }
 
     companion object {

@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.textfield.TextInputEditText
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentPlaceToWorkBinding
@@ -23,9 +21,7 @@ class PlaceToWorkFragment : Fragment() {
 
     private var country: String = EMPTY
     private var region: String = EMPTY
-    private val inputCountry: TextInputEditText by lazy { binding.countryText }
-    private val inputRegion: TextInputEditText by lazy { binding.regionText }
-    private val applyBtn: Button by lazy { binding.buttonApply }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,10 +34,10 @@ class PlaceToWorkFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         country = viewModel.getCountryName()
-        inputCountry.setText(country)
+        binding.countryText.setText(country)
 
         region = viewModel.getRegionName()
-        inputRegion.setText(region)
+        binding.regionText.setText(region)
 
         initListeners()
         checkButtonsState()
@@ -53,29 +49,29 @@ class PlaceToWorkFragment : Fragment() {
             clearCountry()
             clearRegion()
         }
-        applyBtn.setOnClickListener {
+        binding.buttonApply.setOnClickListener {
             findNavController().navigateUp()
         }
-        inputCountry.setOnClickListener {
-            if (inputCountry.text?.isEmpty() == true) {
+        binding.countryText.setOnClickListener {
+            if (binding.countryText.text?.isEmpty() == true) {
                 navigateToCountry()
             }
         }
         binding.actionCountry.setOnClickListener {
-            if (inputCountry.text?.isEmpty() == true) {
+            if (binding.countryText.text?.isEmpty() == true) {
                 navigateToCountry()
             } else {
                 clearCountry()
                 clearRegion()
             }
         }
-        inputRegion.setOnClickListener {
-            if (inputRegion.text?.isEmpty() == true) {
+        binding.regionText.setOnClickListener {
+            if (binding.regionText.text?.isEmpty() == true) {
                 navigateToRegion()
             }
         }
         binding.actionRegion.setOnClickListener {
-            if (inputRegion.text?.isEmpty() == true) {
+            if (binding.regionText.text?.isEmpty() == true) {
                 navigateToRegion()
             } else {
                 clearRegion()
@@ -84,19 +80,19 @@ class PlaceToWorkFragment : Fragment() {
     }
 
     private fun checkButtonsState() {
-        if (!inputCountry.text.isNullOrEmpty()) {
-            applyBtn.isVisible = true
+        if (!binding.countryText.text.isNullOrEmpty()) {
+            binding.buttonApply.isVisible = true
         }
     }
 
     private fun clearCountry() {
-        inputCountry.setText(EMPTY)
+        binding.countryText.setText(EMPTY)
         viewModel.clearCountryName()
         refreshCountryIcon()
     }
 
     private fun clearRegion() {
-        inputRegion.setText(EMPTY)
+        binding.regionText.setText(EMPTY)
         viewModel.clearRegionName()
         refreshRegionIcon()
     }
@@ -112,9 +108,9 @@ class PlaceToWorkFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        inputCountry.setText(viewModel.getCountryName())
+        binding.countryText.setText(viewModel.getCountryName())
         refreshCountryIcon()
-        inputRegion.setText(viewModel.getRegionName())
+        binding.regionText.setText(viewModel.getRegionName())
         refreshRegionIcon()
         checkButtonsState()
     }
@@ -123,7 +119,7 @@ class PlaceToWorkFragment : Fragment() {
         binding.actionCountry.setImageDrawable(
             ResourcesCompat.getDrawable(
                 resources,
-                if (inputCountry.text?.isEmpty() == true) {
+                if (binding.countryText.text?.isEmpty() == true) {
                     R.drawable.ic_arrow_forward
                 } else {
                     R.drawable.ic_close
@@ -137,7 +133,7 @@ class PlaceToWorkFragment : Fragment() {
         binding.actionRegion.setImageDrawable(
             ResourcesCompat.getDrawable(
                 resources,
-                if (inputRegion.text?.isEmpty() == true) {
+                if (binding.regionText.text?.isEmpty() == true) {
                     R.drawable.ic_arrow_forward
                 } else {
                     R.drawable.ic_close
