@@ -25,7 +25,7 @@ val viewModelModule = module {
     }
 
     viewModel<FiltersViewModel> {
-        FiltersViewModel()
+        FiltersViewModel(get())
     }
     viewModel<PlaceToWorkViewModel> {
         PlaceToWorkViewModel(get())

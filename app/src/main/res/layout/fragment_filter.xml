@@ -67,16 +67,6 @@
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
         app:layout_constraintTop_toTopOf="@id/place_work_layout" />
 
-    <ImageButton
-        android:id="@+id/place_work_btn_close"
-        style="@style/image_filter"
-        android:contentDescription="@string/place_work"
-        android:src="@drawable/ic_close"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/place_work_layout"
-        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-        app:layout_constraintTop_toTopOf="@id/place_work_layout" />
-
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/industry_layout"
@@ -109,15 +99,6 @@
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
         app:layout_constraintTop_toTopOf="@id/industry_layout" />
 
-    <ImageButton
-        android:id="@+id/industry_btn_close"
-        style="@style/image_filter"
-        android:contentDescription="@string/place_work"
-        android:src="@drawable/ic_close"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/industry_layout"
-        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-        app:layout_constraintTop_toTopOf="@id/industry_layout" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout_salary"

@@ -55,4 +55,5 @@
     <string name="enter_industry">Введите отрасль</string>
     <string name="not_found_region">Такого региона нет</string>
     <string name="empty_region">Не удалось получить\nсписок</string>
+    <string name="place_to_work_text">%1$s, %2$s</string>
 </resources>
