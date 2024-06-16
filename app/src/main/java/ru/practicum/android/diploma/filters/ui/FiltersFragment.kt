@@ -93,6 +93,10 @@ class FiltersFragment : Fragment() {
             clearPlaceToWork()
             clearIndustry()
         }
+
+        binding.salaryCheckBox.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.saveSalaryFlag(isChecked)
+        }
     }
 
     private fun clearPlaceToWork() {
@@ -111,6 +115,11 @@ class FiltersFragment : Fragment() {
     private fun clearSalary() {
         inputSalary.setText(EMPTY)
         viewModel.clearSalary()
+    }
+
+    private fun clearSalaryFlag() {
+        binding.salaryCheckBox.isChecked = true
+        viewModel.clearSalaryFlag()
     }
 
     private fun refreshPlaceToWorkIcon() {
@@ -169,6 +178,7 @@ class FiltersFragment : Fragment() {
         refreshIndustryIcon()
 
         binding.salaryText.setText(viewModel.getSalary())
+        binding.salaryCheckBox.isChecked = viewModel.getSalaryFlag()
     }
 
     override fun onDestroy() {

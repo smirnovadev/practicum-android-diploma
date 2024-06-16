@@ -23,6 +23,10 @@ class FiltersSharedInteractorImpl(
         filtersLocalStorage.saveSalary(salary)
     }
 
+    override fun saveSalaryFlag(flag: Boolean?) {
+        filtersLocalStorage.saveSalaryFlag(flag)
+    }
+
     override fun getCountry(): Area? = filtersLocalStorage.getCountry()
 
     override fun getRegion(): Area? = filtersLocalStorage.getRegion()
@@ -30,6 +34,7 @@ class FiltersSharedInteractorImpl(
     override fun getIndustry(): Industry? = filtersLocalStorage.getIndustry()
 
     override fun getSalary(): Int? = filtersLocalStorage.getSalary()
+    override fun getSalaryFlag(): Boolean? = filtersLocalStorage.getSalaryFlag()
 
     override fun deleteIndustry() {
         filtersLocalStorage.deleteIndustry()
@@ -45,5 +50,9 @@ class FiltersSharedInteractorImpl(
 
     override fun deleteSalary() {
         filtersLocalStorage.deleteSalary()
+    }
+
+    override fun deleteSalaryFlag() {
+        filtersLocalStorage.deleteSalaryFlag()
     }
 }
