@@ -27,18 +27,11 @@ class ResponseToVacancyMapper(
     private val addressMapper: AddressMapper,
     private val vacancyAreaMapper: VacancyAreaMapper,
     private val contactsMapper: ContactsMapper,
-    private val departmentMapper: DepartmentMapper,
     private val employerMapper: EmployerMapper,
     private val experienceMapper: ExperienceMapper,
-    private val insiderInterviewMapper: InsiderInterviewMapper,
     private val keySkillMapper: KeySkillMapper,
-    private val managerMapper: ManagerMapper,
     private val professionalRoleMapper: ProfessionalRoleMapper,
     private val scheduleMapper: ScheduleMapper,
-    private val typeMapper: TypeMapper,
-    private val workingDayMapper: WorkingDayMapper,
-    private val workingTimeIntervalMapper: WorkingTimeIntervalMapper,
-    private val snippetMapper: SnippetMapper,
     private val employmentMapper: EmploymentMapper,
 ) {
 
@@ -47,39 +40,21 @@ class ResponseToVacancyMapper(
             address = addressMapper.map(response?.address),
             alternateUrl = response?.alternateUrl ?: EMPTY_STRING,
             applyAlternateUrl = response?.applyAlternateUrl ?: EMPTY_STRING,
-            approved = response?.approved ?: EMPTY_BOOLEAN,
-            archived = response?.archived ?: EMPTY_BOOLEAN,
             area = vacancyAreaMapper.map(response?.area),
             code = response?.code ?: EMPTY_STRING,
             contacts = contactsMapper.map(response?.contacts),
-            department = departmentMapper.map(response?.department),
             description = response?.description ?: EMPTY_STRING,
             employer = employerMapper.map(response?.employer),
             employment = employmentMapper.map(response?.employment),
             experience = experienceMapper.map(response?.experience),
-            hasTest = response?.hasTest ?: EMPTY_BOOLEAN,
             id = response?.id ?: EMPTY_STRING,
-            insiderInterview = insiderInterviewMapper.map(response?.insiderInterview),
             keySkills = response?.keySkills?.map { dto -> keySkillMapper.map(dto) } ?: listOf(),
-            manager = managerMapper.map(response?.manager),
             name = response?.name ?: EMPTY_STRING,
-            premium = response?.premium ?: EMPTY_BOOLEAN,
             previousId = response?.previousId ?: EMPTY_STRING,
             professionalRoles = response?.professionalRoles?.map { dto -> professionalRoleMapper.map(dto) } ?: listOf(),
-            publishedAt = response?.publishedAt ?: EMPTY_STRING,
-            responseLetterRequired = response?.responseLetterRequired ?: EMPTY_BOOLEAN,
-            responseNotifications = response?.responseNotifications ?: EMPTY_BOOLEAN,
             responseUrl = response?.responseUrl ?: EMPTY_STRING,
             salary = formatSalary(response?.salary),
             schedule = scheduleMapper.map(response?.schedule),
-            snippet = snippetMapper.map(response?.snippet),
-            type = typeMapper.map(response?.type),
-            workingDays = response?.workingDays?.map { dto -> workingDayMapper.map(dto) } ?: listOf(),
-            workingTimeIntervals = response?.workingTimeIntervals?.map { response ->
-                workingTimeIntervalMapper.map(
-                    response
-                )
-            } ?: listOf()
         )
     }
 

@@ -79,13 +79,6 @@ val dataModule = module {
             get(),
             get(),
             get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get()
         )
     }
 
@@ -204,13 +197,6 @@ val dataModule = module {
             get(),
             get(),
             get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get()
         )
     }
 }

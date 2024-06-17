@@ -31,18 +31,12 @@ data class VacancyByIdResponse(
     val alternateUrl: String?,
     @SerializedName("apply_alternate_url")
     val applyAlternateUrl: String?,
-    @SerializedName("approved")
-    val approved: Boolean?,
-    @SerializedName("archived")
-    val archived: Boolean?,
     @SerializedName("area")
     val area: VacancyAreaDTO?,
     @SerializedName("code")
     val code: String?,
     @SerializedName("contacts")
     val contacts: ContactsDTO?,
-    @SerializedName("department")
-    val department: DepartmentDTO?,
     @SerializedName("description")
     val description: String?,
     @SerializedName("employer")
@@ -51,42 +45,22 @@ data class VacancyByIdResponse(
     val employment: EmploymentDTO?,
     @SerializedName("experience")
     val experience: ExperienceDTO?,
-    @SerializedName("has_test")
-    val hasTest: Boolean?,
     @SerializedName("id")
     val id: String?,
-    @SerializedName("insider_interview")
-    val insiderInterview: InsiderInterviewDTO?,
     @SerializedName("key_skills")
     val keySkills: List<KeySkillDTO?>?,
     @SerializedName("manager")
     val manager: ManagerDTO?,
     @SerializedName("name")
     val name: String?,
-    @SerializedName("premium")
-    val premium: Boolean?,
     @SerializedName("previous_id")
     val previousId: String?,
     @SerializedName("professional_roles")
     val professionalRoles: List<ProfessionalRoleDTO?>?,
-    @SerializedName("published_at")
-    val publishedAt: String?,
-    @SerializedName("response_letter_required")
-    val responseLetterRequired: Boolean?,
-    @SerializedName("response_notifications")
-    val responseNotifications: Boolean?,
     @SerializedName("response_url")
     val responseUrl: String?,
     @SerializedName("salary")
     val salary: SalaryDTO?,
     @SerializedName("schedule")
-    val schedule: ScheduleDTO?,
-    @SerializedName("snippet")
-    val snippet: SnippetDTO?,
-    @SerializedName("type")
-    val type: TypeDTO?,
-    @SerializedName("working_days")
-    val workingDays: List<WorkingDayDTO?>?,
-    @SerializedName("working_time_intervals")
-    val workingTimeIntervals: List<WorkingTimeIntervalDTO?>?
+    val schedule: ScheduleDTO?
 ) : NetworkResponse()
