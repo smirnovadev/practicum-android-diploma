@@ -79,8 +79,7 @@ class ResponseToVacancyMapper(
                 workingTimeIntervalMapper.map(
                     response
                 )
-            }
-                ?: listOf()
+            } ?: listOf()
         )
     }
 

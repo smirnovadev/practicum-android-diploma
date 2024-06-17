@@ -28,7 +28,6 @@ class JobFragment : Fragment() {
 
     private val viewModel by viewModel<JobViewModel>()
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -125,61 +124,56 @@ class JobFragment : Fragment() {
 
     private fun viewContacts(vacancy: Vacancy) {
         binding.apply {
-            val email = vacancy.contacts.email ?: ""
-            val phoneNumber = vacancy.contacts.phones.joinToString(separator = " + ") {
-                "+${it?.country} (${it?.city ?: ""})  ${it?.number ?: ""}"
-            }
-            val contactName = vacancy.contacts.name ?: ""
-            val comments = vacancy.contacts.phones.joinToString(separator = " ") {
-                it?.comment ?: ""
-            }
-
-            if (email.isEmpty()) {
-                tvEMail.isVisible = false
-                eMail.isVisible = false
-            } else {
-                eMail.isVisible = true
-                tvEMail.isVisible = true
+            setupContactField(vacancy.contacts.email, tvEMail, eMail) { email ->
                 tvEMail.text = email
                 tvEMail.setOnClickListener {
                     viewModel.emailTo(email)
                 }
             }
 
-            if (phoneNumber.isEmpty()) {
-                tvNumberPhone.isVisible = false
-                numberPhone.isVisible = false
-            } else {
-                tvNumberPhone.isVisible = true
-                numberPhone.isVisible = true
-                tvNumberPhone.text = phoneNumber
+            val phoneNumber = vacancy.contacts.phones.joinToString(separator = " + ") {
+                "+${it?.country} (${it?.city ?: ""})  ${it?.number ?: ""}"
+            }
+            setupContactField(phoneNumber, tvNumberPhone, numberPhone) { phone ->
+                tvNumberPhone.text = phone
                 tvNumberPhone.setOnClickListener {
-                    viewModel.callTo(phoneNumber)
+                    viewModel.callTo(phone)
                 }
             }
 
-            if (contactName.isEmpty()) {
-                tvContactPerson.isVisible = false
-                contactPerson.isVisible = false
-            } else {
-                tvContactPerson.isVisible = true
-                contactPerson.isVisible = true
-                tvContactPerson.text = contactName
+            setupContactField(vacancy.contacts.name, tvContactPerson, contactPerson) { name ->
+                tvContactPerson.text = name
             }
 
-            if (comments.isEmpty()) {
-                tvComment.isVisible = false
-                comment.isVisible = false
-            } else {
-                tvComment.isVisible = true
-                comment.isVisible = true
-                tvComment.text = comments
+            val comments = vacancy.contacts.phones.joinToString(separator = " ") {
+                it?.comment ?: ""
+            }
+            setupContactField(comments, tvComment, comment) { commentText ->
+                tvComment.text = commentText
             }
 
-            contacts.isVisible = email.isNotEmpty()
-                || phoneNumber.isNotEmpty()
-                || contactName.isNotEmpty()
-                || comments.isNotEmpty()
+            contacts.isVisible = listOf(
+                vacancy.contacts.email,
+                phoneNumber,
+                vacancy.contacts.name,
+                comments
+            ).any { it?.isNotEmpty() == true }
+        }
+    }
+
+    private fun setupContactField(
+        value: String?,
+        textView: TextView,
+        container: View,
+        setupAction: (String) -> Unit
+    ) {
+        if (value.isNullOrEmpty()) {
+            textView.isVisible = false
+            container.isVisible = false
+        } else {
+            textView.isVisible = true
+            container.isVisible = true
+            setupAction(value)
         }
     }
 
