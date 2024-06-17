@@ -41,6 +41,7 @@ import ru.practicum.android.diploma.search.data.mapper.VacancyAreaMapper
 import ru.practicum.android.diploma.search.data.mapper.VacancyMapper
 import ru.practicum.android.diploma.search.data.mapper.WorkingDayMapper
 import ru.practicum.android.diploma.search.data.mapper.WorkingTimeIntervalMapper
+import ru.practicum.android.diploma.util.MapperContainer
 
 val dataModule = module {
     single(named("baseUrl")) {
@@ -70,14 +71,7 @@ val dataModule = module {
 
     single<VacancyMapper> {
         VacancyMapper(
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
+            get()
         )
     }
 
@@ -187,6 +181,12 @@ val dataModule = module {
 
     single<ResponseToVacancyMapper> {
         ResponseToVacancyMapper(
+            get()
+        )
+    }
+
+    single<MapperContainer> {
+        MapperContainer(
             get(),
             get(),
             get(),
@@ -194,7 +194,7 @@ val dataModule = module {
             get(),
             get(),
             get(),
-            get(),
+            get()
         )
     }
 }
