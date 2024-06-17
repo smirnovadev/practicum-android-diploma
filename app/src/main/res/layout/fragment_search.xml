@@ -50,11 +50,12 @@
     <ProgressBar
         android:id="@+id/progressBar"
         style="@style/ProgressBar"
+        android:layout_marginVertical="@dimen/_16dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchField"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView"
         tools:visibility="gone" />
 
     <ImageView
@@ -102,11 +103,11 @@
         android:layout_marginTop="@dimen/_38dp"
         android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/progressBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchField"
-        tools:itemCount="15"
+        tools:itemCount="5"
         tools:listitem="@layout/card_item"
         tools:visibility="visible" />
 

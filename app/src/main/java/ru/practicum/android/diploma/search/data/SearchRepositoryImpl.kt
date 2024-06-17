@@ -16,8 +16,8 @@ class SearchRepositoryImpl(
     private val responseToVacanciesMapper: ResponseToVacanciesMapper
 ) : SearchRepository {
 
-    override fun getVacancies(query: String): Flow<Resource<Vacancies>> = flow {
-        val vacancySearchRequest = VacanciesSearchRequest(query = query)
+    override fun getVacancies(query: String, page: Int): Flow<Resource<Vacancies>> = flow {
+        val vacancySearchRequest = VacanciesSearchRequest(query = query, page = page)
         Log.d(TAG_SEARCH_REQUEST, "$vacancySearchRequest")
         val response = networkClient.findVacancies(vacancySearchRequest)
 
