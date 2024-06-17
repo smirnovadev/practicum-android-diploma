@@ -9,7 +9,7 @@ import ru.practicum.android.diploma.search.domain.model.Vacancies
 class SearchInteractorImpl(
     private val searchRepository: SearchRepository
 ) : SearchInteractor {
-    override fun getVacancies(query: String): Flow<Resource<Vacancies>> {
-        return searchRepository.getVacancies(query)
+    override fun getVacancies(query: String, page: Int): Flow<Resource<Vacancies>> {
+        return searchRepository.getVacancies(query, page)
     }
 }

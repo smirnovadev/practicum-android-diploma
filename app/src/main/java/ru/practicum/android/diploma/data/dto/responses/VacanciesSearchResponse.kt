@@ -9,7 +9,6 @@ import ru.practicum.android.diploma.data.dto.responses.vacancies.VacancyDTO
  */
 
 data class VacanciesSearchResponse(
-//    val results: VacanciesDTO
     @SerializedName("items")
     val vacancies: List<VacancyDTO>,
     @SerializedName("found")
