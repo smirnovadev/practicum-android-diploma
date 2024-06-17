@@ -4,21 +4,15 @@ import com.google.gson.annotations.SerializedName
 import ru.practicum.android.diploma.data.dto.NetworkResponse
 import ru.practicum.android.diploma.data.dto.responses.fields.AddressDTO
 import ru.practicum.android.diploma.data.dto.responses.fields.ContactsDTO
-import ru.practicum.android.diploma.data.dto.responses.fields.DepartmentDTO
 import ru.practicum.android.diploma.data.dto.responses.fields.EmployerDTO
 import ru.practicum.android.diploma.data.dto.responses.fields.EmploymentDTO
 import ru.practicum.android.diploma.data.dto.responses.fields.ExperienceDTO
-import ru.practicum.android.diploma.data.dto.responses.fields.InsiderInterviewDTO
 import ru.practicum.android.diploma.data.dto.responses.fields.KeySkillDTO
 import ru.practicum.android.diploma.data.dto.responses.fields.ManagerDTO
 import ru.practicum.android.diploma.data.dto.responses.fields.ProfessionalRoleDTO
 import ru.practicum.android.diploma.data.dto.responses.fields.SalaryDTO
 import ru.practicum.android.diploma.data.dto.responses.fields.ScheduleDTO
-import ru.practicum.android.diploma.data.dto.responses.fields.SnippetDTO
-import ru.practicum.android.diploma.data.dto.responses.fields.TypeDTO
 import ru.practicum.android.diploma.data.dto.responses.fields.VacancyAreaDTO
-import ru.practicum.android.diploma.data.dto.responses.fields.WorkingDayDTO
-import ru.practicum.android.diploma.data.dto.responses.fields.WorkingTimeIntervalDTO
 
 /**
  * https://api.hh.ru/openapi/redoc#tag/Vakansii/operation/get-vacancy
@@ -57,8 +51,6 @@ data class VacancyByIdResponse(
     val previousId: String?,
     @SerializedName("professional_roles")
     val professionalRoles: List<ProfessionalRoleDTO?>?,
-    @SerializedName("response_url")
-    val responseUrl: String?,
     @SerializedName("salary")
     val salary: SalaryDTO?,
     @SerializedName("schedule")

@@ -34,7 +34,6 @@ data class Vacancy(
     val name: String,
     val previousId: String,
     val professionalRoles: List<ProfessionalRole>,
-    val responseUrl: String?,
     val salary: String,
     val schedule: Schedule,
 ) : Serializable

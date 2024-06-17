@@ -74,7 +74,6 @@ class VacancyMapper(
             name = dto?.name ?: EMPTY_STRING,
             previousId = dto?.previousId ?: EMPTY_STRING,
             professionalRoles = dto?.professionalRoles?.map { dto -> professionalRoleMapper.map(dto) } ?: listOf(),
-            responseUrl = dto?.responseUrl ?: EMPTY_STRING,
             salary = formatSalary(dto?.salary),
             schedule = scheduleMapper.map(dto?.schedule),
         )
