@@ -14,7 +14,6 @@ class VacancyMapper(
     private val employerMapper: EmployerMapper,
     private val experienceMapper: ExperienceMapper,
     private val keySkillMapper: KeySkillMapper,
-    private val professionalRoleMapper: ProfessionalRoleMapper,
     private val scheduleMapper: ScheduleMapper,
     private val employmentMapper: EmploymentMapper,
 ) {
@@ -73,7 +72,6 @@ class VacancyMapper(
             keySkills = dto?.keySkills?.map { dto -> keySkillMapper.map(dto) } ?: listOf(),
             name = dto?.name ?: EMPTY_STRING,
             previousId = dto?.previousId ?: EMPTY_STRING,
-            professionalRoles = dto?.professionalRoles?.map { dto -> professionalRoleMapper.map(dto) } ?: listOf(),
             salary = formatSalary(dto?.salary),
             schedule = scheduleMapper.map(dto?.schedule),
         )

@@ -9,7 +9,6 @@ import ru.practicum.android.diploma.data.dto.responses.fields.EmploymentDTO
 import ru.practicum.android.diploma.data.dto.responses.fields.ExperienceDTO
 import ru.practicum.android.diploma.data.dto.responses.fields.KeySkillDTO
 import ru.practicum.android.diploma.data.dto.responses.fields.ManagerDTO
-import ru.practicum.android.diploma.data.dto.responses.fields.ProfessionalRoleDTO
 import ru.practicum.android.diploma.data.dto.responses.fields.SalaryDTO
 import ru.practicum.android.diploma.data.dto.responses.fields.ScheduleDTO
 import ru.practicum.android.diploma.data.dto.responses.fields.VacancyAreaDTO
@@ -49,8 +48,6 @@ data class VacancyByIdResponse(
     val name: String?,
     @SerializedName("previous_id")
     val previousId: String?,
-    @SerializedName("professional_roles")
-    val professionalRoles: List<ProfessionalRoleDTO?>?,
     @SerializedName("salary")
     val salary: SalaryDTO?,
     @SerializedName("schedule")

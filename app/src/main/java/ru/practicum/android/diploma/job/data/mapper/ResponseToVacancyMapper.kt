@@ -8,7 +8,6 @@ import ru.practicum.android.diploma.search.data.mapper.EmployerMapper
 import ru.practicum.android.diploma.search.data.mapper.EmploymentMapper
 import ru.practicum.android.diploma.search.data.mapper.ExperienceMapper
 import ru.practicum.android.diploma.search.data.mapper.KeySkillMapper
-import ru.practicum.android.diploma.search.data.mapper.ProfessionalRoleMapper
 import ru.practicum.android.diploma.search.data.mapper.ScheduleMapper
 import ru.practicum.android.diploma.search.data.mapper.VacancyAreaMapper
 import ru.practicum.android.diploma.search.domain.model.Vacancy
@@ -23,7 +22,6 @@ class ResponseToVacancyMapper(
     private val employerMapper: EmployerMapper,
     private val experienceMapper: ExperienceMapper,
     private val keySkillMapper: KeySkillMapper,
-    private val professionalRoleMapper: ProfessionalRoleMapper,
     private val scheduleMapper: ScheduleMapper,
     private val employmentMapper: EmploymentMapper,
 ) {
@@ -44,7 +42,6 @@ class ResponseToVacancyMapper(
             keySkills = response?.keySkills?.map { dto -> keySkillMapper.map(dto) } ?: listOf(),
             name = response?.name ?: EMPTY_STRING,
             previousId = response?.previousId ?: EMPTY_STRING,
-            professionalRoles = response?.professionalRoles?.map { dto -> professionalRoleMapper.map(dto) } ?: listOf(),
             salary = formatSalary(response?.salary),
             schedule = scheduleMapper.map(response?.schedule),
         )

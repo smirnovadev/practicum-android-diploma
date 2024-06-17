@@ -78,7 +78,6 @@ val dataModule = module {
             get(),
             get(),
             get(),
-            get(),
         )
     }
 
@@ -188,7 +187,6 @@ val dataModule = module {
 
     single<ResponseToVacancyMapper> {
         ResponseToVacancyMapper(
-            get(),
             get(),
             get(),
             get(),
