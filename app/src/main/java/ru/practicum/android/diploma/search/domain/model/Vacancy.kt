@@ -15,7 +15,6 @@ data class Vacancy(
     val alternateUrl: String,
     val applyAlternateUrl: String,
     val area: VacancyArea,
-    val code: String,
     val contacts: Contacts,
     val description: String,
     val employer: Employer,
@@ -24,7 +23,6 @@ data class Vacancy(
     val id: String,
     val keySkills: List<KeySkill>,
     val name: String,
-    val previousId: String,
     val salary: String,
     val schedule: Schedule,
 ) : Serializable

@@ -62,7 +62,6 @@ class VacancyMapper(
             alternateUrl = dto?.alternateUrl ?: EMPTY_STRING,
             applyAlternateUrl = dto?.applyAlternateUrl ?: EMPTY_STRING,
             area = vacancyAreaMapper.map(dto?.area),
-            code = dto?.code ?: EMPTY_STRING,
             contacts = contactsMapper.map(dto?.contacts),
             description = dto?.description ?: EMPTY_STRING,
             employer = employerMapper.map(dto?.employer),
@@ -71,7 +70,6 @@ class VacancyMapper(
             id = dto?.id ?: EMPTY_STRING,
             keySkills = dto?.keySkills?.map { dto -> keySkillMapper.map(dto) } ?: listOf(),
             name = dto?.name ?: EMPTY_STRING,
-            previousId = dto?.previousId ?: EMPTY_STRING,
             salary = formatSalary(dto?.salary),
             schedule = scheduleMapper.map(dto?.schedule),
         )

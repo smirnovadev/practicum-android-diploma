@@ -26,8 +26,6 @@ data class VacancyByIdResponse(
     val applyAlternateUrl: String?,
     @SerializedName("area")
     val area: VacancyAreaDTO?,
-    @SerializedName("code")
-    val code: String?,
     @SerializedName("contacts")
     val contacts: ContactsDTO?,
     @SerializedName("description")
@@ -46,8 +44,6 @@ data class VacancyByIdResponse(
     val manager: ManagerDTO?,
     @SerializedName("name")
     val name: String?,
-    @SerializedName("previous_id")
-    val previousId: String?,
     @SerializedName("salary")
     val salary: SalaryDTO?,
     @SerializedName("schedule")

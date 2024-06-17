@@ -32,7 +32,6 @@ class ResponseToVacancyMapper(
             alternateUrl = response?.alternateUrl ?: EMPTY_STRING,
             applyAlternateUrl = response?.applyAlternateUrl ?: EMPTY_STRING,
             area = vacancyAreaMapper.map(response?.area),
-            code = response?.code ?: EMPTY_STRING,
             contacts = contactsMapper.map(response?.contacts),
             description = response?.description ?: EMPTY_STRING,
             employer = employerMapper.map(response?.employer),
@@ -41,7 +40,6 @@ class ResponseToVacancyMapper(
             id = response?.id ?: EMPTY_STRING,
             keySkills = response?.keySkills?.map { dto -> keySkillMapper.map(dto) } ?: listOf(),
             name = response?.name ?: EMPTY_STRING,
-            previousId = response?.previousId ?: EMPTY_STRING,
             salary = formatSalary(response?.salary),
             schedule = scheduleMapper.map(response?.schedule),
         )
