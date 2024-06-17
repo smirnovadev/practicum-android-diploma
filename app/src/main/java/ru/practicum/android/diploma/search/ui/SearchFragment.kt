@@ -291,6 +291,5 @@ class SearchFragment : Fragment(), SearchClickListener {
     companion object {
         private const val CLICK_DEBOUNCE_DELAY = 1000L
         const val EXTRA_ID = "vacancy_id"
-
     }
 }

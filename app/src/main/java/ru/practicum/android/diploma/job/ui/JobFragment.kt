@@ -39,6 +39,9 @@ class JobFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val vacancy = requireArguments().getSerializable(EXTRA_VACANCY) as Vacancy
+
+        viewModel.loadFavoriteState(vacancy)
 
         viewModel.getScreenState().observe(viewLifecycleOwner) {
             render(it)
@@ -51,7 +54,21 @@ class JobFragment : Fragment() {
             toolbar.setNavigationOnClickListener {
                 findNavController().popBackStack()
             }
+            icFavorites.setOnClickListener {
+                viewModel.onFavoriteClicked(vacancy)
+            }
         }
+        val addFavoriteButton = binding.icFavorites
+        viewModel.isFavoriteVacancyLiveData().observe(requireActivity()) { isFavorite ->
+            addFavoriteButton.setBackgroundResource(
+                if (isFavorite) {
+                    R.drawable.ic_favorites_on
+                } else {
+                    R.drawable.ic_favorites_off
+                }
+            )
+        }
+        viewCompanyLogo()
     }
 
     private fun render(state: JobScreenState) {
@@ -219,7 +236,7 @@ class JobFragment : Fragment() {
         val employment = vacancy.employment.name
         val schedul = vacancy.schedule.name
 
-        binding.tvWorkSchedule.text = "$employment, $schedul"
+        binding.tvWorkSchedule.text = getString(R.string.tv_work_schedule_template, employment, schedul)
     }
 
     private fun formatHtml(html: String): String {

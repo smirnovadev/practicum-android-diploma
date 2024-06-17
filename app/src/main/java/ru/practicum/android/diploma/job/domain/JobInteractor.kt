@@ -9,6 +9,10 @@ interface JobInteractor {
     fun shareLink(alternateUrl: String)
     fun emailTo(email: String)
     fun callTo(phoneNumber: String)
+    suspend fun deleteFavorite(vacancy: Vacancy)
+    suspend fun addFavorite(vacancy: Vacancy)
+    suspend fun getAllFavorite(): Flow<List<Vacancy>>
+    suspend fun isFavoriteVacancy(id: String): Flow<Boolean>
 
     fun getVacancyById(id: String): Flow<Resource<Vacancy>>
 }

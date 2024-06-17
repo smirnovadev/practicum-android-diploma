@@ -13,7 +13,6 @@ import java.io.Serializable
 data class Vacancy(
     val address: Address,
     val alternateUrl: String,
-    val applyAlternateUrl: String,
     val area: VacancyArea,
     val contacts: Contacts,
     val description: String,
