@@ -6,11 +6,13 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import debounce
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
@@ -23,15 +25,14 @@ import ru.practicum.android.diploma.search.ui.adapter.SearchAdapter
 import ru.practicum.android.diploma.search.ui.adapter.SearchClickListener
 import ru.practicum.android.diploma.util.Formatter
 
-
 class SearchFragment : Fragment(), SearchClickListener {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModel<SearchViewModel>()
     private var textWatcher: TextWatcher? = null
-    private var searchDebounce: ((String) -> Unit)? = null
-    private var searchAdapter: SearchAdapter? = null
+    private var searchAdapter = SearchAdapter(this)
+    private var clickDebounce: ((Vacancy) -> Unit)? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,13 +50,6 @@ class SearchFragment : Fragment(), SearchClickListener {
             renderState(state)
         }
 
-        searchDebounce = debounce<String>(
-            SEARCH_DEBOUNCE_DELAY,
-            viewLifecycleOwner.lifecycleScope,
-            false
-        ) { request -> viewModel.search(request) }
-
-        searchAdapter = SearchAdapter(this)
         binding.apply {
             recyclerView.adapter = searchAdapter
             recyclerView.layoutManager = LinearLayoutManager(
@@ -64,6 +58,27 @@ class SearchFragment : Fragment(), SearchClickListener {
                 false
             )
         }
+
+        clickDebounce = debounce<Vacancy>(
+            CLICK_DEBOUNCE_DELAY,
+            viewLifecycleOwner.lifecycleScope,
+            false
+        ) { vacancy -> onVacancyClick(vacancy) }
+
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                if (dy > 0) {
+                    val pos = (binding.recyclerView.layoutManager as LinearLayoutManager)
+                        .findLastVisibleItemPosition()
+                    val itemsCount = searchAdapter.itemCount
+                    if (pos >= itemsCount - 1) {
+                        viewModel.uploadPage()
+                    }
+                }
+            }
+        })
 
         textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
@@ -78,7 +93,7 @@ class SearchFragment : Fragment(), SearchClickListener {
 
             override fun afterTextChanged(s: Editable?) {
                 if (!s.isNullOrEmpty()) {
-                    search(s.toString())
+                    viewModel.searchDebounce(s.toString())
                 }
             }
         }
@@ -87,6 +102,8 @@ class SearchFragment : Fragment(), SearchClickListener {
 
         binding.searchFieldIcon.setOnClickListener {
             binding.searchField.setText("")
+            searchAdapter.vacanciesList.clear()
+            searchAdapter.notifyDataSetChanged()
             viewModel.clearSearchField()
         }
 
@@ -100,22 +117,19 @@ class SearchFragment : Fragment(), SearchClickListener {
         super.onDestroyView()
         textWatcher.let { binding.searchField.removeTextChangedListener(it) }
         _binding = null
-        searchAdapter = null
-        searchDebounce = null
     }
 
     private fun renderState(state: SearchScreenState) {
         when (state) {
-            is SearchScreenState.Default -> {
-                showDefaultScreenState()
-            }
-
+            is SearchScreenState.Default -> showDefaultScreenState()
             is SearchScreenState.Loading -> showProgressbar()
             is SearchScreenState.InternetConnectionError -> showInternetConnectionError()
             is SearchScreenState.ServerError -> showServerError()
             is SearchScreenState.SearchError -> showSearchError()
             is SearchScreenState.ShowContent -> showContent(state.vacancies, state.found)
-            is SearchScreenState.uploadNextPage -> showProgressbar()
+            is SearchScreenState.UploadNextPage -> uploadNextPage()
+            is SearchScreenState.Error -> showError()
+            is SearchScreenState.IOError -> showIOError()
         }
     }
 
@@ -191,10 +205,39 @@ class SearchFragment : Fragment(), SearchClickListener {
         }
     }
 
+    private fun uploadNextPage() {
+        binding.apply {
+            errorPlaceholder.isVisible = false
+            progressBar.isVisible = true
+        }
+    }
+
+    private fun showError() {
+        Toast.makeText(requireContext(), getString(R.string.error_occured), Toast.LENGTH_SHORT).show()
+        binding.apply {
+            searchScreenCover.isVisible = true
+            progressBar.isVisible = false
+            errorPlaceholder.isVisible = false
+            searchStatus.isVisible = false
+            recyclerView.isVisible = false
+        }
+    }
+
+    private fun showIOError() {
+        Toast.makeText(requireContext(), getString(R.string.error_occured), Toast.LENGTH_SHORT).show()
+        binding.apply {
+            searchScreenCover.isVisible = false
+            progressBar.isVisible = false
+            errorPlaceholder.isVisible = false
+            searchStatus.isVisible = true
+            recyclerView.isVisible = true
+        }
+    }
+
     private fun showContent(list: ArrayList<Vacancy>, resultsQty: Int) {
-        searchAdapter?.vacanciesList?.clear()
-        searchAdapter?.vacanciesList?.addAll(list)
-        searchAdapter?.notifyDataSetChanged()
+        searchAdapter.vacanciesList.clear()
+        searchAdapter.vacanciesList.addAll(list)
+        searchAdapter.notifyDataSetChanged()
         binding.apply {
             progressBar.isVisible = false
             errorPlaceholder.isVisible = false
@@ -202,10 +245,6 @@ class SearchFragment : Fragment(), SearchClickListener {
             searchStatus.text = getVacanciesWordForm(resultsQty)
             recyclerView.isVisible = true
         }
-    }
-
-    private fun search(request: String) {
-        searchDebounce?.let { it(request) }
     }
 
     override fun onVacancyClick(vacancy: Vacancy) {
@@ -238,7 +277,6 @@ class SearchFragment : Fragment(), SearchClickListener {
     }
 
     companion object {
-        private const val SEARCH_DEBOUNCE_DELAY = 3000L
         private const val CLICK_DEBOUNCE_DELAY = 1000L
         const val EXTRA_ID = "vacancy_id"
 
