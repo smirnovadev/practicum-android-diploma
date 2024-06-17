@@ -104,6 +104,4 @@ class VacancyConverters {
     fun fromSchedule(shedule: Schedule): String {
         return Gson().toJson(shedule)
     }
-
-
 }

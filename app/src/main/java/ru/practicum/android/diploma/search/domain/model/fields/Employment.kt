@@ -5,4 +5,4 @@ import java.io.Serializable
 data class Employment(
     val id: String,
     val name: String?,
-): Serializable
+) : Serializable

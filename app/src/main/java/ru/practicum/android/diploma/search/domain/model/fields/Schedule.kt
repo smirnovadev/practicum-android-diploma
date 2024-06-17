@@ -5,4 +5,4 @@ import java.io.Serializable
 data class Schedule(
     val id: String?,
     val name: String?
-): Serializable
+) : Serializable

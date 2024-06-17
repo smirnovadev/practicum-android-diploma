@@ -10,4 +10,4 @@ data class Employer(
     val name: String?,
     val trusted: Boolean?,
     val url: String?
-): Serializable
+) : Serializable

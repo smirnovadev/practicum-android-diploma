@@ -4,4 +4,4 @@ import java.io.Serializable
 
 data class KeySkill(
     val name: String?
-): Serializable
+) : Serializable

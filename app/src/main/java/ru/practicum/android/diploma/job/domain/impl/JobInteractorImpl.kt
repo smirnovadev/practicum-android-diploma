@@ -9,7 +9,6 @@ import ru.practicum.android.diploma.search.domain.model.Vacancy
 import ru.practicum.android.diploma.job.domain.JobRepository
 import ru.practicum.android.diploma.search.domain.model.Resource
 
-
 class JobInteractorImpl(
     private val navigation: ExternalNavigator,
     private val jobRepository: JobRepository,
