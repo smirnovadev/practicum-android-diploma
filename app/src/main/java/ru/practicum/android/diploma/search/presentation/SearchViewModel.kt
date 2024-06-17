@@ -80,7 +80,7 @@ class SearchViewModel(private val searchInteractor: SearchInteractor) : ViewMode
                 }
 
                 IO_EXCEPTION -> {
-                    screenState.postValue(SearchScreenState.Error)
+                    screenState.postValue(SearchScreenState.IOError)
                     isNextPageLoading = false
                 }
 

@@ -8,6 +8,7 @@ sealed class SearchScreenState {
     data object InternetConnectionError : SearchScreenState()
     data object ServerError : SearchScreenState()
     data object SearchError : SearchScreenState()
+    data object IOError : SearchScreenState()
     data object Error : SearchScreenState()
     data object UploadNextPage : SearchScreenState()
     data class ShowContent(val vacancies: ArrayList<Vacancy>, val found: Int) : SearchScreenState()

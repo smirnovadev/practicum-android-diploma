@@ -129,6 +129,7 @@ class SearchFragment : Fragment(), SearchClickListener {
             is SearchScreenState.ShowContent -> showContent(state.vacancies, state.found)
             is SearchScreenState.UploadNextPage -> uploadNextPage()
             is SearchScreenState.Error -> showError()
+            is SearchScreenState.IOError -> showIOError()
         }
     }
 
@@ -219,6 +220,17 @@ class SearchFragment : Fragment(), SearchClickListener {
             errorPlaceholder.isVisible = false
             searchStatus.isVisible = false
             recyclerView.isVisible = false
+        }
+    }
+
+    private fun showIOError() {
+        Toast.makeText(requireContext(), getString(R.string.error_occured), Toast.LENGTH_SHORT).show()
+        binding.apply {
+            searchScreenCover.isVisible = false
+            progressBar.isVisible = false
+            errorPlaceholder.isVisible = false
+            searchStatus.isVisible = true
+            recyclerView.isVisible = true
         }
     }
 
