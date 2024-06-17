@@ -15,6 +15,7 @@ import ru.practicum.android.diploma.data.network.RetrofitNetworkClient
 import ru.practicum.android.diploma.db.AppDatabase
 import ru.practicum.android.diploma.filters.data.FiltersLocalStorage
 import ru.practicum.android.diploma.job.data.ExternalNavigatorImpl
+import ru.practicum.android.diploma.job.data.mapper.ResponseToVacancyMapper
 import ru.practicum.android.diploma.job.domain.ExternalNavigator
 import ru.practicum.android.diploma.search.data.mapper.AddressMapper
 import ru.practicum.android.diploma.search.data.mapper.AreaMapper
@@ -190,5 +191,26 @@ val dataModule = module {
 
     single<FiltersLocalStorage> {
         FiltersLocalStorage(get(), get())
+    }
+
+    single<ResponseToVacancyMapper> {
+        ResponseToVacancyMapper(
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get()
+        )
     }
 }

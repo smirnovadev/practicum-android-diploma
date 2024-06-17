@@ -1,3 +1,5 @@
+package ru.practicum.android.diploma.util
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
