@@ -228,6 +228,11 @@ class JobFragment : Fragment() {
             .replace("<li>", "<li> ")
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     companion object {
         fun createArgs(
             vacancyId: String
