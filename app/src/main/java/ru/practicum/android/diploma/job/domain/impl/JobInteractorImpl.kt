@@ -1,13 +1,14 @@
 package ru.practicum.android.diploma.job.domain.impl
 
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+
 import ru.practicum.android.diploma.job.domain.ExternalNavigator
 import ru.practicum.android.diploma.job.domain.FavoritesJobRepository
 import ru.practicum.android.diploma.job.domain.JobInteractor
-import ru.practicum.android.diploma.search.domain.model.Vacancy
 import ru.practicum.android.diploma.job.domain.JobRepository
 import ru.practicum.android.diploma.search.domain.model.Resource
+import ru.practicum.android.diploma.search.domain.model.Vacancy
 
 class JobInteractorImpl(
     private val navigation: ExternalNavigator,
