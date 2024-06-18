@@ -18,7 +18,7 @@ class FavoritesViewModel(private val interactor: FavoritesInteractor) : ViewMode
     init {
         viewModelScope.launch {
             val newScreenState = interactor.loadData()
-            Log.i("Favorite_screen_state",newScreenState.toString())
+            Log.i("Favorite_screen_state", newScreenState.toString())
             screenState.postValue(newScreenState)
         }
     }
