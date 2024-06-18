@@ -64,7 +64,7 @@ class SearchFragment : Fragment(), SearchClickListener {
             CLICK_DEBOUNCE_DELAY,
             viewLifecycleOwner.lifecycleScope,
             false
-        ) { allowClick() }
+        ) { if (!isClickAllowed) allowClick() }
 
         binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {

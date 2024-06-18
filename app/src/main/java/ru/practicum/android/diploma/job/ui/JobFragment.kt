@@ -224,7 +224,6 @@ class JobFragment : Fragment() {
         val cornerSize = resources.getDimensionPixelSize(R.dimen._12dp)
         Glide.with(this)
             .load(vacancy.employer.logoUrls?.original)
-            .centerCrop()
             .placeholder(R.drawable.ic_placeholder_card_list)
             .transform(RoundedCorners(cornerSize))
             .into(binding.icCompany)

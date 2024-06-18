@@ -13,6 +13,8 @@
         android:layout_width="@dimen/_48dp"
         android:layout_height="@dimen/_48dp"
         android:contentDescription="@null"
+        android:scaleType="centerInside"
+        android:clipToOutline="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/ic_placeholder_card_list" />

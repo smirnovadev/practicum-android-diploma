@@ -25,7 +25,7 @@ class SearchViewModel(private val searchInteractor: SearchInteractor) : ViewMode
         SEARCH_DEBOUNCE_DELAY,
         viewModelScope,
         true
-    ) { request -> search(request) }
+    ) { request -> if (request != previousRequest && !isNextPageLoading) search(request) }
 
     private val screenState = MutableLiveData<SearchScreenState>(SearchScreenState.Default)
     fun getScreenState(): LiveData<SearchScreenState> = screenState
@@ -93,7 +93,7 @@ class SearchViewModel(private val searchInteractor: SearchInteractor) : ViewMode
     }
 
     fun uploadPage() {
-        if (!isNextPageLoading && currentPage != maxPages - ONE) {
+        if (previousRequest.isNotEmpty() && !isNextPageLoading && currentPage != maxPages - ONE) {
             isNextPageLoading = true
             screenState.postValue(SearchScreenState.UploadNextPage)
             search(previousRequest, currentPage + ONE)
@@ -102,6 +102,7 @@ class SearchViewModel(private val searchInteractor: SearchInteractor) : ViewMode
 
     fun clearSearchField() {
         previousRequest = ""
+        searchDebounce("")
         searchResultsList.clear()
         screenState.postValue(SearchScreenState.Default)
     }
