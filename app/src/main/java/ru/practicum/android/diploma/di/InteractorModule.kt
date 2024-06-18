@@ -19,6 +19,7 @@ val interactorModule = module {
 
     single<FavoritesInteractor> {
         FavoritesInteractorImpl(get())
+    }
 
     single<JobInteractor> {
         JobInteractorImpl(get(), get(), get())

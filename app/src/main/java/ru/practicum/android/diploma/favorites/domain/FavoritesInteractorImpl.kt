@@ -1,6 +1,6 @@
 package ru.practicum.android.diploma.favorites.domain
 
-import ru.practicum.android.diploma.db.entities.VacancyWithEmployer
+import ru.practicum.android.diploma.db.entities.VacancyEntity
 import ru.practicum.android.diploma.favorites.domain.models.FavoritesScreenState
 
 class FavoritesInteractorImpl(private val favoritesRepository: FavoritesRepository) : FavoritesInteractor {
@@ -19,7 +19,7 @@ class FavoritesInteractorImpl(private val favoritesRepository: FavoritesReposito
         }
     }
 
-    private fun verificationData(list: List<VacancyWithEmployer>): List<VacancyWithEmployer>? {
+    private fun verificationData(list: List<VacancyEntity>): List<VacancyEntity>? {
         return if (list.toString() == "[]") {
             null
         } else {
