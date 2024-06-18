@@ -26,7 +26,9 @@ class FavoritesFragment : Fragment(), SearchClickListener {
     private var adapter = SearchAdapter(this)
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
 
@@ -87,7 +89,10 @@ class FavoritesFragment : Fragment(), SearchClickListener {
             placeholder.isVisible = true
             placeholder.setText(R.string.empty_search_results)
             placeholder.setCompoundDrawablesWithIntrinsicBounds(
-                0, R.drawable.img_empty_search_results, 0, 0
+                0,
+                R.drawable.img_empty_search_results,
+                0,
+                0
             )
             recyclerView.isVisible = false
         }

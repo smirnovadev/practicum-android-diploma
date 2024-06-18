@@ -6,7 +6,8 @@ import ru.practicum.android.diploma.job.domain.JobDbConvertor
 import ru.practicum.android.diploma.search.domain.model.Vacancy
 
 class FavoritesRepositoryImpl(
-    private val appDatabase: AppDatabase, private val convertor: JobDbConvertor
+    private val appDatabase: AppDatabase,
+    private val convertor: JobDbConvertor
 ) : FavoritesRepository {
     override suspend fun loadData(): ArrayList<Vacancy> {
         val vacancyList = convertor
