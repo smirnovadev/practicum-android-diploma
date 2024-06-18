@@ -1,10 +1,10 @@
 package ru.practicum.android.diploma.favorites.domain.models
 
-import ru.practicum.android.diploma.db.entities.VacancyEntity
+import ru.practicum.android.diploma.search.domain.model.Vacancy
 
 sealed class FavoritesScreenState {
     data class Default(
-        val vacancyList: List<VacancyEntity>
+        val vacancyList: ArrayList<Vacancy>
     ) : FavoritesScreenState()
 
     data object NoFavoritesAdded : FavoritesScreenState()

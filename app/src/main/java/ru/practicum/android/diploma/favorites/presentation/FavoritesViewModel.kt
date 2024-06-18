@@ -16,6 +16,10 @@ class FavoritesViewModel(private val interactor: FavoritesInteractor) : ViewMode
     fun getScreenState(): LiveData<FavoritesScreenState> = screenState
 
     init {
+        getVacancies()
+    }
+
+    fun getVacancies() {
         viewModelScope.launch {
             val newScreenState = interactor.loadData()
             Log.i("Favorite_screen_state", newScreenState.toString())

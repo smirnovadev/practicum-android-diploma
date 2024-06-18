@@ -1,7 +1,7 @@
 package ru.practicum.android.diploma.favorites.domain
 
-import ru.practicum.android.diploma.db.entities.VacancyEntity
 import ru.practicum.android.diploma.favorites.domain.models.FavoritesScreenState
+import ru.practicum.android.diploma.search.domain.model.Vacancy
 
 class FavoritesInteractorImpl(private val favoritesRepository: FavoritesRepository) : FavoritesInteractor {
     override suspend fun loadData(): FavoritesScreenState {
@@ -19,7 +19,7 @@ class FavoritesInteractorImpl(private val favoritesRepository: FavoritesReposito
         }
     }
 
-    private fun verificationData(list: List<VacancyEntity>): List<VacancyEntity>? {
+    private fun verificationData(list: ArrayList<Vacancy>): ArrayList<Vacancy>? {
         return if (list.toString() == "[]") {
             null
         } else {
