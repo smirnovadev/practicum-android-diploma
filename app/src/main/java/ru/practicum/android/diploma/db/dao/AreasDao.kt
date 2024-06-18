@@ -12,13 +12,21 @@ interface AreasDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertArea(area: AreaEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAreas(areas: List<AreaEntity>)
+
     @Query("SELECT * FROM areas_table")
     suspend fun getAreas(): List<AreaEntity>
 
-    @Query("SELECT id FROM areas_table")
-    suspend fun getAreasId(): List<Int>
+    @Query("SELECT * FROM areas_table WHERE parent IS NULL")
+    suspend fun getCountries(): List<AreaEntity>
+
+    @Query("SELECT * FROM areas_table WHERE parent==:parent")
+    suspend fun getRegions(parent: Int): List<AreaEntity>
+
+    @Query("SELECT * FROM areas_table WHERE name LIKE '%' || :name || '%' AND parent=:parent")
+    suspend fun getRegion(name: String, parent: Int): List<AreaEntity>
 
     @Delete(entity = AreaEntity::class)
     fun deleteArea(areaEntity: AreaEntity)
-
 }
