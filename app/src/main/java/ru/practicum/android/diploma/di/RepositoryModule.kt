@@ -16,7 +16,7 @@ val repositoryModule = module {
     }
 
     single<JobRepository> {
-        JobRepositoryImpl()
+        JobRepositoryImpl(get(), get())
     }
 
     single<FiltersRepository> {

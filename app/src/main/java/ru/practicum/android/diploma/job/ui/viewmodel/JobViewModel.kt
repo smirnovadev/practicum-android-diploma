@@ -9,17 +9,17 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.practicum.android.diploma.job.domain.JobInteractor
 import ru.practicum.android.diploma.job.domain.JobScreenState
+import ru.practicum.android.diploma.search.domain.model.Resource
 
 class JobViewModel(
     private val jobInteractor: JobInteractor
 ) : ViewModel() {
 
-    private val _state = MutableLiveData<JobScreenState>()
-    val state: LiveData<JobScreenState> get() = _state
+    private val screenState = MutableLiveData<JobScreenState>()
+    fun getScreenState(): LiveData<JobScreenState> = screenState
 
     init {
-        _state.value = JobScreenState.Loading
-        loadData()
+        screenState.postValue(JobScreenState.Loading)
     }
 
     fun shareLink(alternateUrl: String) {
@@ -34,17 +34,16 @@ class JobViewModel(
         jobInteractor.callTo(phoneNumber)
     }
 
-    private fun loadData() {
+    fun searchVacancyById(id: String) {
         viewModelScope.launch {
-//            delay(2000) // для проверки
-            val success = withContext(Dispatchers.IO) {
-                true
-            }
-
-            if (success) {
-                _state.value = JobScreenState.Content
-            } else {
-                _state.value = JobScreenState.Error
+            withContext(Dispatchers.IO) {
+                jobInteractor.getVacancyById(id)
+                    .collect { resource ->
+                        when (resource) {
+                            is Resource.Success -> screenState.postValue(JobScreenState.Content(resource.data!!))
+                            is Resource.Error -> screenState.postValue(JobScreenState.Error)
+                        }
+                    }
             }
         }
     }

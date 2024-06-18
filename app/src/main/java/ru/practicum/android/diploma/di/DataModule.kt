@@ -15,6 +15,7 @@ import ru.practicum.android.diploma.data.network.RetrofitNetworkClient
 import ru.practicum.android.diploma.db.AppDatabase
 import ru.practicum.android.diploma.filters.data.FiltersLocalStorage
 import ru.practicum.android.diploma.job.data.ExternalNavigatorImpl
+import ru.practicum.android.diploma.job.data.mapper.ResponseToVacancyMapper
 import ru.practicum.android.diploma.job.domain.ExternalNavigator
 import ru.practicum.android.diploma.search.data.mapper.AddressMapper
 import ru.practicum.android.diploma.search.data.mapper.AreaMapper
@@ -40,6 +41,7 @@ import ru.practicum.android.diploma.search.data.mapper.VacancyAreaMapper
 import ru.practicum.android.diploma.search.data.mapper.VacancyMapper
 import ru.practicum.android.diploma.search.data.mapper.WorkingDayMapper
 import ru.practicum.android.diploma.search.data.mapper.WorkingTimeIntervalMapper
+import ru.practicum.android.diploma.util.MapperContainer
 
 val dataModule = module {
     single(named("baseUrl")) {
@@ -69,21 +71,6 @@ val dataModule = module {
 
     single<VacancyMapper> {
         VacancyMapper(
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
             get()
         )
     }
@@ -190,5 +177,24 @@ val dataModule = module {
 
     single<FiltersLocalStorage> {
         FiltersLocalStorage(get(), get())
+    }
+
+    single<ResponseToVacancyMapper> {
+        ResponseToVacancyMapper(
+            get()
+        )
+    }
+
+    single<MapperContainer> {
+        MapperContainer(
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get()
+        )
     }
 }
