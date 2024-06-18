@@ -32,7 +32,7 @@ class JobFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentVacancyBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -45,12 +45,25 @@ class JobFragment : Fragment() {
         }
 
         val vacancyId = requireArguments().getString(EXTRA_ID)
-        if (vacancyId != null) viewModel.searchVacancyById(vacancyId)
+        if (vacancyId != null) {
+            viewModel.searchVacancyById(vacancyId)
+            viewModel.loadFavoriteState(vacancyId)
+        }
 
         binding.apply {
             toolbar.setNavigationOnClickListener {
                 findNavController().popBackStack()
             }
+        }
+        val addFavoriteButton = binding.icFavorites
+        viewModel.isFavoriteVacancyLiveData().observe(requireActivity()) { isFavorite ->
+            addFavoriteButton.setBackgroundResource(
+                if (isFavorite) {
+                    R.drawable.ic_favorites_on
+                } else {
+                    R.drawable.ic_favorites_off
+                }
+            )
         }
     }
 
@@ -118,6 +131,9 @@ class JobFragment : Fragment() {
 
             icShape.setOnClickListener {
                 viewModel.shareLink(vacancy.alternateUrl)
+            }
+            icFavorites.setOnClickListener {
+                viewModel.onFavoriteClicked(vacancy)
             }
         }
     }
@@ -219,7 +235,7 @@ class JobFragment : Fragment() {
         val employment = vacancy.employment.name
         val schedul = vacancy.schedule.name
 
-        binding.tvWorkSchedule.text = "$employment, $schedul"
+        binding.tvWorkSchedule.text = getString(R.string.tv_work_schedule_template, employment, schedul)
     }
 
     private fun formatHtml(html: String): String {

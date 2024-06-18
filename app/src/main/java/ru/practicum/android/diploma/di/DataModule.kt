@@ -13,6 +13,7 @@ import ru.practicum.android.diploma.data.network.ApiService
 import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.data.network.RetrofitNetworkClient
 import ru.practicum.android.diploma.db.AppDatabase
+import ru.practicum.android.diploma.db.AppDatabase.Companion.MIGRATION_1_2
 import ru.practicum.android.diploma.filters.data.FiltersLocalStorage
 import ru.practicum.android.diploma.job.data.ExternalNavigatorImpl
 import ru.practicum.android.diploma.job.data.mapper.ResponseToVacancyMapper
@@ -20,27 +21,18 @@ import ru.practicum.android.diploma.job.domain.ExternalNavigator
 import ru.practicum.android.diploma.search.data.mapper.AddressMapper
 import ru.practicum.android.diploma.search.data.mapper.AreaMapper
 import ru.practicum.android.diploma.search.data.mapper.ContactsMapper
-import ru.practicum.android.diploma.search.data.mapper.DepartmentMapper
 import ru.practicum.android.diploma.search.data.mapper.EmployerMapper
 import ru.practicum.android.diploma.search.data.mapper.EmploymentMapper
 import ru.practicum.android.diploma.search.data.mapper.ExperienceMapper
 import ru.practicum.android.diploma.search.data.mapper.IndustryMapper
-import ru.practicum.android.diploma.search.data.mapper.InsiderInterviewMapper
 import ru.practicum.android.diploma.search.data.mapper.KeySkillMapper
 import ru.practicum.android.diploma.search.data.mapper.LogoUrlsMapper
-import ru.practicum.android.diploma.search.data.mapper.ManagerMapper
-import ru.practicum.android.diploma.search.data.mapper.MetroStationMapper
 import ru.practicum.android.diploma.search.data.mapper.PhoneMapper
-import ru.practicum.android.diploma.search.data.mapper.ProfessionalRoleMapper
 import ru.practicum.android.diploma.search.data.mapper.ResponseToVacanciesMapper
 import ru.practicum.android.diploma.search.data.mapper.ScheduleMapper
-import ru.practicum.android.diploma.search.data.mapper.SnippetMapper
-import ru.practicum.android.diploma.search.data.mapper.TypeMapper
 import ru.practicum.android.diploma.search.data.mapper.VacanciesMapper
 import ru.practicum.android.diploma.search.data.mapper.VacancyAreaMapper
 import ru.practicum.android.diploma.search.data.mapper.VacancyMapper
-import ru.practicum.android.diploma.search.data.mapper.WorkingDayMapper
-import ru.practicum.android.diploma.search.data.mapper.WorkingTimeIntervalMapper
 import ru.practicum.android.diploma.util.MapperContainer
 
 val dataModule = module {
@@ -71,7 +63,7 @@ val dataModule = module {
 
     single<VacancyMapper> {
         VacancyMapper(
-            get()
+            get(),
         )
     }
 
@@ -81,19 +73,16 @@ val dataModule = module {
 
     single<AppDatabase> {
         Room.databaseBuilder(androidContext(), AppDatabase::class.java, "database.db")
+            .addMigrations(MIGRATION_1_2)
             .build()
     }
 
     single<AddressMapper> {
-        AddressMapper(get())
+        AddressMapper()
     }
 
     single<ContactsMapper> {
         ContactsMapper(get())
-    }
-
-    single<DepartmentMapper> {
-        DepartmentMapper()
     }
 
     single<EmployerMapper> {
@@ -108,10 +97,6 @@ val dataModule = module {
         ExperienceMapper()
     }
 
-    single<InsiderInterviewMapper> {
-        InsiderInterviewMapper()
-    }
-
     single<KeySkillMapper> {
         KeySkillMapper()
     }
@@ -120,45 +105,18 @@ val dataModule = module {
         LogoUrlsMapper()
     }
 
-    single<ManagerMapper> {
-        ManagerMapper()
-    }
-
-    single<MetroStationMapper> {
-        MetroStationMapper()
-    }
-
     single<PhoneMapper> {
         PhoneMapper()
-    }
-
-    single<ProfessionalRoleMapper> {
-        ProfessionalRoleMapper()
     }
 
     single<ScheduleMapper> {
         ScheduleMapper()
     }
 
-    single<SnippetMapper> {
-        SnippetMapper()
-    }
-
-    single<TypeMapper> {
-        TypeMapper()
-    }
-
     single<VacancyAreaMapper> {
         VacancyAreaMapper()
     }
 
-    single<WorkingDayMapper> {
-        WorkingDayMapper()
-    }
-
-    single<WorkingTimeIntervalMapper> {
-        WorkingTimeIntervalMapper()
-    }
     single<VacanciesMapper> {
         VacanciesMapper(get())
     }

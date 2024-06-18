@@ -10,6 +10,7 @@ import kotlinx.coroutines.withContext
 import ru.practicum.android.diploma.job.domain.JobInteractor
 import ru.practicum.android.diploma.job.domain.JobScreenState
 import ru.practicum.android.diploma.search.domain.model.Resource
+import ru.practicum.android.diploma.search.domain.model.Vacancy
 
 class JobViewModel(
     private val jobInteractor: JobInteractor
@@ -18,8 +19,33 @@ class JobViewModel(
     private val screenState = MutableLiveData<JobScreenState>()
     fun getScreenState(): LiveData<JobScreenState> = screenState
 
+    private val isFavoriteVacancyLiveData = MutableLiveData<Boolean>()
+    fun isFavoriteVacancyLiveData(): LiveData<Boolean> = isFavoriteVacancyLiveData
+
     init {
         screenState.postValue(JobScreenState.Loading)
+    }
+
+    fun onFavoriteClicked(vacancy: Vacancy?) {
+        vacancy ?: error("vacancy is null")
+        viewModelScope.launch {
+            if (isFavoriteVacancyLiveData.value == true) {
+                jobInteractor.deleteFavorite(vacancy)
+                isFavoriteVacancyLiveData.postValue(false)
+            } else {
+                jobInteractor.addFavorite(vacancy)
+                isFavoriteVacancyLiveData.postValue(true)
+            }
+        }
+    }
+
+    fun loadFavoriteState(vacancyId: String?) {
+        vacancyId ?: error("vacancyId is null")
+        viewModelScope.launch {
+            jobInteractor.isFavoriteVacancy(vacancyId).collect { isFavorite ->
+                isFavoriteVacancyLiveData.value = isFavorite
+            }
+        }
     }
 
     fun shareLink(alternateUrl: String) {
