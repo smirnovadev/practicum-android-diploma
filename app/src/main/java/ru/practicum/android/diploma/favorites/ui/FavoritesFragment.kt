@@ -78,7 +78,10 @@ class FavoritesFragment : Fragment(), SearchClickListener {
             placeholder.isVisible = true
             placeholder.setText(R.string.empty_list)
             placeholder.setCompoundDrawablesWithIntrinsicBounds(
-                0, R.drawable.img_empty_list, 0, 0
+                0,
+                R.drawable.img_empty_list,
+                0,
+                0
             )
             recyclerView.isVisible = false
         }
