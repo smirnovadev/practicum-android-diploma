@@ -32,7 +32,8 @@ class SearchFragment : Fragment(), SearchClickListener {
     private val viewModel by viewModel<SearchViewModel>()
     private var textWatcher: TextWatcher? = null
     private var searchAdapter = SearchAdapter(this)
-    private var clickDebounce: ((Vacancy) -> Unit)? = null
+    private var clickDebounce: ((Boolean) -> Unit)? = null
+    private var isClickAllowed = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,11 +60,11 @@ class SearchFragment : Fragment(), SearchClickListener {
             )
         }
 
-        clickDebounce = debounce<Vacancy>(
+        clickDebounce = debounce<Boolean>(
             CLICK_DEBOUNCE_DELAY,
             viewLifecycleOwner.lifecycleScope,
             false
-        ) { vacancy -> onVacancyClick(vacancy) }
+        ) { allowClick() }
 
         binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -117,6 +118,7 @@ class SearchFragment : Fragment(), SearchClickListener {
         super.onDestroyView()
         textWatcher.let { binding.searchField.removeTextChangedListener(it) }
         _binding = null
+        clickDebounce = null
     }
 
     private fun renderState(state: SearchScreenState) {
@@ -248,10 +250,16 @@ class SearchFragment : Fragment(), SearchClickListener {
     }
 
     override fun onVacancyClick(vacancy: Vacancy) {
+        isClickAllowed = false
+        navigateToJobFragment(vacancy.id)
+        clickDebounce?.let { it(isClickAllowed) }
+    }
+
+    private fun navigateToJobFragment(vacancyId: String) {
         findNavController().navigate(
             R.id.action_searchFragment_to_jobFragment,
             JobFragment.createArgs(
-                vacancy.id
+                vacancyId
             )
         )
     }
@@ -274,6 +282,10 @@ class SearchFragment : Fragment(), SearchClickListener {
             )
 
         return "$foundForm $quantity $vacancyForm"
+    }
+
+    private fun allowClick() {
+        isClickAllowed = true
     }
 
     companion object {
