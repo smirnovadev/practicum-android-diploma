@@ -1,5 +1,7 @@
 package ru.practicum.android.diploma.favorites.domain
 
+import ru.practicum.android.diploma.db.entities.VacancyEntity
+
 interface FavoritesRepository {
-    fun loadData()
+    suspend fun loadData(): List<VacancyEntity>
 }
