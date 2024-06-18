@@ -17,6 +17,7 @@ data class VacancyEntity(
     val id: String,
     val address: Address,
     val alternateUrl: String,
+    val applyAlternateUrl: String,
     val area: VacancyArea,
     val contacts: Contacts,
     val description: String,

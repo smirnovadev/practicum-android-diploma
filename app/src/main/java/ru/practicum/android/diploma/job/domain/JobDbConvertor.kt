@@ -9,6 +9,7 @@ class JobDbConvertor {
             id = vacancy.id,
             address = vacancy.address,
             alternateUrl = vacancy.alternateUrl,
+            applyAlternateUrl = vacancy.applyAlternateUrl,
             area = vacancy.area,
             contacts = vacancy.contacts,
             description = vacancy.description,
@@ -26,6 +27,7 @@ class JobDbConvertor {
         return Vacancy(
             address = vacancyEntity.address,
             alternateUrl = vacancyEntity.alternateUrl,
+            applyAlternateUrl = vacancyEntity.applyAlternateUrl,
             area = vacancyEntity.area,
             contacts = vacancyEntity.contacts,
             description = vacancyEntity.description,

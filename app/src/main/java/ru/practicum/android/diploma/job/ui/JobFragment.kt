@@ -32,30 +32,27 @@ class JobFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentVacancyBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val vacancy = requireArguments().getSerializable(EXTRA_VACANCY) as Vacancy
-
-        viewModel.loadFavoriteState(vacancy)
 
         viewModel.getScreenState().observe(viewLifecycleOwner) {
             render(it)
         }
 
         val vacancyId = requireArguments().getString(EXTRA_ID)
-        if (vacancyId != null) viewModel.searchVacancyById(vacancyId)
+        if (vacancyId != null) {
+            viewModel.searchVacancyById(vacancyId)
+            viewModel.loadFavoriteState(vacancyId)
+        }
 
         binding.apply {
             toolbar.setNavigationOnClickListener {
                 findNavController().popBackStack()
-            }
-            icFavorites.setOnClickListener {
-                viewModel.onFavoriteClicked(vacancy)
             }
         }
         val addFavoriteButton = binding.icFavorites
@@ -68,7 +65,6 @@ class JobFragment : Fragment() {
                 }
             )
         }
-        viewCompanyLogo()
     }
 
     private fun render(state: JobScreenState) {
@@ -135,6 +131,9 @@ class JobFragment : Fragment() {
 
             icShape.setOnClickListener {
                 viewModel.shareLink(vacancy.alternateUrl)
+            }
+            icFavorites.setOnClickListener {
+                viewModel.onFavoriteClicked(vacancy)
             }
         }
     }

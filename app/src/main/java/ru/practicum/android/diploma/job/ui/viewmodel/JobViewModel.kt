@@ -39,10 +39,10 @@ class JobViewModel(
         }
     }
 
-    fun loadFavoriteState(vacancy: Vacancy?) {
-        vacancy ?: error("vacancy is null")
+    fun loadFavoriteState(vacancyId: String?) {
+        vacancyId ?: error("vacancyId is null")
         viewModelScope.launch {
-            jobInteractor.isFavoriteVacancy(vacancy.id).collect { isFavorite ->
+            jobInteractor.isFavoriteVacancy(vacancyId).collect { isFavorite ->
                 isFavoriteVacancyLiveData.value = isFavorite
             }
         }

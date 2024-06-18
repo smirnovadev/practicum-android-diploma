@@ -16,7 +16,7 @@ val interactorModule = module {
     }
 
     single<JobInteractor> {
-        JobInteractorImpl(get(), get())
+        JobInteractorImpl(get(), get(), get())
     }
 
     single<FiltersInteractor> {

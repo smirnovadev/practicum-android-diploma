@@ -13,6 +13,5 @@ interface JobInteractor {
     suspend fun addFavorite(vacancy: Vacancy)
     suspend fun getAllFavorite(): Flow<List<Vacancy>>
     suspend fun isFavoriteVacancy(id: String): Flow<Boolean>
-
     fun getVacancyById(id: String): Flow<Resource<Vacancy>>
 }

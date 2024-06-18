@@ -35,6 +35,7 @@ abstract class AppDatabase : RoomDatabase() {
                         id TEXT NOT NULL PRIMARY KEY,
                         address TEXT NOT NULL,
                         alternateUrl TEXT NOT NULL,
+                        applyAlternateUrl TEXT NOT NULL,
                         area TEXT NOT NULL,
                         contacts TEXT NOT NULL,
                         description TEXT NOT NULL,
