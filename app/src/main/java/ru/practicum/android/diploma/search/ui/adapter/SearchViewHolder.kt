@@ -31,6 +31,5 @@ class SearchViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         tvCompany.text = vacancy.employer.name
         tvSalary.text = vacancy.salary
 
-        // пока поставим так, потом при рабочем запросе нужно посмотреть, что покажет и придется поправлять
     }
 }
