@@ -6,4 +6,8 @@ data class VacancyArea(
     val id: String?,
     val name: String?,
     val url: String?
-) : Serializable
+) : Serializable {
+    companion object {
+        private const val serialVersionUID = 1L
+    }
+}

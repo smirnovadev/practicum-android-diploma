@@ -25,4 +25,8 @@ data class Vacancy(
     val name: String,
     val salary: String,
     val schedule: Schedule,
-) : Serializable
+) : Serializable {
+    companion object {
+        private const val serialVersionUID = 1L
+    }
+}

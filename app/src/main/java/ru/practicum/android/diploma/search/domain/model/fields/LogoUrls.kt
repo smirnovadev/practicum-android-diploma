@@ -6,4 +6,8 @@ data class LogoUrls(
     val x90: String?,
     val x240: String?,
     val original: String?
-) : Serializable
+) : Serializable {
+    companion object {
+        private const val serialVersionUID = 1L
+    }
+}

@@ -9,4 +9,8 @@ data class Address(
     val lat: Double,
     val lng: Double,
     val street: String
-) : Serializable
+) : Serializable {
+    companion object {
+        private const val serialVersionUID = 1L
+    }
+}

@@ -2,7 +2,6 @@ package ru.practicum.android.diploma.job.domain.impl
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-
 import ru.practicum.android.diploma.job.domain.ExternalNavigator
 import ru.practicum.android.diploma.job.domain.FavoritesJobRepository
 import ru.practicum.android.diploma.job.domain.JobInteractor

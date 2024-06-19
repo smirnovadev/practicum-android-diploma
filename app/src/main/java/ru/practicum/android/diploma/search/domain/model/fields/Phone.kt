@@ -7,4 +7,8 @@ data class Phone(
     val comment: String?,
     val country: String?,
     val number: String?
-) : Serializable
+) : Serializable {
+    companion object {
+        private const val serialVersionUID = 1L
+    }
+}

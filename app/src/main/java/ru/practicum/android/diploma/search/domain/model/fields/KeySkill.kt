@@ -4,4 +4,8 @@ import java.io.Serializable
 
 data class KeySkill(
     val name: String?
-) : Serializable
+) : Serializable {
+    companion object {
+        private const val serialVersionUID = 1L
+    }
+}

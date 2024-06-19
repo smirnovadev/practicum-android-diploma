@@ -6,4 +6,8 @@ data class Contacts(
     val email: String?,
     val name: String?,
     val phones: List<Phone?>
-) : Serializable
+) : Serializable {
+    companion object {
+        private const val serialVersionUID = 1L
+    }
+}
