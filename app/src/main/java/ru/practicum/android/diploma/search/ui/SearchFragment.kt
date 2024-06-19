@@ -259,7 +259,7 @@ class SearchFragment : Fragment(), SearchClickListener {
         findNavController().navigate(
             R.id.action_searchFragment_to_jobFragment,
             JobFragment.createArgs(
-                vacancyId
+                vacancyId = vacancyId
             )
         )
     }

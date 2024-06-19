@@ -7,13 +7,15 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import ru.practicum.android.diploma.favorites.domain.FavoritesInteractor
 import ru.practicum.android.diploma.job.domain.JobInteractor
 import ru.practicum.android.diploma.job.domain.JobScreenState
 import ru.practicum.android.diploma.search.domain.model.Resource
 import ru.practicum.android.diploma.search.domain.model.Vacancy
 
 class JobViewModel(
-    private val jobInteractor: JobInteractor
+    private val jobInteractor: JobInteractor,
+    private val favoritesInteractor: FavoritesInteractor
 ) : ViewModel() {
 
     private val screenState = MutableLiveData<JobScreenState>()
@@ -71,6 +73,13 @@ class JobViewModel(
                         }
                     }
             }
+        }
+    }
+
+    fun getFavoriteVacancyById(vacancyId: String) {
+        viewModelScope.launch {
+            val vacancy = favoritesInteractor.getFavFacancyById(vacancyId)
+            screenState.postValue(JobScreenState.Content(vacancy))
         }
     }
 }

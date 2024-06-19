@@ -16,6 +16,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentVacancyBinding
+import ru.practicum.android.diploma.favorites.ui.FavoritesFragment.Companion.VACANCY_FAV
 import ru.practicum.android.diploma.job.domain.JobScreenState
 import ru.practicum.android.diploma.job.ui.viewmodel.JobViewModel
 import ru.practicum.android.diploma.search.domain.model.Vacancy
@@ -45,9 +46,13 @@ class JobFragment : Fragment() {
         }
 
         val vacancyId = requireArguments().getString(EXTRA_ID)
-        if (vacancyId != null) {
+        val favVacancyId = requireArguments().getString(VACANCY_FAV)
+
+        if (vacancyId != null && favVacancyId == null) {
             viewModel.searchVacancyById(vacancyId)
             viewModel.loadFavoriteState(vacancyId)
+        } else if (vacancyId == null && favVacancyId != null) {
+            viewModel.getFavoriteVacancyById(favVacancyId)
         }
 
         binding.apply {
@@ -232,9 +237,9 @@ class JobFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     private fun viewEmploymentAndSchedule(vacancy: Vacancy) {
         val employment = vacancy.employment.name
-        val schedul = vacancy.schedule.name
+        val schedule = vacancy.schedule.name
 
-        binding.tvWorkSchedule.text = getString(R.string.tv_work_schedule_template, employment, schedul)
+        binding.tvWorkSchedule.text = getString(R.string.tv_work_schedule_template, employment, schedule)
     }
 
     private fun formatHtml(html: String): String {
@@ -250,9 +255,11 @@ class JobFragment : Fragment() {
 
     companion object {
         fun createArgs(
-            vacancyId: String
+            vacancyId: String? = null,
+            favVacancyId: String? = null
         ): Bundle = bundleOf(
-            EXTRA_ID to vacancyId
+            EXTRA_ID to vacancyId,
+            VACANCY_FAV to favVacancyId
         )
     }
 }
