@@ -78,7 +78,7 @@ class JobViewModel(
 
     fun getFavoriteVacancyById(vacancyId: String) {
         viewModelScope.launch {
-            val vacancy = favoritesInteractor.getFavFacancyById(vacancyId)
+            val vacancy = favoritesInteractor.getFavVacancyById(vacancyId)
             screenState.postValue(JobScreenState.Content(vacancy))
         }
     }
