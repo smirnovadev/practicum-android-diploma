@@ -19,6 +19,10 @@ class FavoritesInteractorImpl(private val favoritesRepository: FavoritesReposito
         }
     }
 
+    override suspend fun getFavFacancyById(id: String): Vacancy {
+        return favoritesRepository.getFavFacancyById(id)
+    }
+
     private fun verificationData(list: ArrayList<Vacancy>): ArrayList<Vacancy>? {
         return if (list.toString() == "[]") {
             null

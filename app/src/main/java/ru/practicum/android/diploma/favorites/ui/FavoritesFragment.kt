@@ -105,7 +105,8 @@ class FavoritesFragment : Fragment(), SearchClickListener {
         findNavController().navigate(
             R.id.action_favoritesFragment_to_jobFragment,
             JobFragment.createArgs(
-                vacancy.id
+                vacancyId = null,
+                favVacancyId = vacancy.id
             )
         )
     }
@@ -115,4 +116,7 @@ class FavoritesFragment : Fragment(), SearchClickListener {
         viewModel.getVacancies()
     }
 
+    companion object {
+        const val VACANCY_FAV = "favorite_vacancy"
+    }
 }

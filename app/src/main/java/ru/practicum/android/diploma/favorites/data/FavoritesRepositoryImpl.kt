@@ -14,4 +14,8 @@ class FavoritesRepositoryImpl(
             .convertToListVacancy(appDatabase.vacanciesDao().getAllFavoriteVacancies())
         return vacancyList.toCollection(ArrayList())
     }
+
+    override suspend fun getFavFacancyById(id: String): Vacancy {
+        return convertor.mapToVacancy(appDatabase.vacanciesDao().getVacancyById(id))
+    }
 }

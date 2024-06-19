@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.db.entities
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ru.practicum.android.diploma.search.domain.model.fields.Address
@@ -13,7 +14,7 @@ import ru.practicum.android.diploma.search.domain.model.fields.VacancyArea
 
 @Entity(tableName = "favorite_vacancy_table")
 data class VacancyEntity(
-    @PrimaryKey
+    @PrimaryKey @ColumnInfo(name = "id")
     val id: String,
     val address: Address,
     val alternateUrl: String,
