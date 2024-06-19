@@ -5,5 +5,5 @@ import ru.practicum.android.diploma.search.domain.model.Vacancy
 
 interface FavoritesInteractor {
     suspend fun loadData(): FavoritesScreenState
-    suspend fun getFavFacancyById(id: String): Vacancy
+    suspend fun getFavVacancyById(id: String): Vacancy
 }

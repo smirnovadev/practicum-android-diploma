@@ -53,6 +53,7 @@ class JobFragment : Fragment() {
             viewModel.loadFavoriteState(vacancyId)
         } else if (vacancyId == null && favVacancyId != null) {
             viewModel.getFavoriteVacancyById(favVacancyId)
+            viewModel.loadFavoriteState(favVacancyId)
         }
 
         binding.apply {
