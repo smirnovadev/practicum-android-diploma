@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("ru.practicum.android.diploma.plugins.developproperties")
+    id("kotlin-kapt")
 }
 
 android {
@@ -18,6 +19,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField(type = "String", name = "HH_ACCESS_TOKEN", value = "\"${developProperties.hhAccessToken}\"")
+//        buildConfigField(type = "String", name = "EMAIL", value = "\"${EMAIL}\"")
     }
 
     buildTypes {
@@ -36,16 +38,49 @@ android {
 
     buildFeatures {
         buildConfig = true
+        viewBinding = true
     }
 }
 
 dependencies {
     implementation(libs.androidX.core)
     implementation(libs.androidX.appCompat)
+    implementation(libs.androidX.legacySupport)
 
     // UI layer libraries
     implementation(libs.ui.material)
     implementation(libs.ui.constraintLayout)
+    implementation(libs.ui.fragments)
+
+    // Navigation
+    implementation(libs.nav.navigationFragment)
+    implementation(libs.nav.navigationUI)
+
+    // ViewModel
+    implementation(libs.viewModel.lifecycleViewModel)
+
+    // Livedata
+    implementation(libs.liveData.lifecycleLiveData)
+
+    // Glide
+    implementation(libs.glide.glide)
+
+    // Network
+    implementation(libs.network.retrofit)
+    implementation(libs.network.retrofitConverterGson)
+    implementation(libs.network.gson)
+
+    // Dependency Injections
+    implementation(libs.di.koinAndroid)
+    implementation(libs.di.koinCore)
+
+    // Coroutines
+    implementation(libs.coroutines.coroutines)
+
+    // Database
+    implementation(libs.db.roomRuntime)
+    kapt(libs.db.roomCompiler)
+    implementation(libs.db.roomKtx)
 
     // region Unit tests
     testImplementation(libs.unitTests.junit)
