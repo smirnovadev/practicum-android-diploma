@@ -27,6 +27,21 @@ class RootActivity : AppCompatActivity() {
                 R.id.jobFragment -> {
                     bottomNavigationView.isVisible = false
                 }
+                R.id.filtersFragment -> {
+                    bottomNavigationView.isVisible = false
+                }
+                R.id.industryFragment -> {
+                    bottomNavigationView.isVisible = false
+                }
+                R.id.countryFragment -> {
+                    bottomNavigationView.isVisible = false
+                }
+                R.id.regionFragment -> {
+                    bottomNavigationView.isVisible = false
+                }
+                R.id.placeToWorkFragment -> {
+                    bottomNavigationView.isVisible = false
+                }
 
                 else -> bottomNavigationView.isVisible = true
             }

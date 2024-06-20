@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.filters.ui.area
+package ru.practicum.android.diploma.filters.domain.ScreenState
 
 import ru.practicum.android.diploma.search.domain.model.fields.Area
 
