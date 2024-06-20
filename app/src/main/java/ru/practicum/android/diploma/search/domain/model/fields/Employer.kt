@@ -10,4 +10,8 @@ data class Employer(
     val name: String?,
     val trusted: Boolean?,
     val url: String?
-) : Serializable
+) : Serializable {
+    companion object {
+        private const val serialVersionUID = 1L
+    }
+}
