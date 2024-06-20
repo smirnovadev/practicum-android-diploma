@@ -8,7 +8,7 @@ import ru.practicum.android.diploma.BuildConfig
 import ru.practicum.android.diploma.data.dto.responses.VacanciesSearchResponse
 import ru.practicum.android.diploma.data.dto.responses.VacancyByIdResponse
 import ru.practicum.android.diploma.data.dto.responses.areas.AreasListDAO
-import ru.practicum.android.diploma.data.dto.responses.industry.IndustriesListDTO
+import ru.practicum.android.diploma.data.dto.responses.industry.IndustriesListDAO
 
 interface ApiService {
     @Headers(
@@ -46,5 +46,5 @@ interface ApiService {
     @GET("/salary_statistics/dictionaries/salary_industries")
     suspend fun getIndustries(
         @Query("locale") locale: String = "RU"
-    ): IndustriesListDTO
+    ): IndustriesListDAO
 }

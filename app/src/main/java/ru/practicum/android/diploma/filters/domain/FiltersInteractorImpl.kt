@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.map
 import ru.practicum.android.diploma.data.dto.responses.AreasListResponse
 import ru.practicum.android.diploma.data.dto.responses.IndustriesListResponse
 import ru.practicum.android.diploma.data.dto.responses.areas.AreasListDAO
-import ru.practicum.android.diploma.data.dto.responses.industry.IndustriesListDTO
+import ru.practicum.android.diploma.data.dto.responses.industry.IndustriesListDAO
 import ru.practicum.android.diploma.search.domain.model.fields.Area
 import ru.practicum.android.diploma.search.domain.model.fields.Industry
 
@@ -41,7 +41,7 @@ class FiltersInteractorImpl(
         }
     }
 
-    override suspend fun downloadIndustries(): Flow<Pair<IndustriesListDTO?, Int>> =
+    override suspend fun downloadIndustries(): Flow<Pair<IndustriesListDAO?, Int>> =
         filtersRepository.downloadIndustries().map {
             when (it) {
                 is IndustriesListResponse -> Pair(it.industries, STATUS_OK)
