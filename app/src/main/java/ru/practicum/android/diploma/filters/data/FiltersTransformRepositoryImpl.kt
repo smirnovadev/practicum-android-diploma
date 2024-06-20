@@ -15,9 +15,15 @@ class FiltersTransformRepositoryImpl(
     private val countryRecursionLimit: Int = 1,
     private val industryRecursionLimit: Int = 0,
 ) : FiltersTransformRepository {
-    override fun regionsFromDTO(input: List<AreaUnitDTO>): List<Area>  = areaMapper.map(input, regionRecursionLimit)
+    override fun regionsFromDTO(input: List<AreaUnitDTO>): List<Area> {
+        return areaMapper.map(input, regionRecursionLimit)
+    }
 
-    override fun countriesFromDTO(input: List<AreaUnitDTO>): List<Area> = areaMapper.map(input, countryRecursionLimit)
+    override fun countriesFromDTO(input: List<AreaUnitDTO>): List<Area> {
+        return areaMapper.map(input, countryRecursionLimit)
+    }
 
-    override fun industriesFromDTO(input: List<IndustryUnitDTO>): List<Industry>  = industryMapper.map(input, industryRecursionLimit)
+    override fun industriesFromDTO(input: List<IndustryUnitDTO>): List<Industry> {
+        return industryMapper.map(input, industryRecursionLimit)
+    }
 }

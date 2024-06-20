@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import debounce
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.databinding.FragmentSelectRegionBinding
-import ru.practicum.android.diploma.filters.domain.ScreenState.AreasState
+import ru.practicum.android.diploma.filters.domain.state.AreasState
 import ru.practicum.android.diploma.filters.presentation.RegionViewModel
 import ru.practicum.android.diploma.search.domain.model.fields.Area
 

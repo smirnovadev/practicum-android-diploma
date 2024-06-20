@@ -5,7 +5,6 @@ import ru.practicum.android.diploma.data.dto.responses.industry.IndustryUnitDTO
 import ru.practicum.android.diploma.search.domain.model.fields.Area
 import ru.practicum.android.diploma.search.domain.model.fields.Industry
 
-
 interface FiltersTransformRepository {
     fun regionsFromDTO(input: List<AreaUnitDTO>): List<Area>
     fun countriesFromDTO(input: List<AreaUnitDTO>): List<Area>

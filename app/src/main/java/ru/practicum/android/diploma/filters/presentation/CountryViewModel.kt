@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.filters.domain.FiltersInteractor
 import ru.practicum.android.diploma.filters.domain.FiltersSharedInteractor
 import ru.practicum.android.diploma.filters.domain.FiltersTransformInteractor
-import ru.practicum.android.diploma.filters.domain.ScreenState.AreasState
+import ru.practicum.android.diploma.filters.domain.state.AreasState
 import ru.practicum.android.diploma.search.domain.model.fields.Area
 
 class CountryViewModel(
