@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.practicum.android.diploma.filters.domain.FiltersSharedInteractor
 import ru.practicum.android.diploma.filters.domain.models.Filters
+import ru.practicum.android.diploma.filters.domain.models.FiltersParameters
 import ru.practicum.android.diploma.filters.domain.models.FiltersState
 import ru.practicum.android.diploma.search.domain.api.SearchInteractor
 import ru.practicum.android.diploma.search.domain.model.Vacancies
@@ -69,10 +70,14 @@ class SearchViewModel(
                         .getVacancies(
                             request,
                             page,
-                            currentFilters.salary,
-                            currentFilters.salaryFlag,
-                            processIndustry(currentFilters.industry),
-                            processArea(currentFilters.country, currentFilters.region)
+                            FiltersParameters(
+                                currentFilters.salary,
+                                currentFilters.salaryFlag,
+                                processIndustry(currentFilters.industry),
+                                processArea(
+                                    currentFilters.country, currentFilters.region
+                                )
+                            )
                         )
                         .catch { exception ->
                             screenState.postValue(SearchScreenState.Error)

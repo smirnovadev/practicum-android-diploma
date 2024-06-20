@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.search.domain.impl
 
 import kotlinx.coroutines.flow.Flow
+import ru.practicum.android.diploma.filters.domain.models.FiltersParameters
 import ru.practicum.android.diploma.search.domain.api.SearchInteractor
 import ru.practicum.android.diploma.search.domain.api.SearchRepository
 import ru.practicum.android.diploma.search.domain.model.Resource
@@ -12,19 +13,13 @@ class SearchInteractorImpl(
     override fun getVacancies(
         query: String,
         page: Int,
-        salary: Int?,
-        salaryFlag: Boolean,
-        industry: String?,
-        area: String?
+        filtersParameters: FiltersParameters
     ): Flow<Resource<Vacancies>> {
         return searchRepository
             .getVacancies(
                 query,
                 page,
-                salary,
-                salaryFlag,
-                industry,
-                area
+                filtersParameters
             )
     }
 }
