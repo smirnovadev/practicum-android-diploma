@@ -4,7 +4,9 @@ import org.koin.dsl.module
 import ru.practicum.android.diploma.favorites.data.FavoritesRepositoryImpl
 import ru.practicum.android.diploma.favorites.domain.FavoritesRepository
 import ru.practicum.android.diploma.filters.data.FiltersRepositoryImpl
+import ru.practicum.android.diploma.filters.data.FiltersTransformRepositoryImpl
 import ru.practicum.android.diploma.filters.domain.FiltersRepository
+import ru.practicum.android.diploma.filters.domain.FiltersTransformRepository
 import ru.practicum.android.diploma.job.data.JobRepositoryImpl
 import ru.practicum.android.diploma.job.domain.JobRepository
 import ru.practicum.android.diploma.search.data.SearchRepositoryImpl
@@ -25,5 +27,11 @@ val repositoryModule = module {
 
     single<SearchRepository> {
         SearchRepositoryImpl(get(), get())
+    }
+
+    single<FiltersTransformRepository> {
+        FiltersTransformRepositoryImpl(
+            get(), get()
+        )
     }
 }
