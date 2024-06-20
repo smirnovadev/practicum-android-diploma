@@ -6,6 +6,7 @@ import ru.practicum.android.diploma.data.dto.responses.fields.AddressDTO
 import ru.practicum.android.diploma.data.dto.responses.fields.ContactsDTO
 import ru.practicum.android.diploma.data.dto.responses.fields.DepartmentDTO
 import ru.practicum.android.diploma.data.dto.responses.fields.EmployerDTO
+import ru.practicum.android.diploma.data.dto.responses.fields.EmploymentDTO
 import ru.practicum.android.diploma.data.dto.responses.fields.ExperienceDTO
 import ru.practicum.android.diploma.data.dto.responses.fields.InsiderInterviewDTO
 import ru.practicum.android.diploma.data.dto.responses.fields.KeySkillDTO
@@ -13,6 +14,7 @@ import ru.practicum.android.diploma.data.dto.responses.fields.ManagerDTO
 import ru.practicum.android.diploma.data.dto.responses.fields.ProfessionalRoleDTO
 import ru.practicum.android.diploma.data.dto.responses.fields.SalaryDTO
 import ru.practicum.android.diploma.data.dto.responses.fields.ScheduleDTO
+import ru.practicum.android.diploma.data.dto.responses.fields.SnippetDTO
 import ru.practicum.android.diploma.data.dto.responses.fields.TypeDTO
 import ru.practicum.android.diploma.data.dto.responses.fields.VacancyAreaDTO
 import ru.practicum.android.diploma.data.dto.responses.fields.WorkingDayDTO
@@ -44,6 +46,8 @@ data class VacancyDTO(
     val description: String?,
     @SerializedName("employer")
     val employer: EmployerDTO?,
+    @SerializedName("employment")
+    val employment: EmploymentDTO?,
     @SerializedName("experience")
     val experience: ExperienceDTO?,
     @SerializedName("has_test")
@@ -76,6 +80,8 @@ data class VacancyDTO(
     val salary: SalaryDTO?,
     @SerializedName("schedule")
     val schedule: ScheduleDTO?,
+    @SerializedName("snippet")
+    val snippet: SnippetDTO?,
     @SerializedName("type")
     val type: TypeDTO?,
     @SerializedName("working_days")

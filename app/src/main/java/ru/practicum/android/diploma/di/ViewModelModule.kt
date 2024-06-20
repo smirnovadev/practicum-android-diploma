@@ -17,11 +17,11 @@ val viewModelModule = module {
     }
 
     viewModel<FavoritesViewModel> {
-        FavoritesViewModel()
+        FavoritesViewModel(get())
     }
 
     viewModel<JobViewModel> {
-        JobViewModel(get())
+        JobViewModel(get(), get())
     }
 
     viewModel<FiltersViewModel> {
