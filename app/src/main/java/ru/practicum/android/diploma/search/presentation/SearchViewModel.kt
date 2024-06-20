@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.practicum.android.diploma.filters.domain.FiltersSharedInteractor
-import ru.practicum.android.diploma.filters.domain.models.Filters
 import ru.practicum.android.diploma.filters.domain.models.FiltersParameters
 import ru.practicum.android.diploma.filters.domain.models.FiltersState
 import ru.practicum.android.diploma.search.domain.api.SearchInteractor
@@ -26,8 +25,6 @@ class SearchViewModel(
 ) : ViewModel() {
 
     private var previousRequest: String = ""
-
-    //    private var unprocessedRequest: String = "_"
     private var searchResultsList = ArrayList<Vacancy>()
     private var currentPage: Int = 0
     private var maxPages: Int = 0
@@ -70,15 +67,7 @@ class SearchViewModel(
                         .getVacancies(
                             request,
                             page,
-                            FiltersParameters(
-                                currentFilters.salary,
-                                currentFilters.salaryFlag,
-                                processIndustry(currentFilters.industry),
-                                processArea(
-                                    currentFilters.country,
-                                    currentFilters.region
-                                )
-                            )
+                            currentFilters
                         )
                         .catch { exception ->
                             screenState.postValue(SearchScreenState.Error)
@@ -141,22 +130,25 @@ class SearchViewModel(
         screenState.postValue(SearchScreenState.Default)
     }
 
-    private fun getFilters(): Filters {
-        return Filters(
-            filtersSharedInteractor.getSalary(),
-            filtersSharedInteractor.getSalaryFlag() ?: false,
-            filtersSharedInteractor.getCountry(),
-            filtersSharedInteractor.getRegion(),
-            filtersSharedInteractor.getIndustry()
+    private fun getFilters(): FiltersParameters {
+        return FiltersParameters(
+            salary = filtersSharedInteractor.getSalary(),
+            salaryFlag = filtersSharedInteractor.getSalaryFlag() ?: false,
+            industry = processIndustry(
+                filtersSharedInteractor.getIndustry()
+            ),
+            area = processArea(
+                filtersSharedInteractor.getCountry(),
+                filtersSharedInteractor.getRegion()
+            )
         )
     }
 
-    private fun processFiltersStatus(filters: Filters) {
+    private fun processFiltersStatus(filters: FiltersParameters) {
         if (filters.salary != null ||
             filters.salaryFlag ||
-            filters.country != null ||
-            filters.region != null ||
-            filters.industry != null
+            filters.industry != null ||
+            filters.area != null
         ) {
             filtersState.postValue(FiltersState.Active)
         } else {
