@@ -10,28 +10,47 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import ru.practicum.android.diploma.filters.domain.FiltersSharedInteractor
+import ru.practicum.android.diploma.filters.domain.models.Filters
+import ru.practicum.android.diploma.filters.domain.models.FiltersState
 import ru.practicum.android.diploma.search.domain.api.SearchInteractor
 import ru.practicum.android.diploma.search.domain.model.Vacancies
 import ru.practicum.android.diploma.search.domain.model.Vacancy
+import ru.practicum.android.diploma.search.domain.model.fields.Area
+import ru.practicum.android.diploma.search.domain.model.fields.Industry
 
-class SearchViewModel(private val searchInteractor: SearchInteractor) : ViewModel() {
+class SearchViewModel(
+    private val searchInteractor: SearchInteractor,
+    private val filtersSharedInteractor: FiltersSharedInteractor
+) : ViewModel() {
 
     private var previousRequest: String = ""
+
+    //    private var unprocessedRequest: String = "_"
     private var searchResultsList = ArrayList<Vacancy>()
     private var currentPage: Int = 0
     private var maxPages: Int = 0
+    private var currentFilters = getFilters()
     private var isNextPageLoading: Boolean = false
     val searchDebounce = debounce<String>(
         SEARCH_DEBOUNCE_DELAY,
         viewModelScope,
         true
-    ) { request -> if (request != previousRequest && !isNextPageLoading) search(request) }
+    ) { request ->
+        if (request != previousRequest && !isNextPageLoading) {
+            search(request)
+        }
+    }
 
     private val screenState = MutableLiveData<SearchScreenState>(SearchScreenState.Default)
     fun getScreenState(): LiveData<SearchScreenState> = screenState
 
+    private val filtersState = MutableLiveData<FiltersState>(FiltersState.Inactive)
+    fun getFiltersState(): LiveData<FiltersState> = filtersState
+
     init {
         screenState.postValue(SearchScreenState.Default)
+        processFiltersStatus(getFilters())
     }
 
     fun search(request: String, page: Int = 0) {
@@ -43,17 +62,26 @@ class SearchViewModel(private val searchInteractor: SearchInteractor) : ViewMode
         }
 
         isNextPageLoading = true
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                searchInteractor
-                    .getVacancies(request, page)
-                    .catch { exception ->
-                        screenState.postValue(SearchScreenState.Error)
-                        isNextPageLoading = false
-                    }
-                    .collect { pair ->
-                        processResults(pair.data, pair.message, request)
-                    }
+        if (!request.isNullOrEmpty()) {
+            viewModelScope.launch {
+                withContext(Dispatchers.IO) {
+                    searchInteractor
+                        .getVacancies(
+                            request,
+                            page,
+                            currentFilters.salary,
+                            currentFilters.salaryFlag,
+                            processIndustry(currentFilters.industry),
+                            processArea(currentFilters.country, currentFilters.region)
+                        )
+                        .catch { exception ->
+                            screenState.postValue(SearchScreenState.Error)
+                            isNextPageLoading = false
+                        }
+                        .collect { pair ->
+                            processResults(pair.data, pair.message, request)
+                        }
+                }
             }
         }
     }
@@ -105,6 +133,61 @@ class SearchViewModel(private val searchInteractor: SearchInteractor) : ViewMode
         searchDebounce("")
         searchResultsList.clear()
         screenState.postValue(SearchScreenState.Default)
+    }
+
+    private fun getFilters(): Filters {
+        return Filters(
+            filtersSharedInteractor.getSalary(),
+            filtersSharedInteractor.getSalaryFlag() ?: false,
+            filtersSharedInteractor.getCountry(),
+            filtersSharedInteractor.getRegion(),
+            filtersSharedInteractor.getIndustry()
+        )
+    }
+
+    private fun processFiltersStatus(filters: Filters) {
+        if (filters.salary != null ||
+            filters.salaryFlag ||
+            filters.country != null ||
+            filters.region != null ||
+            filters.industry != null
+        ) {
+            filtersState.postValue(FiltersState.Active)
+        } else {
+            filtersState.postValue(FiltersState.Inactive)
+        }
+    }
+
+    fun checkFiltersStatus() {
+        val filters = getFilters()
+        if (filters != currentFilters) {
+            currentFilters = filters
+            processFiltersStatus(currentFilters)
+            repeatRequest()
+        }
+    }
+
+    private fun repeatRequest() {
+        searchResultsList.clear()
+        search(previousRequest, currentPage)
+    }
+
+    private fun processArea(country: Area?, region: Area?): String? {
+        if (country == null && region == null) {
+            return null
+        } else if (country != null && region == null) {
+            return country.id.toString()
+        } else {
+            return region?.id.toString()
+        }
+    }
+
+    private fun processIndustry(industry: Industry?): String? {
+        return if (industry == null) {
+            null
+        } else {
+            industry.id.toString()
+        }
     }
 
     companion object {
