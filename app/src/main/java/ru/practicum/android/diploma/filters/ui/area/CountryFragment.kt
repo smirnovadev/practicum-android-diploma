@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.databinding.FragmentSelectCountryBinding
+import ru.practicum.android.diploma.filters.domain.state.AreasState
 import ru.practicum.android.diploma.filters.presentation.CountryViewModel
 import ru.practicum.android.diploma.search.domain.model.fields.Area
 

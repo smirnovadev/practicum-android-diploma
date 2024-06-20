@@ -7,13 +7,13 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.filters.domain.FiltersInteractor
 import ru.practicum.android.diploma.filters.domain.FiltersSharedInteractor
-import ru.practicum.android.diploma.filters.ui.area.AreasState
-import ru.practicum.android.diploma.search.data.mapper.AreaMapper
+import ru.practicum.android.diploma.filters.domain.FiltersTransformInteractor
+import ru.practicum.android.diploma.filters.domain.state.AreasState
 import ru.practicum.android.diploma.search.domain.model.fields.Area
 
 class CountryViewModel(
     private val interactor: FiltersInteractor,
-    private val mapper: AreaMapper,
+    private val transformer: FiltersTransformInteractor,
     private val sharedInteractor: FiltersSharedInteractor
 ) : ViewModel() {
     private val stateMutableLiveData = MutableLiveData<AreasState>()
@@ -35,16 +35,17 @@ class CountryViewModel(
                     }
                 )
             } else {
-                val areas = mapper.map(result.first!!, 1)
-                if (areas.isNotEmpty()) {
-                    interactor.insertAreas(areas)
-                    renderState(AreasState.Content(
-                        areas.filter { area ->
-                            area.parent == null
+                transformer.countriesFromDTO(result.first!!).also {
+                    renderState(
+                        if (it.isNotEmpty()) {
+                            interactor.insertAreas(it)
+                            AreasState.Content(it.filter { area ->
+                                area.parent == null
+                            })
+                        } else {
+                            AreasState.Empty
                         }
-                    ))
-                } else {
-                    renderState(AreasState.Empty)
+                    )
                 }
             }
         }

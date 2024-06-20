@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import debounce
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.databinding.FragmentIndustryBinding
+import ru.practicum.android.diploma.filters.domain.state.IndustryState
 import ru.practicum.android.diploma.filters.presentation.IndustryViewModel
 import ru.practicum.android.diploma.search.domain.model.fields.Industry
 

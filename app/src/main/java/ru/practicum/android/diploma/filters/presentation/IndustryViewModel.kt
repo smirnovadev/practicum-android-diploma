@@ -7,13 +7,13 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.filters.domain.FiltersInteractor
 import ru.practicum.android.diploma.filters.domain.FiltersSharedInteractor
-import ru.practicum.android.diploma.filters.ui.industry.IndustryState
-import ru.practicum.android.diploma.search.data.mapper.IndustryMapper
+import ru.practicum.android.diploma.filters.domain.FiltersTransformInteractor
+import ru.practicum.android.diploma.filters.domain.state.IndustryState
 import ru.practicum.android.diploma.search.domain.model.fields.Industry
 
 class IndustryViewModel(
     private val interactor: FiltersInteractor,
-    private val mapper: IndustryMapper,
+    private val transformer: FiltersTransformInteractor,
     private val sharedInteractor: FiltersSharedInteractor,
 ) : ViewModel() {
     private val stateMutableLiveData = MutableLiveData<IndustryState>()
@@ -35,12 +35,13 @@ class IndustryViewModel(
                     }
                 )
             } else {
-                val industries = mapper.map(result.first!!)
-                if (industries.isNotEmpty()) {
-                    interactor.insertIndustries(industries)
-                    renderState(IndustryState.Content(industries))
-                } else {
-                    renderState(IndustryState.Empty)
+                transformer.industriesFromDTO(result.first!!).also {
+                    if (it.isNotEmpty()) {
+                        interactor.insertIndustries(it)
+                        renderState(IndustryState.Content(it))
+                    } else {
+                        renderState(IndustryState.Empty)
+                    }
                 }
             }
         }
