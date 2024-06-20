@@ -36,10 +36,11 @@ val repositoryModule = module {
         FiltersTransformRepositoryImpl(
             get(), get()
         )
-
-        single<FavoritesJobRepository> {
-            FavoritesJobRepositoryImpl(get(), get())
-        }
-        
-        single { JobDbConvertor() }
     }
+
+    single<FavoritesJobRepository> {
+        FavoritesJobRepositoryImpl(get(), get())
+    }
+
+    single { JobDbConvertor() }
+}
