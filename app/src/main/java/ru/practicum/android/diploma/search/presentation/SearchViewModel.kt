@@ -75,7 +75,8 @@ class SearchViewModel(
                                 currentFilters.salaryFlag,
                                 processIndustry(currentFilters.industry),
                                 processArea(
-                                    currentFilters.country, currentFilters.region
+                                    currentFilters.country,
+                                    currentFilters.region
                                 )
                             )
                         )
@@ -178,13 +179,15 @@ class SearchViewModel(
     }
 
     private fun processArea(country: Area?, region: Area?): String? {
-        if (country == null && region == null) {
-            return null
+        val result: String?
+        result = if (country == null && region == null) {
+            null
         } else if (country != null && region == null) {
-            return country.id.toString()
+            country.id.toString()
         } else {
-            return region?.id.toString()
+            region?.id.toString()
         }
+        return result
     }
 
     private fun processIndustry(industry: Industry?): String? {
