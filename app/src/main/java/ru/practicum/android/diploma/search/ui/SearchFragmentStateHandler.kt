@@ -135,6 +135,7 @@ class SearchFragmentStateHandler(
         searchAdapter.vacanciesList.addAll(list)
         searchAdapter.notifyDataSetChanged()
         binding.apply {
+            searchScreenCover.isVisible = false
             progressBar.isVisible = false
             errorPlaceholder.isVisible = false
             searchStatus.isVisible = true

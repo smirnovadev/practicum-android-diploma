@@ -15,6 +15,7 @@ import debounce
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
+import ru.practicum.android.diploma.filters.domain.models.FiltersState
 import ru.practicum.android.diploma.job.ui.JobFragment
 import ru.practicum.android.diploma.search.domain.model.Vacancy
 import ru.practicum.android.diploma.search.presentation.SearchViewModel
@@ -46,6 +47,10 @@ class SearchFragment : Fragment(), SearchClickListener {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getScreenState().observe(viewLifecycleOwner) { state ->
             stateHandler?.renderState(state)
+        }
+
+        viewModel.getFiltersState().observe(viewLifecycleOwner) { state ->
+            renderFiltersState(state)
         }
 
         binding.apply {
@@ -109,6 +114,18 @@ class SearchFragment : Fragment(), SearchClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_filtersFragment)
         }
 
+    }
+
+    private fun renderFiltersState(state: FiltersState) {
+        when (state) {
+            FiltersState.Active -> binding.icFilter.setImageResource(R.drawable.ic_filter_on)
+            FiltersState.Inactive -> binding.icFilter.setImageResource(R.drawable.ic_filter_off)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.checkFiltersStatus()
     }
 
     override fun onDestroyView() {

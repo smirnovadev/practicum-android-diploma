@@ -25,7 +25,7 @@ interface ApiService {
     @GET("/vacancies")
     suspend fun findVacancies(
         @Query("text") query: String,
-        @Query("salary") salary: String? = null,
+        @Query("salary") salary: Int? = null,
         @Query("page") page: Int = 0,
         @Query("per_page") amount: Int = 20,
         @Query("only_with_salary") onlyWithSalary: Boolean = false,

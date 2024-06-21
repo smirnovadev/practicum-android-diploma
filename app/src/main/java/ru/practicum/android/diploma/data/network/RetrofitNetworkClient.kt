@@ -10,8 +10,8 @@ import retrofit2.HttpException
 import ru.practicum.android.diploma.data.dto.NetworkResponse
 import ru.practicum.android.diploma.data.dto.requests.AreaRequest
 import ru.practicum.android.diploma.data.dto.requests.CountriesRequest
-import ru.practicum.android.diploma.data.dto.requests.VacanciesSearchRequest
 import ru.practicum.android.diploma.data.dto.requests.IndustriesRequest
+import ru.practicum.android.diploma.data.dto.requests.VacanciesSearchRequest
 import ru.practicum.android.diploma.data.dto.requests.VacancyByIdRequest
 import ru.practicum.android.diploma.data.dto.responses.AreasListResponse
 import ru.practicum.android.diploma.data.dto.responses.CountriesListResponse

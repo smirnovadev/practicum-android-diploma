@@ -44,7 +44,7 @@ class PlaceToWorkFragment : Fragment() {
     }
 
     private fun initListeners() {
-        binding.toolbar.setOnClickListener {
+        binding.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
             clearCountry()
             clearRegion()

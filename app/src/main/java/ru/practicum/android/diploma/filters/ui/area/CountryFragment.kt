@@ -37,7 +37,7 @@ class CountryFragment : Fragment() {
 
         binding.groupEmpty.visibility = View.GONE
 
-        binding.toolbar.setOnClickListener {
+        binding.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
         rvAdapter = AreaAdapter(countries) {
