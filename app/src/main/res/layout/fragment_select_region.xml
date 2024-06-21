@@ -35,8 +35,8 @@
             android:drawableEnd="@drawable/ic_search"
             android:drawablePadding="@dimen/_8dp"
             android:hint="@string/enter_region"
-            android:maxLines="1"
             android:imeOptions="actionDone"
+            android:maxLines="1"
             android:paddingBottom="@dimen/_20dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
