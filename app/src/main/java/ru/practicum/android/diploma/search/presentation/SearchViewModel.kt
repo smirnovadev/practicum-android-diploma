@@ -169,7 +169,7 @@ class SearchViewModel(
 
     private fun repeatRequest() {
         searchResultsList.clear()
-        search(previousRequest, currentPage)
+        search(previousRequest, ZERO)
     }
 
     private fun processArea(country: Area?, region: Area?): String? {
@@ -197,6 +197,7 @@ class SearchViewModel(
         private const val IO_EXCEPTION = -2
         private const val SEARCH_DEBOUNCE_DELAY = 2000L
         private const val ONE = 1
+        private const val ZERO = 0
         private const val TAG_SEARCH = "SEARCH RESPONSE"
     }
 }

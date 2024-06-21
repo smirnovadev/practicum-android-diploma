@@ -44,7 +44,7 @@ class RegionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.groupNotFound.visibility = View.GONE
         binding.groupEmpty.visibility = View.GONE
-        binding.toolbar.setOnClickListener {
+        binding.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
         searchDebounce = debounce(
