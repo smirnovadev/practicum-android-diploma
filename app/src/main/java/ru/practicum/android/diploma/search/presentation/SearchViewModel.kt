@@ -145,15 +145,17 @@ class SearchViewModel(
     }
 
     private fun processFiltersStatus(filters: FiltersParameters) {
+        var isActive = false
         if (filters.salary != null ||
-            filters.salaryFlag ||
             filters.industry != null ||
             filters.area != null
         ) {
-            filtersState.postValue(FiltersState.Active)
+            isActive = true
         } else {
-            filtersState.postValue(FiltersState.Inactive)
+            isActive = false
         }
+        if (filters.salaryFlag) isActive = true
+        if (isActive) filtersState.postValue(FiltersState.Active) else filtersState.postValue(FiltersState.Inactive)
     }
 
     fun checkFiltersStatus() {
