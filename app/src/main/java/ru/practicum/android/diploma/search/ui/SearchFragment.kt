@@ -31,6 +31,8 @@ class SearchFragment : Fragment(), SearchClickListener {
     private val searchAdapter = SearchAdapter(this)
     private var clickDebounce: ((Boolean) -> Unit)? = null
     private var isClickAllowed = true
+    private var uploadDebounce: ((Boolean) -> Unit)? = null
+    private var isUploadingAllowed = true
     private var stateHandler: SearchFragmentStateHandler? = null
 
     override fun onCreateView(
@@ -62,11 +64,17 @@ class SearchFragment : Fragment(), SearchClickListener {
             )
         }
 
-        clickDebounce = debounce<Boolean>(
+        clickDebounce = debounce(
             CLICK_DEBOUNCE_DELAY,
             viewLifecycleOwner.lifecycleScope,
             false
-        ) { if (!isClickAllowed) allowClick() }
+        ) { isClickAllowed = true }
+
+        uploadDebounce = debounce(
+            UPLOAD_DEBOUNCE_DELAY,
+            viewLifecycleOwner.lifecycleScope,
+            false
+        ) { isUploadingAllowed = true }
 
         binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -77,7 +85,11 @@ class SearchFragment : Fragment(), SearchClickListener {
                         .findLastVisibleItemPosition()
                     val itemsCount = searchAdapter.itemCount
                     if (pos >= itemsCount - 1) {
-                        viewModel.uploadPage()
+                        if (isUploadingAllowed) {
+                            isUploadingAllowed = false
+                            viewModel.uploadPage()
+                            uploadDebounce?.let { it(isUploadingAllowed) }
+                        }
                     }
                 }
             }
@@ -126,6 +138,8 @@ class SearchFragment : Fragment(), SearchClickListener {
     override fun onResume() {
         super.onResume()
         viewModel.checkFiltersStatus()
+        isClickAllowed = true
+        isUploadingAllowed = true
     }
 
     override fun onDestroyView() {
@@ -136,10 +150,17 @@ class SearchFragment : Fragment(), SearchClickListener {
         stateHandler = null
     }
 
+    override fun onPause() {
+        super.onPause()
+        viewModel.prepareOnResumeState()
+    }
+
     override fun onVacancyClick(vacancy: Vacancy) {
-        isClickAllowed = false
-        navigateToJobFragment(vacancy.id)
-        clickDebounce?.let { it(isClickAllowed) }
+        if (isClickAllowed) {
+            isClickAllowed = false
+            clickDebounce?.let { it(isClickAllowed) }
+            navigateToJobFragment(vacancy.id)
+        }
     }
 
     private fun navigateToJobFragment(vacancyId: String) {
@@ -151,12 +172,9 @@ class SearchFragment : Fragment(), SearchClickListener {
         )
     }
 
-    private fun allowClick() {
-        isClickAllowed = true
-    }
-
     companion object {
         private const val CLICK_DEBOUNCE_DELAY = 1000L
+        private const val UPLOAD_DEBOUNCE_DELAY = 500L
         const val EXTRA_ID = "vacancy_id"
     }
 }

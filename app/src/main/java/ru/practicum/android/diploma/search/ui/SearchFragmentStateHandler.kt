@@ -25,7 +25,20 @@ class SearchFragmentStateHandler(
             is SearchScreenState.ShowContent -> showContent(state.vacancies, state.found)
             is SearchScreenState.UploadNextPage -> uploadNextPage()
             is SearchScreenState.Error -> showError()
-            is SearchScreenState.IOError -> showIOError()
+            is SearchScreenState.IOError -> showError()
+            is SearchScreenState.UploadingError -> {
+                Toast
+                    .makeText(context, context.getString(R.string.error_occured), Toast.LENGTH_SHORT)
+                    .show()
+                showUploadingError(state.vacancies, state.found)
+            }
+
+            is SearchScreenState.UploadingInternetError -> {
+                Toast
+                    .makeText(context, context.getString(R.string.check_internet_connection), Toast.LENGTH_SHORT)
+                    .show()
+                showUploadingError(state.vacancies, state.found)
+            }
         }
     }
 
@@ -119,21 +132,21 @@ class SearchFragmentStateHandler(
         }
     }
 
-    private fun showIOError() {
-        Toast.makeText(context, context.getString(R.string.error_occured), Toast.LENGTH_SHORT).show()
+    private fun showContent(list: ArrayList<Vacancy>, resultsQty: Int) {
+        searchAdapter.vacanciesList.clear()
+        searchAdapter.vacanciesList.addAll(list)
+        searchAdapter.notifyDataSetChanged()
         binding.apply {
             searchScreenCover.isVisible = false
             progressBar.isVisible = false
             errorPlaceholder.isVisible = false
             searchStatus.isVisible = true
+            searchStatus.text = getVacanciesWordForm(resultsQty)
             recyclerView.isVisible = true
         }
     }
 
-    private fun showContent(list: ArrayList<Vacancy>, resultsQty: Int) {
-        searchAdapter.vacanciesList.clear()
-        searchAdapter.vacanciesList.addAll(list)
-        searchAdapter.notifyDataSetChanged()
+    private fun showUploadingError(list: ArrayList<Vacancy>, resultsQty: Int) {
         binding.apply {
             searchScreenCover.isVisible = false
             progressBar.isVisible = false

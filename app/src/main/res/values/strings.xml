@@ -59,5 +59,6 @@
     <string name="apply">Применить</string>
     <string name="tv_work_schedule_template">%1$s, %2$s</string>
     <string name="error_occured">Произошла ошибка</string>
+    <string name="check_internet_connection">Проверьте подключение к интернету</string>
 
 </resources>
