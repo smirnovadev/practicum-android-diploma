@@ -28,8 +28,12 @@ class SearchViewModel(
     private var searchResultsList = ArrayList<Vacancy>()
     private var currentPage: Int = 0
     private var maxPages: Int = 0
+    private var found: Int = 0
     private var currentFilters = getFilters()
     private var isNextPageLoading: Boolean = false
+
+    private var isUploading: Boolean = false
+
     val searchDebounce = debounce<String>(
         SEARCH_DEBOUNCE_DELAY,
         viewModelScope,
@@ -56,6 +60,8 @@ class SearchViewModel(
             searchResultsList.clear()
             currentPage = 0
             maxPages = 0
+            found = 0
+            isUploading = false
             screenState.postValue(SearchScreenState.Loading)
         }
 
@@ -70,7 +76,15 @@ class SearchViewModel(
                             currentFilters
                         )
                         .catch { exception ->
-                            screenState.postValue(SearchScreenState.Error)
+                            if (!isUploading) {
+                                previousRequest = request
+                                screenState.postValue(SearchScreenState.Error)
+                            } else {
+                                SearchScreenState.UploadingError(
+                                    searchResultsList,
+                                    found
+                                )
+                            }
                             isNextPageLoading = false
                         }
                         .collect { pair ->
@@ -88,6 +102,7 @@ class SearchViewModel(
                 searchResultsList.addAll(vacancies.vacancies)
                 currentPage = vacancies.page
                 maxPages = vacancies.pages
+                found = vacancies.found
                 Log.d(TAG_SEARCH, "Max pages: $maxPages")
                 screenState.postValue(SearchScreenState.ShowContent(searchResultsList, vacancies.found))
                 isNextPageLoading = false
@@ -98,17 +113,32 @@ class SearchViewModel(
         } else {
             when (errorCode) {
                 ERROR_NO_INTERNET -> {
-                    screenState.postValue(SearchScreenState.InternetConnectionError)
+                    if (!isUploading) {
+                        previousRequest = ""
+                        screenState.postValue(SearchScreenState.InternetConnectionError)
+                    } else {
+                        screenState.postValue(SearchScreenState.UploadingInternetError(searchResultsList, found))
+                    }
                     isNextPageLoading = false
                 }
 
                 IO_EXCEPTION -> {
-                    screenState.postValue(SearchScreenState.IOError)
+                    previousRequest = searchRequest
+                    if (!isUploading) {
+                        screenState.postValue(SearchScreenState.IOError)
+                    } else {
+                        screenState.postValue(SearchScreenState.UploadingError(searchResultsList, found))
+                    }
                     isNextPageLoading = false
                 }
 
                 else -> {
-                    screenState.postValue(SearchScreenState.ServerError)
+                    previousRequest = searchRequest
+                    if (!isUploading) {
+                        screenState.postValue(SearchScreenState.ServerError)
+                    } else {
+                        screenState.postValue(SearchScreenState.UploadingError(searchResultsList, found))
+                    }
                     isNextPageLoading = false
                 }
             }
@@ -118,13 +148,29 @@ class SearchViewModel(
     fun uploadPage() {
         if (previousRequest.isNotEmpty() && !isNextPageLoading && currentPage != maxPages - ONE) {
             isNextPageLoading = true
+            isUploading = true
             screenState.postValue(SearchScreenState.UploadNextPage)
             search(previousRequest, currentPage + ONE)
         }
     }
 
+    fun prepareOnResumeState() {
+        if (screenState.value is SearchScreenState.UploadingError ||
+            screenState.value is SearchScreenState.UploadingInternetError
+        ) {
+            screenState.postValue(SearchScreenState.ShowContent(searchResultsList, found))
+        } else if (
+            screenState.value is SearchScreenState.IOError ||
+            screenState.value is SearchScreenState.Error
+        ) {
+            screenState.postValue(SearchScreenState.Default)
+        }
+    }
+
     fun clearSearchField() {
         previousRequest = ""
+        isUploading = false
+        isNextPageLoading = false
         searchDebounce("")
         searchResultsList.clear()
         screenState.postValue(SearchScreenState.Default)
