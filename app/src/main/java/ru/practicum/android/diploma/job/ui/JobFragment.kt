@@ -213,15 +213,17 @@ class JobFragment : Fragment() {
     }
 
     private fun viewKeySkills(vacancy: Vacancy) {
-        val keySkill = vacancy.keySkills.joinToString("\n - ") { it.name ?: "" }
+        val keySkillsList = vacancy.keySkills.mapNotNull { it.name }
+        val formattedKeySkills = if (keySkillsList.isEmpty()) "" else keySkillsList.joinToString("\n- ", prefix = "- ")
+
         binding.apply {
-            if (keySkill.isEmpty()) {
+            if (formattedKeySkills.isEmpty()) {
                 tvKeySkills.isVisible = false
                 keySkills.isVisible = false
             } else {
                 tvKeySkills.isVisible = true
                 keySkills.isVisible = true
-                tvKeySkills.text = keySkill
+                tvKeySkills.text = formattedKeySkills
             }
         }
     }
