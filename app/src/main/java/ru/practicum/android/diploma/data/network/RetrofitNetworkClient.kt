@@ -29,109 +29,104 @@ class RetrofitNetworkClient(
     private val context: Context
 ) : NetworkClient {
 
-    override suspend fun findVacancies(dto: VacanciesSearchRequest): NetworkResponse {
+    override suspend fun findVacancies(dto: VacanciesSearchRequest): NetworkResponse =
         if (!isConnected()) {
-            return NetworkResponse().apply { resultCode = ERROR_NO_INTERNET }
-        }
-
-        return withContext(Dispatchers.IO) {
-            try {
-                apiService.findVacancies(
-                    query = dto.query,
-                    salary = dto.salary,
-                    page = dto.page,
-                    amount = dto.amount,
-                    onlyWithSalary = dto.onlyWithSalary,
-                    industry = dto.industry,
-                    area = dto.area
-                ).apply { resultCode = SUCCESS_STATUS }
-            } catch (e: HttpException) {
-                Log.e(TAG, e.stackTraceToString())
-                NetworkResponse().apply { resultCode = e.code() }
-            } catch (e: IOException) {
-                Log.e(TAG, e.stackTraceToString())
-                NetworkResponse().apply { resultCode = IO_EXCEPTION }
+            NetworkResponse().apply { resultCode = ERROR_NO_INTERNET }
+        } else {
+            withContext(Dispatchers.IO) {
+                try {
+                    apiService.findVacancies(
+                        query = dto.query,
+                        salary = dto.salary,
+                        page = dto.page,
+                        amount = dto.amount,
+                        onlyWithSalary = dto.onlyWithSalary,
+                        industry = dto.industry,
+                        area = dto.area
+                    ).apply { resultCode = SUCCESS_STATUS }
+                } catch (e: HttpException) {
+                    Log.e(TAG, e.stackTraceToString())
+                    NetworkResponse().apply { resultCode = e.code() }
+                } catch (e: IOException) {
+                    Log.e(TAG, e.stackTraceToString())
+                    NetworkResponse().apply { resultCode = IO_EXCEPTION }
+                }
             }
         }
-    }
 
-    override suspend fun getVacancyById(dto: VacancyByIdRequest): NetworkResponse {
+    override suspend fun getVacancyById(dto: VacancyByIdRequest): NetworkResponse =
         if (!isConnected()) {
-            return NetworkResponse().apply { resultCode = ERROR_NO_INTERNET }
-        }
-
-        return withContext(Dispatchers.IO) {
-            try {
-                apiService.getVacancyById(dto.id).apply { resultCode = SUCCESS_STATUS }
-            } catch (e: HttpException) {
-                Log.e(TAG, e.stackTraceToString())
-                NetworkResponse().apply { resultCode = e.code() }
-            } catch (e: IOException) {
-                Log.e(TAG, e.stackTraceToString())
-                NetworkResponse().apply { resultCode = IO_EXCEPTION }
+            NetworkResponse().apply { resultCode = ERROR_NO_INTERNET }
+        } else {
+            withContext(Dispatchers.IO) {
+                try {
+                    apiService.getVacancyById(dto.id).apply { resultCode = SUCCESS_STATUS }
+                } catch (e: HttpException) {
+                    Log.e(TAG, e.stackTraceToString())
+                    NetworkResponse().apply { resultCode = e.code() }
+                } catch (e: IOException) {
+                    Log.e(TAG, e.stackTraceToString())
+                    NetworkResponse().apply { resultCode = IO_EXCEPTION }
+                }
             }
         }
-    }
 
-    override suspend fun getCountries(dto: CountriesRequest): NetworkResponse {
+    override suspend fun getCountries(dto: CountriesRequest): NetworkResponse =
         if (!isConnected()) {
-            return NetworkResponse().apply { resultCode = ERROR_NO_INTERNET }
-        }
-
-        return withContext(Dispatchers.IO) {
-            try {
-                CountriesListResponse(
-                    apiService.getCountries(dto.locale)
-                ).apply { resultCode = SUCCESS_STATUS }
-            } catch (e: HttpException) {
-                Log.e(TAG, e.stackTraceToString())
-                NetworkResponse().apply { resultCode = e.code() }
-            } catch (e: IOException) {
-                Log.e(TAG, e.stackTraceToString())
-                NetworkResponse().apply { resultCode = IO_EXCEPTION }
+            NetworkResponse().apply { resultCode = ERROR_NO_INTERNET }
+        } else {
+            withContext(Dispatchers.IO) {
+                try {
+                    CountriesListResponse(
+                        apiService.getCountries(dto.locale)
+                    ).apply { resultCode = SUCCESS_STATUS }
+                } catch (e: HttpException) {
+                    Log.e(TAG, e.stackTraceToString())
+                    NetworkResponse().apply { resultCode = e.code() }
+                } catch (e: IOException) {
+                    Log.e(TAG, e.stackTraceToString())
+                    NetworkResponse().apply { resultCode = IO_EXCEPTION }
+                }
             }
         }
-    }
 
-    override suspend fun getAreas(dto: AreaRequest): NetworkResponse {
+    override suspend fun getAreas(dto: AreaRequest): NetworkResponse =
         if (!isConnected()) {
-            return NetworkResponse().apply { resultCode = ERROR_NO_INTERNET }
-        }
-
-        return withContext(Dispatchers.IO) {
-            try {
-                AreasListResponse(
-                    apiService.getAreas(dto.locale)
-                ).apply { resultCode = SUCCESS_STATUS }
-            } catch (e: HttpException) {
-                Log.e(TAG, e.stackTraceToString())
-                NetworkResponse().apply { resultCode = e.code() }
-            } catch (e: IOException) {
-                Log.e(TAG, e.stackTraceToString())
-                NetworkResponse().apply { resultCode = IO_EXCEPTION }
+            NetworkResponse().apply { resultCode = ERROR_NO_INTERNET }
+        } else {
+            withContext(Dispatchers.IO) {
+                try {
+                    AreasListResponse(
+                        apiService.getAreas(dto.locale)
+                    ).apply { resultCode = SUCCESS_STATUS }
+                } catch (e: HttpException) {
+                    Log.e(TAG, e.stackTraceToString())
+                    NetworkResponse().apply { resultCode = e.code() }
+                } catch (e: IOException) {
+                    Log.e(TAG, e.stackTraceToString())
+                    NetworkResponse().apply { resultCode = IO_EXCEPTION }
+                }
             }
         }
-    }
 
-    override suspend fun getIndustries(dto: IndustriesRequest): NetworkResponse {
+    override suspend fun getIndustries(dto: IndustriesRequest): NetworkResponse =
         if (!isConnected()) {
-            return NetworkResponse().apply { resultCode = ERROR_NO_INTERNET }
-        }
-
-        return withContext(Dispatchers.IO) {
-            try {
-                IndustriesListResponse(
-                    apiService.getIndustries(dto.locale)
-                ).apply { resultCode = SUCCESS_STATUS }
-            } catch (e: HttpException) {
-                Log.e(TAG, e.stackTraceToString())
-                NetworkResponse().apply { resultCode = e.code() }
-            } catch (e: IOException) {
-                Log.e(TAG, e.stackTraceToString())
-                NetworkResponse().apply { resultCode = IO_EXCEPTION }
+            NetworkResponse().apply { resultCode = ERROR_NO_INTERNET }
+        } else {
+            withContext(Dispatchers.IO) {
+                try {
+                    IndustriesListResponse(
+                        apiService.getIndustries(dto.locale)
+                    ).apply { resultCode = SUCCESS_STATUS }
+                } catch (e: HttpException) {
+                    Log.e(TAG, e.stackTraceToString())
+                    NetworkResponse().apply { resultCode = e.code() }
+                } catch (e: IOException) {
+                    Log.e(TAG, e.stackTraceToString())
+                    NetworkResponse().apply { resultCode = IO_EXCEPTION }
+                }
             }
         }
-    }
 
     private fun isConnected(): Boolean {
         val connectivityManager = context.getSystemService(
