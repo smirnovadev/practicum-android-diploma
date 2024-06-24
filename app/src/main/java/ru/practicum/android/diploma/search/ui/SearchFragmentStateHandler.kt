@@ -1,6 +1,9 @@
 package ru.practicum.android.diploma.search.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.view.isVisible
 import ru.practicum.android.diploma.R
@@ -67,6 +70,7 @@ class SearchFragmentStateHandler(
             searchStatus.isVisible = false
             recyclerView.isVisible = false
         }
+        hideKeyboard(context, binding.searchField)
     }
 
     private fun showServerError() {
@@ -84,6 +88,7 @@ class SearchFragmentStateHandler(
             searchStatus.isVisible = false
             recyclerView.isVisible = false
         }
+        hideKeyboard(context, binding.searchField)
     }
 
     private fun showSearchError() {
@@ -102,6 +107,7 @@ class SearchFragmentStateHandler(
             searchStatus.text = context.getString(R.string.no_such_vacancies)
             recyclerView.isVisible = false
         }
+        hideKeyboard(context, binding.searchField)
     }
 
     private fun showDefaultScreenState() {
@@ -112,6 +118,7 @@ class SearchFragmentStateHandler(
             searchStatus.isVisible = false
             recyclerView.isVisible = false
         }
+        hideKeyboard(context, binding.searchField)
     }
 
     private fun uploadNextPage() {
@@ -130,8 +137,10 @@ class SearchFragmentStateHandler(
             searchStatus.isVisible = false
             recyclerView.isVisible = false
         }
+        hideKeyboard(context, binding.searchField)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun showContent(list: ArrayList<Vacancy>, resultsQty: Int) {
         searchAdapter.vacanciesList.clear()
         searchAdapter.vacanciesList.addAll(list)
@@ -144,6 +153,7 @@ class SearchFragmentStateHandler(
             searchStatus.text = getVacanciesWordForm(resultsQty)
             recyclerView.isVisible = true
         }
+        hideKeyboard(context, binding.searchField)
     }
 
     private fun showUploadingError(list: ArrayList<Vacancy>, resultsQty: Int) {
@@ -155,6 +165,7 @@ class SearchFragmentStateHandler(
             searchStatus.text = getVacanciesWordForm(resultsQty)
             recyclerView.isVisible = true
         }
+        hideKeyboard(context, binding.searchField)
     }
 
     private fun getVacanciesWordForm(quantity: Int): String {
@@ -175,5 +186,10 @@ class SearchFragmentStateHandler(
             )
 
         return "$foundForm $quantity $vacancyForm"
+    }
+
+    private fun hideKeyboard(context: Context, view: View) {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }
