@@ -1,15 +1,15 @@
 package ru.practicum.android.diploma.search.data.mapper
 
-import ru.practicum.android.diploma.data.dto.responses.industry.IndustryUnitDAO
+import ru.practicum.android.diploma.data.dto.responses.industry.IndustryUnitDTO
 import ru.practicum.android.diploma.search.domain.model.fields.Industry
 
 class IndustryMapper {
     private fun recursiveFlatmap(
-        src: List<IndustryUnitDAO>,
+        src: List<IndustryUnitDTO>,
         limit: Int,
         parent: String? = null
-    ): List<IndustryUnitDAO> {
-        val result = mutableListOf<IndustryUnitDAO>()
+    ): List<IndustryUnitDTO> {
+        val result = mutableListOf<IndustryUnitDTO>()
         src.forEach {
             result.add(it.copy(parent = parent))
             if (limit > 0 && it.industries != null) {
@@ -27,7 +27,7 @@ class IndustryMapper {
      * а так-же детей. 2 - входной, дети, и дети детей. И так далее
      */
     fun map(
-        src: List<IndustryUnitDAO>,
+        src: List<IndustryUnitDTO>,
         recursiveLimit: Int = 0
     ): List<Industry> {
         val recursiveMap = recursiveFlatmap(src, recursiveLimit)

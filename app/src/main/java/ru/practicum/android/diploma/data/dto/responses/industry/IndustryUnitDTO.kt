@@ -1,8 +1,8 @@
 package ru.practicum.android.diploma.data.dto.responses.industry
 
-data class IndustryUnitDAO(
+data class IndustryUnitDTO(
     val id: String,
     val name: String,
-    val industries: List<IndustryUnitDAO>? = arrayListOf(),
+    val industries: List<IndustryUnitDTO>? = arrayListOf(),
     val parent: String? = null
 )

@@ -14,14 +14,17 @@ interface FiltersRepository {
     suspend fun insertArea(area: Area)
     suspend fun insertAreas(area: List<Area>)
     suspend fun deleteArea(area: Area)
-    fun getArea(): Flow<List<Area>>
+    fun getAllAreas(): Flow<List<Area>>
     fun getCountries(): Flow<List<Area>>
-    fun getRegions(parent: Int): Flow<List<Area>>
+    fun getRegionsByParent(parent: String?): Flow<List<Area>>
 
     suspend fun downloadAreas(): Flow<NetworkResponse>
 
     suspend fun downloadIndustries(): Flow<NetworkResponse>
 
-    fun getRegion(name: String, parent: Int): Flow<List<Area>>
+    fun getRegionsByName(name: String): Flow<List<Area>>
+    suspend fun getCountryById(id: Int): Flow<Area>
+
+    fun getRegionsByNameAndParent(name: String, parent: String?): Flow<List<Area>>
     fun findIndustry(name: String): Flow<List<Industry>>
 }

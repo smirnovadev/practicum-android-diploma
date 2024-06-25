@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import debounce
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.databinding.FragmentIndustryBinding
+import ru.practicum.android.diploma.filters.domain.state.IndustryState
 import ru.practicum.android.diploma.filters.presentation.IndustryViewModel
 import ru.practicum.android.diploma.search.domain.model.fields.Industry
 
@@ -43,12 +44,12 @@ class IndustryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.toolbar.setOnClickListener {
+        binding.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
             clearIndustry()
         }
         binding.groupNotFound.visibility = View.GONE
-        binding.groupEmpty.visibility = View.GONE
+        binding.groupError.visibility = View.GONE
         rvAdapter = IndustryAdapter(industries) {
             viewModel.save(it)
             binding.buttonApply.isVisible = true
@@ -120,7 +121,7 @@ class IndustryFragment : Fragment() {
         binding.recyclerView.isVisible = true
         rvAdapter!!.notifyDataSetChanged()
         binding.apply {
-            binding.groupEmpty.isVisible = false
+            binding.groupError.isVisible = false
             binding.groupNotFound.isVisible = false
             progressBar.isVisible = false
         }
@@ -129,7 +130,7 @@ class IndustryFragment : Fragment() {
     private fun showEmpty() {
         binding.apply {
             recyclerView.isVisible = false
-            binding.groupEmpty.isVisible = true
+            binding.groupError.isVisible = true
             binding.groupNotFound.isVisible = false
             progressBar.isVisible = false
         }
@@ -138,7 +139,7 @@ class IndustryFragment : Fragment() {
     private fun showError() {
         binding.apply {
             recyclerView.isVisible = false
-            binding.groupEmpty.isVisible = false
+            binding.groupError.isVisible = false
             binding.groupNotFound.isVisible = true
             progressBar.isVisible = false
         }
@@ -148,7 +149,7 @@ class IndustryFragment : Fragment() {
         binding.apply {
             progressBar.isVisible = true
             recyclerView.isVisible = false
-            binding.groupEmpty.isVisible = false
+            binding.groupError.isVisible = false
             binding.groupNotFound.isVisible = false
         }
     }

@@ -18,34 +18,22 @@ import ru.practicum.android.diploma.data.dto.responses.fields.VacancyAreaDTO
  */
 
 data class VacancyByIdResponse(
-    @SerializedName("address")
     val address: AddressDTO?,
     @SerializedName("alternate_url")
     val alternateUrl: String?,
     @SerializedName("apply_alternate_url")
     val applyAlternateUrl: String?,
-    @SerializedName("area")
     val area: VacancyAreaDTO?,
-    @SerializedName("contacts")
     val contacts: ContactsDTO?,
-    @SerializedName("description")
     val description: String?,
-    @SerializedName("employer")
     val employer: EmployerDTO?,
-    @SerializedName("employment")
     val employment: EmploymentDTO?,
-    @SerializedName("experience")
     val experience: ExperienceDTO?,
-    @SerializedName("id")
     val id: String?,
     @SerializedName("key_skills")
     val keySkills: List<KeySkillDTO?>?,
-    @SerializedName("manager")
     val manager: ManagerDTO?,
-    @SerializedName("name")
     val name: String?,
-    @SerializedName("salary")
     val salary: SalaryDTO?,
-    @SerializedName("schedule")
     val schedule: ScheduleDTO?
 ) : NetworkResponse()
