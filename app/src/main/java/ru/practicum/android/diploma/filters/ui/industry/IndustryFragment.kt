@@ -49,7 +49,7 @@ class IndustryFragment : Fragment() {
             clearIndustry()
         }
         binding.groupNotFound.visibility = View.GONE
-        binding.groupEmpty.visibility = View.GONE
+        binding.groupError.visibility = View.GONE
         rvAdapter = IndustryAdapter(industries) {
             viewModel.save(it)
             binding.buttonApply.isVisible = true
@@ -121,7 +121,7 @@ class IndustryFragment : Fragment() {
         binding.recyclerView.isVisible = true
         rvAdapter!!.notifyDataSetChanged()
         binding.apply {
-            binding.groupEmpty.isVisible = false
+            binding.groupError.isVisible = false
             binding.groupNotFound.isVisible = false
             progressBar.isVisible = false
         }
@@ -130,7 +130,7 @@ class IndustryFragment : Fragment() {
     private fun showEmpty() {
         binding.apply {
             recyclerView.isVisible = false
-            binding.groupEmpty.isVisible = true
+            binding.groupError.isVisible = true
             binding.groupNotFound.isVisible = false
             progressBar.isVisible = false
         }
@@ -139,7 +139,7 @@ class IndustryFragment : Fragment() {
     private fun showError() {
         binding.apply {
             recyclerView.isVisible = false
-            binding.groupEmpty.isVisible = false
+            binding.groupError.isVisible = false
             binding.groupNotFound.isVisible = true
             progressBar.isVisible = false
         }
@@ -149,7 +149,7 @@ class IndustryFragment : Fragment() {
         binding.apply {
             progressBar.isVisible = true
             recyclerView.isVisible = false
-            binding.groupEmpty.isVisible = false
+            binding.groupError.isVisible = false
             binding.groupNotFound.isVisible = false
         }
     }

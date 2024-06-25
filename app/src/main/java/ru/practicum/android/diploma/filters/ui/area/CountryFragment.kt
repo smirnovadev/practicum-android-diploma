@@ -35,7 +35,7 @@ class CountryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.groupEmpty.visibility = View.GONE
+        binding.groupError.visibility = View.GONE
 
         binding.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
@@ -63,14 +63,14 @@ class CountryFragment : Fragment() {
         binding.recyclerView.isVisible = true
         rvAdapter!!.notifyItemRangeChanged(0, countriesList.size)
         binding.apply {
-            groupEmpty.isVisible = false
+            groupError.isVisible = false
             progressBar.isVisible = false
         }
     }
 
     private fun showEmpty() {
         binding.apply {
-            groupEmpty.isVisible = true
+            groupError.isVisible = true
             progressBar.isVisible = false
             recyclerView.isVisible = false
         }
@@ -78,7 +78,7 @@ class CountryFragment : Fragment() {
 
     private fun showError() {
         binding.apply {
-            groupEmpty.isVisible = true
+            groupError.isVisible = true
             progressBar.isVisible = false
             recyclerView.isVisible = false
         }
@@ -86,7 +86,7 @@ class CountryFragment : Fragment() {
 
     private fun showLoading() {
         binding.apply {
-            groupEmpty.isVisible = false
+            groupError.isVisible = false
             progressBar.isVisible = true
             recyclerView.isVisible = false
         }

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.filters.domain.FiltersInteractor
 import ru.practicum.android.diploma.filters.domain.FiltersSharedInteractor
@@ -24,6 +25,91 @@ class RegionViewModel(
         loadRegions()
     }
 
+    fun saveAndExit(region: Area, navController: NavController) {
+        viewModelScope.launch {
+            sharedInteractor.saveRegion(region)
+            val country = sharedInteractor.getCountry()
+            if (country == null && region.parent != null) {
+                val parentId = region.parent.toInt()
+                interactor.getCountryById(parentId).collect { parentCountry ->
+                    sharedInteractor.saveCountry(parentCountry)
+                    navController.navigateUp()
+                }
+            } else {
+                navController.navigateUp()
+            }
+        }
+    }
+
+    fun search(request: String) {
+        val country = sharedInteractor.getCountry()
+        if (country == null) {
+            viewModelScope.launch {
+                interactor
+                    .getRegionsByName(request)
+                    .collect { areas ->
+                        if (areas.isEmpty()) {
+                            renderState(AreasState.Empty)
+                        } else {
+                            val regions = areas.filter { region ->
+                                region.parent != null
+                            }
+                            renderState(AreasState.Content(regions))
+                        }
+                    }
+            }
+            return
+        }
+
+        viewModelScope.launch {
+            interactor
+                .getRegionsByNameAndParent(request, country.id.toString())
+                .collect {
+                    renderState(AreasState.Content(it))
+                }
+        }
+    }
+
+    private fun renderState(state: AreasState) {
+        stateMutableLiveData.postValue(state)
+    }
+
+    private fun loadRegions() {
+        renderState(AreasState.Loading)
+        val country = sharedInteractor.getCountry()
+        if (country == null) {
+            viewModelScope.launch {
+                interactor
+                    .getAllRegions()
+                    .collect { regions ->
+                        if (regions.isNotEmpty()) {
+                            renderState(
+                                AreasState.Content(
+                                    regions.filter {
+                                        it.parent != null
+                                    }
+                                )
+                            )
+                        } else {
+                            downloadAreasToBase()
+                        }
+                    }
+            }
+            return
+        }
+        viewModelScope.launch {
+            interactor
+                .getRegionsByParent(country.id.toString())
+                .collect { regions ->
+                    if (regions.isNotEmpty()) {
+                        renderState(AreasState.Content(regions))
+                    } else {
+                        downloadAreasToBase()
+                    }
+                }
+        }
+    }
+
     private suspend fun downloadAreasToBase() {
         interactor.downloadAreas().collect { result ->
             if (result.first == null) {
@@ -31,7 +117,7 @@ class RegionViewModel(
                     if (result.second == STATUS_OK) {
                         AreasState.Empty
                     } else {
-                        AreasState.Error(result.second)
+                        AreasState.Error
                     }
                 )
             } else {
@@ -48,50 +134,6 @@ class RegionViewModel(
                     )
                 }
             }
-        }
-    }
-
-    private fun loadRegions() {
-        val country = sharedInteractor.getCountry()
-        if (country == null) {
-            renderState(AreasState.Empty)
-            return
-        }
-        renderState(AreasState.Loading)
-        viewModelScope.launch {
-            interactor
-                .getRegions(country.id)
-                .collect {
-                    if (it.isNotEmpty()) {
-                        renderState(AreasState.Content(it))
-                    } else {
-                        downloadAreasToBase()
-                    }
-                }
-        }
-    }
-
-    fun save(region: Area) {
-        sharedInteractor.saveRegion(region)
-    }
-
-    private fun renderState(state: AreasState) {
-        stateMutableLiveData.postValue(state)
-    }
-
-    fun search(request: String) {
-        val country = sharedInteractor.getCountry()
-        if (country == null) {
-            renderState(AreasState.Empty)
-            return
-        }
-
-        viewModelScope.launch {
-            interactor
-                .getRegion(request, country.id)
-                .collect {
-                    renderState(AreasState.Content(it))
-                }
         }
     }
 

@@ -31,7 +31,7 @@ class CountryViewModel(
                     if (result.second == STATUS_OK) {
                         AreasState.Empty
                     } else {
-                        AreasState.Error(result.second)
+                        AreasState.Error
                     }
                 )
             } else {
