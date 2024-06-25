@@ -1,9 +1,21 @@
 package ru.practicum.android.diploma.favorites.data
 
+import ru.practicum.android.diploma.db.AppDatabase
 import ru.practicum.android.diploma.favorites.domain.FavoritesRepository
+import ru.practicum.android.diploma.job.domain.JobDbConvertor
+import ru.practicum.android.diploma.search.domain.model.Vacancy
 
-class FavoritesRepositoryImpl : FavoritesRepository {
-    override fun loadData() {
-        /* no-op */
+class FavoritesRepositoryImpl(
+    private val appDatabase: AppDatabase,
+    private val convertor: JobDbConvertor
+) : FavoritesRepository {
+    override suspend fun loadData(): ArrayList<Vacancy> {
+        val vacancyList = convertor
+            .convertToListVacancy(appDatabase.vacanciesDao().getAllFavoriteVacancies())
+        return vacancyList.toCollection(ArrayList())
+    }
+
+    override suspend fun getFavVacancyById(id: String): Vacancy {
+        return convertor.mapToVacancy(appDatabase.vacanciesDao().getVacancyById(id))
     }
 }

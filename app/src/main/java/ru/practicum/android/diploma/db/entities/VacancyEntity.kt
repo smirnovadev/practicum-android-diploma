@@ -1,55 +1,32 @@
 package ru.practicum.android.diploma.db.entities
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import ru.practicum.android.diploma.search.domain.model.fields.Address
+import ru.practicum.android.diploma.search.domain.model.fields.Contacts
+import ru.practicum.android.diploma.search.domain.model.fields.Employer
+import ru.practicum.android.diploma.search.domain.model.fields.Employment
+import ru.practicum.android.diploma.search.domain.model.fields.Experience
+import ru.practicum.android.diploma.search.domain.model.fields.KeySkill
+import ru.practicum.android.diploma.search.domain.model.fields.Schedule
+import ru.practicum.android.diploma.search.domain.model.fields.VacancyArea
 
-@Entity(tableName = "vacancy_table")
+@Entity(tableName = "favorite_vacancy_table")
 data class VacancyEntity(
-    @PrimaryKey
-    val id: Int,
-
-    // Название вакансии
-    val name: String,
-
-    // Адресс
-    val address: String,
-
-    // Зарплата
-    val salary: String,
-
-    // Поля работодателя в вакансии
-    val employerId: Int,
-
-    // Департамент
-    val department: String,
-
-    // Опыт работы
-    val experience: String,
-
-    // Дни работы
-    val workingDays: String,
-
-    // График работы
-    val schedule: String,
-
-    // Список профессиональных ролей
-    val professionalRoles: String,
-
-    // Тип вакансии
-    val type: String,
-
-    // Регион
-    val area: String,
-
-    // Описание
-    val description: String,
-
-    // Ключевые навыки
-    val keySkills: String,
-
-    // Контакты
-    val contacts: String,
-
-    // Ссылка на сайт HH с вакансией
+    @PrimaryKey @ColumnInfo(name = "id")
+    val id: String,
+    val address: Address,
     val alternateUrl: String,
+    val applyAlternateUrl: String,
+    val area: VacancyArea,
+    val contacts: Contacts,
+    val description: String,
+    val employer: Employer,
+    val employment: Employment,
+    val experience: Experience,
+    val keySkills: List<KeySkill>,
+    val name: String,
+    val salary: String,
+    val schedule: Schedule,
 )
