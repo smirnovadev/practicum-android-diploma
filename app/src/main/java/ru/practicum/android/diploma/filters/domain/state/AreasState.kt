@@ -9,5 +9,5 @@ sealed interface AreasState {
     ) : AreasState
 
     data object Empty : AreasState
-    data class Error(val code: Int) : AreasState
+    data object Error : AreasState
 }

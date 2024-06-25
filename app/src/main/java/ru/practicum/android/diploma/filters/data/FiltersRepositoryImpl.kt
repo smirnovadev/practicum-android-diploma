@@ -90,7 +90,7 @@ class FiltersRepositoryImpl(
         )
     }
 
-    override fun getArea(): Flow<List<Area>> = flow {
+    override fun getAllAreas(): Flow<List<Area>> = flow {
         val areas = appDatabase.areasDao().getAreas()
         emit(areas.map {
             Area(
@@ -111,8 +111,8 @@ class FiltersRepositoryImpl(
         })
     }
 
-    override fun getRegions(parent: Int): Flow<List<Area>> = flow {
-        emit(appDatabase.areasDao().getRegions(parent).map {
+    override fun getRegionsByParent(parent: String?): Flow<List<Area>> = flow {
+        emit(appDatabase.areasDao().getRegionsByParent(parent).map {
             Area(
                 it.id,
                 it.name,
@@ -133,8 +133,29 @@ class FiltersRepositoryImpl(
         )
     }
 
-    override fun getRegion(name: String, parent: Int): Flow<List<Area>> = flow {
-        emit(appDatabase.areasDao().getRegion(name, parent).map {
+    override fun getRegionsByName(name: String): Flow<List<Area>> = flow {
+        emit(appDatabase.areasDao().getRegionsByName(name).map {
+            Area(
+                it.id,
+                it.name,
+                it.parent
+            )
+        })
+    }
+
+    override suspend fun getCountryById(id: Int): Flow<Area> = flow {
+        val areaEntity = appDatabase.areasDao().getAreaById(id)
+        emit(
+            Area(
+                areaEntity.id,
+                areaEntity.name,
+                areaEntity.parent
+            )
+        )
+    }
+
+    override fun getRegionsByNameAndParent(name: String, parent: String?): Flow<List<Area>> = flow {
+        emit(appDatabase.areasDao().getRegionsByNameAndParent(name, parent).map {
             Area(
                 it.id,
                 it.name,

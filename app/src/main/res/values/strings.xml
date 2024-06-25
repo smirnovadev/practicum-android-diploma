@@ -54,7 +54,7 @@
     <string name="enter_region">Введите регион</string>
     <string name="enter_industry">Введите отрасль</string>
     <string name="not_found_region">Такого региона нет</string>
-    <string name="empty_region">Не удалось получить\nсписок</string>
+    <string name="error_region">Не удалось получить\nсписок</string>
     <string name="place_to_work_text">%1$s, %2$s</string>
     <string name="apply">Применить</string>
     <string name="tv_work_schedule_template">%1$s, %2$s</string>
