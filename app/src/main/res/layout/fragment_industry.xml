@@ -89,7 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_16dp"
         android:fontFamily="@font/ys_display_medium"
-        android:text="@string/not_found_region"
+        android:text="@string/not_found_industry"
         android:textAlignment="center"
         android:textColor="@color/filter_text"
         android:textSize="@dimen/_22sp"

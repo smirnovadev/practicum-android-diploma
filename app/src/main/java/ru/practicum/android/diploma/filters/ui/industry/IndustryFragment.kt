@@ -141,8 +141,8 @@ class IndustryFragment : Fragment() {
     private fun showEmpty() {
         binding.apply {
             recyclerView.isVisible = false
-            binding.groupError.isVisible = true
-            binding.groupNotFound.isVisible = false
+            binding.groupError.isVisible = false
+            binding.groupNotFound.isVisible = true
             progressBar.isVisible = false
         }
     }
@@ -150,8 +150,8 @@ class IndustryFragment : Fragment() {
     private fun showError() {
         binding.apply {
             recyclerView.isVisible = false
-            binding.groupError.isVisible = false
-            binding.groupNotFound.isVisible = true
+            binding.groupError.isVisible = true
+            binding.groupNotFound.isVisible = false
             progressBar.isVisible = false
         }
     }
@@ -176,7 +176,7 @@ class IndustryFragment : Fragment() {
     }
 
     companion object {
-        private const val SEARCH_DEBOUNCE_DELAY = 200L
+        private const val SEARCH_DEBOUNCE_DELAY = 500L
         private const val EMPTY = ""
     }
 }
