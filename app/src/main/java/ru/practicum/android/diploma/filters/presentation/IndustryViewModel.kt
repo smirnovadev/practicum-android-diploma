@@ -31,7 +31,7 @@ class IndustryViewModel(
                     if (result.second == STATUS_OK) {
                         IndustryState.Empty
                     } else {
-                        IndustryState.Error(result.second)
+                        IndustryState.Error
                     }
                 )
             } else {
@@ -75,7 +75,13 @@ class IndustryViewModel(
             interactor
                 .findIndustry(request)
                 .collect {
-                    renderState(IndustryState.Content(it))
+                    if (!it.isNullOrEmpty()) {
+                        renderState(IndustryState.Content(it))
+                    } else if (it.isEmpty()) {
+                        renderState(IndustryState.Empty)
+                    } else {
+                        renderState(IndustryState.Error)
+                    }
                 }
         }
     }
