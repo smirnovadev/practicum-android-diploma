@@ -79,13 +79,14 @@ class SearchViewModel(
                             if (!isUploading) {
                                 previousRequest = request
                                 screenState.postValue(SearchScreenState.Error)
+                                isNextPageLoading = false
                             } else {
                                 SearchScreenState.UploadingError(
                                     searchResultsList,
                                     found
                                 )
+                                isNextPageLoading = false
                             }
-                            isNextPageLoading = false
                         }
                         .collect { pair ->
                             processResults(pair.data, pair.message, request)
@@ -209,7 +210,7 @@ class SearchViewModel(
         if (filters != currentFilters) {
             currentFilters = filters
             processFiltersStatus(currentFilters)
-            repeatRequest()
+            if (!previousRequest.isNullOrEmpty()) repeatRequest()
         }
     }
 
