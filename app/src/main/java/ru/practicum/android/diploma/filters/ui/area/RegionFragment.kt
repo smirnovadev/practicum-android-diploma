@@ -51,7 +51,7 @@ class RegionFragment : Fragment() {
         searchDebounce = debounce(
             SEARCH_DEBOUNCE_DELAY,
             viewLifecycleOwner.lifecycleScope,
-            false
+            true
         ) { request -> viewModel.search(request) }
         rvAdapter = AreaAdapter(regions) { area ->
             viewModel.saveAndExit(area, findNavController())
@@ -62,9 +62,9 @@ class RegionFragment : Fragment() {
         viewModel.getScreenStateLiveData().observe(viewLifecycleOwner) { state ->
             when (state) {
                 is AreasState.Content -> showContent(state.areasList)
-                AreasState.Empty -> showEmpty()
-                AreasState.Error -> showError()
-                AreasState.Loading -> showLoading()
+                is AreasState.Empty -> showEmpty()
+                is AreasState.Error -> showError()
+                is AreasState.Loading -> showLoading()
             }
         }
     }
