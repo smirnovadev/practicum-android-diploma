@@ -50,9 +50,9 @@ class CountryFragment : Fragment() {
         viewModel.getScreenStateLiveData().observe(viewLifecycleOwner) { state ->
             when (state) {
                 is AreasState.Content -> showContent(state.areasList)
-                AreasState.Empty -> showEmpty()
+                is AreasState.Empty -> showEmpty()
                 is AreasState.Error -> showError()
-                AreasState.Loading -> showLoading()
+                is AreasState.Loading -> showLoading()
             }
         }
     }

@@ -59,7 +59,7 @@ class IndustryFragment : Fragment() {
         searchDebounce = debounce(
             SEARCH_DEBOUNCE_DELAY,
             viewLifecycleOwner.lifecycleScope,
-            false
+            true
         ) { request -> viewModel.search(request) }
 
         initListeners()
@@ -97,10 +97,21 @@ class IndustryFragment : Fragment() {
 
         viewModel.getScreenStateLiveData().observe(viewLifecycleOwner) { state ->
             when (state) {
-                is IndustryState.Content -> showContent(state.industryList)
-                IndustryState.Empty -> showEmpty()
-                is IndustryState.Error -> showError()
-                IndustryState.Loading -> showLoading()
+                is IndustryState.Content -> {
+                    showContent(state.industryList)
+                }
+
+                is IndustryState.Empty -> {
+                    showEmpty()
+                }
+
+                is IndustryState.Error -> {
+                    showError()
+                }
+
+                is IndustryState.Loading -> {
+                    showLoading()
+                }
             }
         }
     }
