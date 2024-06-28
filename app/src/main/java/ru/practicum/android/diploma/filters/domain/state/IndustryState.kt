@@ -10,5 +10,5 @@ sealed interface IndustryState {
     ) : IndustryState
 
     data object Empty : IndustryState
-    data class Error(val code: Int) : IndustryState
+    data object Error : IndustryState
 }
