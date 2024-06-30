@@ -4,8 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="?attr/backgroundColor"
-    android:paddingVertical="@dimen/_9dp">
+    android:background="?attr/backgroundColor">
 
     <TextView
         android:id="@+id/area_text"
