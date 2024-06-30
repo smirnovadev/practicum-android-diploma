@@ -29,7 +29,7 @@ class FiltersTransformRepositoryImpl(
 
     override fun filterIndustries(query: String, industries: List<Industry>): List<Industry> {
         return industries.filter {
-            it.name.contains(query)
+            it.name.lowercase().contains(query.lowercase())
         }
     }
 }
