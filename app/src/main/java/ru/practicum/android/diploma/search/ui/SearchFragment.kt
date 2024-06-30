@@ -100,9 +100,9 @@ class SearchFragment : Fragment(), SearchClickListener {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (!s.isNullOrEmpty()) {
-                    binding.searchFieldIcon.setImageResource(R.drawable.ic_close)
+                    binding.searchFieldIcon.setImageResource(R.drawable.ic_close_black)
                 } else {
-                    binding.searchFieldIcon.setImageResource(R.drawable.ic_search)
+                    binding.searchFieldIcon.setImageResource(R.drawable.ic_search_black)
                 }
             }
 
