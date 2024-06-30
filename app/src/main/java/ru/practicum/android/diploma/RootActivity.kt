@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
@@ -18,6 +19,7 @@ class RootActivity : AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.rootFragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
+        val menuDivider = findViewById<View>(R.id.menuTopDivider)
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomNavigationView.setupWithNavController(navController)
@@ -29,9 +31,15 @@ class RootActivity : AppCompatActivity() {
                 R.id.industryFragment,
                 R.id.countryFragment,
                 R.id.regionFragment,
-                R.id.placeToWorkFragment -> bottomNavigationView.isVisible = false
+                R.id.placeToWorkFragment -> {
+                    bottomNavigationView.isVisible = false
+                    menuDivider.isVisible = false
+                }
 
-                else -> bottomNavigationView.isVisible = true
+                else -> {
+                    bottomNavigationView.isVisible = true
+                    menuDivider.isVisible = true
+                }
             }
         }
     }
