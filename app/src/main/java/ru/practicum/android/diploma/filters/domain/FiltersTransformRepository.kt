@@ -9,4 +9,5 @@ interface FiltersTransformRepository {
     fun regionsFromDTO(input: List<AreaUnitDTO>): List<Area>
     fun countriesFromDTO(input: List<AreaUnitDTO>): List<Area>
     fun industriesFromDTO(input: List<IndustryUnitDTO>): List<Industry>
+    fun filterIndustries(query: String, industries: List<Industry>): List<Industry>
 }

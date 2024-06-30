@@ -13,4 +13,7 @@ class FiltersTransformInteractorImpl(
     override fun countriesFromDTO(input: List<AreaUnitDTO>): List<Area> = repository.countriesFromDTO(input)
 
     override fun industriesFromDTO(input: List<IndustryUnitDTO>): List<Industry> = repository.industriesFromDTO(input)
+
+    override fun filterIndustries(query: String, industries: List<Industry>): List<Industry> =
+        repository.filterIndustries(query, industries)
 }
