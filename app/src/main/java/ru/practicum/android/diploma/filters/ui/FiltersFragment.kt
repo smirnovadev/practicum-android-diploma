@@ -61,6 +61,7 @@ class FiltersFragment : Fragment() {
             if (binding.placeWorkText.text?.isEmpty() == true) {
                 openPlaceToWorkFragment()
             }
+            checkButtonsState()
         }
         binding.placeWorkBtn.setOnClickListener {
             if (binding.placeWorkText.text?.isEmpty() == true) {
@@ -68,11 +69,13 @@ class FiltersFragment : Fragment() {
             } else {
                 clearPlaceToWork()
             }
+            checkButtonsState()
         }
         binding.industryText.setOnClickListener {
             if (binding.industryText.text?.isEmpty() == true) {
                 openIndustryFragment()
             }
+            checkButtonsState()
         }
         binding.industryBtn.setOnClickListener {
             if (binding.industryText.text?.isEmpty() == true) {
@@ -80,6 +83,7 @@ class FiltersFragment : Fragment() {
             } else {
                 clearIndustry()
             }
+            checkButtonsState()
         }
         binding.salaryText.addTextChangedListener(onTextChanged = { text, _, _, _ ->
             viewModel.saveSalary(text?.toString())
