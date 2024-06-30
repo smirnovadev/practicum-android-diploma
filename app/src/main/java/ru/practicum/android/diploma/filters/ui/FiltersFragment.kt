@@ -50,7 +50,6 @@ class FiltersFragment : Fragment() {
         salary = viewModel.getSalary()
         salaryFlag = viewModel.getSalaryFlag()
 
-        binding.placeWorkText.setText(getString(R.string.place_to_work_text, country, region))
         binding.industryText.setText(industry)
 
         initListeners()
@@ -176,17 +175,17 @@ class FiltersFragment : Fragment() {
         super.onResume()
         country = viewModel.getCountryName()
         region = viewModel.getRegionName()
-        if (country.isEmpty() && region.isEmpty()) {
-            binding.placeWorkText.setText(EMPTY)
-        } else {
-            binding.placeWorkText.setText(
-                getString(
-                    R.string.place_to_work_text,
-                    country,
-                    region
-                )
-            )
+
+        val col = mutableListOf<String>()
+        if (country.isNotEmpty()) {
+            col.add(country)
         }
+        if (region.isNotEmpty()) {
+            col.add(country)
+        }
+        val joinToString = col.joinToString()
+        binding.placeWorkText.setText(joinToString)
+
         refreshPlaceToWorkIcon()
         binding.industryText.setText(viewModel.getIndustryName())
         refreshIndustryIcon()
