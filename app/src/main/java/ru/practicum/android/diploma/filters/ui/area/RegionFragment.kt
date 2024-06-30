@@ -71,11 +71,8 @@ class RegionFragment : Fragment() {
 
     private fun initListeners() {
         binding.inputRegion.addTextChangedListener(
-            afterTextChanged =
-            { editable ->
-                if (editable.toString().isNotEmpty()) {
-                    search(editable.toString())
-                }
+            afterTextChanged = { editable ->
+                search(editable.toString())
             }
         )
         binding.inputRegion.setOnEditorActionListener { _, actionId, _ ->
