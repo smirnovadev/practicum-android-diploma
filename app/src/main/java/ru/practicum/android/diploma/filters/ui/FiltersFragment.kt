@@ -181,7 +181,7 @@ class FiltersFragment : Fragment() {
             col.add(country)
         }
         if (region.isNotEmpty()) {
-            col.add(country)
+            col.add(region)
         }
         val joinToString = col.joinToString()
         binding.placeWorkText.setText(joinToString)
