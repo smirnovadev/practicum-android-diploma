@@ -9,7 +9,6 @@ class AreaViewHolder(
     val onClickListener: AreaOnClickListener,
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(item: Area) {
-        val context = itemView.context
         with(binding) {
             areaText.text = item.name
         }
