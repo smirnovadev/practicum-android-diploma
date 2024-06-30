@@ -112,7 +112,7 @@ class FiltersFragment : Fragment() {
         val visible = !binding.placeWorkText.text.isNullOrEmpty() ||
             !binding.industryText.text.isNullOrEmpty() ||
             !binding.salaryText.text.isNullOrEmpty() ||
-            viewModel.getSalaryFlagN() != null
+            viewModel.getSalaryFlagN() == true
         binding.buttonApply.isVisible = visible
         binding.reset.isVisible = visible
     }
