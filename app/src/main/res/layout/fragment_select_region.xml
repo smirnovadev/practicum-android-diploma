@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/backgroundColor"
     tools:context="ru.practicum.android.diploma.filters.ui.area.RegionFragment">
 
     <androidx.appcompat.widget.Toolbar
@@ -17,10 +18,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout_region"
-        style="@style/input_filter"
-        app:endIconDrawable="@drawable/ic_close"
-        app:endIconMode="clear_text"
-        app:endIconTint="?attr/hintTextColor"
+        style="@style/FilterSearchFieldLayout"
         app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,16 +26,9 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/input_region"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_16dp"
-            android:background="@drawable/bg_searchfield"
-            android:drawableEnd="@drawable/ic_search"
-            android:drawablePadding="@dimen/_8dp"
-            android:hint="@string/enter_region"
-            android:imeOptions="actionDone"
-            android:maxLines="1"
-            android:paddingBottom="@dimen/_20dp" />
+            style="@style/FilterSearchField"
+            android:hint="@string/enter_region" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <ProgressBar
