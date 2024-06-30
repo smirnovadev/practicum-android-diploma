@@ -26,4 +26,10 @@ class FiltersTransformRepositoryImpl(
     override fun industriesFromDTO(input: List<IndustryUnitDTO>): List<Industry> {
         return industryMapper.map(input, industryRecursionLimit)
     }
+
+    override fun filterIndustries(query: String, industries: List<Industry>): List<Industry> {
+        return industries.filter {
+            it.name.contains(query)
+        }
+    }
 }

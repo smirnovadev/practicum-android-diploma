@@ -20,45 +20,36 @@ class IndustryViewModel(
     private val industryScreenState: LiveData<IndustryState> = stateMutableLiveData
     fun getScreenStateLiveData() = industryScreenState
 
+    private val industries = mutableListOf<Industry>()
+
     init {
         loadIndustry()
-    }
-
-    private suspend fun downloadIndustriesToBase() {
-        interactor.downloadIndustries().collect { result ->
-            if (result.first == null) {
-                renderState(
-                    if (result.second == STATUS_OK) {
-                        IndustryState.Empty
-                    } else {
-                        IndustryState.Error
-                    }
-                )
-            } else {
-                transformer.industriesFromDTO(result.first!!).also {
-                    if (it.isNotEmpty()) {
-                        interactor.insertIndustries(it)
-                        renderState(IndustryState.Content(it))
-                    } else {
-                        renderState(IndustryState.Empty)
-                    }
-                }
-            }
-        }
     }
 
     private fun loadIndustry() {
         renderState(IndustryState.Loading)
         viewModelScope.launch {
-            interactor
-                .getIndustry()
-                .collect {
-                    if (it.isNotEmpty()) {
-                        renderState(IndustryState.Content(it))
-                    } else {
-                        downloadIndustriesToBase()
+            interactor.downloadIndustries().collect { result ->
+                if (result.first == null) {
+                    renderState(
+                        if (result.second == STATUS_OK) {
+                            IndustryState.Empty
+                        } else {
+                            IndustryState.Error
+                        }
+                    )
+                } else {
+                    transformer.industriesFromDTO(result.first!!).also {
+                        if (it.isNotEmpty()) {
+                            industries.clear()
+                            industries.addAll(it)
+                            renderState(IndustryState.Content(it))
+                        } else {
+                            renderState(IndustryState.Empty)
+                        }
                     }
                 }
+            }
         }
     }
 
@@ -72,17 +63,12 @@ class IndustryViewModel(
 
     fun search(request: String) {
         viewModelScope.launch {
-            interactor
-                .findIndustry(request)
-                .collect {
-                    if (!it.isNullOrEmpty()) {
-                        renderState(IndustryState.Content(it))
-                    } else if (it.isEmpty()) {
-                        renderState(IndustryState.Empty)
-                    } else {
-                        renderState(IndustryState.Error)
-                    }
-                }
+            val filterIndustries = transformer.filterIndustries(request, industries)
+            if (filterIndustries.isEmpty()) {
+                renderState(IndustryState.Empty)
+            } else {
+                renderState(IndustryState.Content(filterIndustries))
+            }
         }
     }
 
