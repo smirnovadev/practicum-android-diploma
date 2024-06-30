@@ -117,10 +117,8 @@ class SearchFragment : Fragment(), SearchClickListener {
         textWatcher.let { binding.searchField.addTextChangedListener(it) }
 
         binding.searchField.setOnEditorActionListener { v, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                if (binding.searchField.text.isNotEmpty()) {
-                    viewModel.actionDoneRequest(binding.searchField.text.toString())
-                }
+            if (actionId == EditorInfo.IME_ACTION_DONE && binding.searchField.text.isNotEmpty()) {
+                viewModel.actionDoneRequest(binding.searchField.text.toString())
             }
             false
         }
