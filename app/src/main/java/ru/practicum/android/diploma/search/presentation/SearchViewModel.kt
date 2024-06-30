@@ -25,13 +25,13 @@ class SearchViewModel(
 ) : ViewModel() {
 
     private var previousRequest: String = ""
+    private var unprocessedRequest: String = ""
     private var searchResultsList = ArrayList<Vacancy>()
     private var currentPage: Int = 0
     private var maxPages: Int = 0
     private var found: Int = 0
     private var currentFilters = getFilters()
     private var isNextPageLoading: Boolean = false
-
     private var isUploading: Boolean = false
 
     val searchDebounce = debounce<String>(
@@ -103,9 +103,10 @@ class SearchViewModel(
                 searchResultsList.addAll(vacancies.vacancies)
                 currentPage = vacancies.page
                 maxPages = vacancies.pages
-                found = vacancies.found
+                if (currentPage == ZERO) found = vacancies.found
                 Log.d(TAG_SEARCH, "Max pages: $maxPages")
-                screenState.postValue(SearchScreenState.ShowContent(searchResultsList, vacancies.found))
+                screenState.postValue(SearchScreenState.ShowContent(searchResultsList, found))
+                unprocessedRequest = ""
                 isNextPageLoading = false
             } else {
                 screenState.postValue(SearchScreenState.SearchError)
@@ -116,6 +117,7 @@ class SearchViewModel(
                 ERROR_NO_INTERNET -> {
                     if (!isUploading) {
                         previousRequest = ""
+                        unprocessedRequest = searchRequest
                         screenState.postValue(SearchScreenState.InternetConnectionError)
                     } else {
                         screenState.postValue(SearchScreenState.UploadingInternetError(searchResultsList, found))
@@ -170,6 +172,7 @@ class SearchViewModel(
 
     fun clearSearchField() {
         previousRequest = ""
+        unprocessedRequest = ""
         isUploading = false
         isNextPageLoading = false
         searchDebounce("")
@@ -193,14 +196,9 @@ class SearchViewModel(
 
     private fun processFiltersStatus(filters: FiltersParameters) {
         var isActive = false
-        if (filters.salary != null ||
+        isActive = filters.salary != null ||
             filters.industry != null ||
             filters.area != null
-        ) {
-            isActive = true
-        } else {
-            isActive = false
-        }
         if (filters.salaryFlag) isActive = true
         if (isActive) filtersState.postValue(FiltersState.Active) else filtersState.postValue(FiltersState.Inactive)
     }
@@ -236,6 +234,14 @@ class SearchViewModel(
             null
         } else {
             industry.id.toString()
+        }
+    }
+
+    fun actionDoneRequest(request: String) {
+        if (unprocessedRequest.isNotEmpty()) {
+            search(request, currentPage)
+        } else if (request != previousRequest) {
+            search(request)
         }
     }
 

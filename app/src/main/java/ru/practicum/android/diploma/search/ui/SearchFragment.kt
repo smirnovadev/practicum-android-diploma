@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -114,6 +115,13 @@ class SearchFragment : Fragment(), SearchClickListener {
         }
 
         textWatcher.let { binding.searchField.addTextChangedListener(it) }
+
+        binding.searchField.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE && binding.searchField.text.isNotEmpty()) {
+                viewModel.actionDoneRequest(binding.searchField.text.toString())
+            }
+            false
+        }
 
         binding.searchFieldIcon.setOnClickListener {
             binding.searchField.setText("")
