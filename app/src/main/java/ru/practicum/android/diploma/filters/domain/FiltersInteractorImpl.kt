@@ -35,11 +35,12 @@ class FiltersInteractorImpl(
     override suspend fun getRegionsByParent(parent: String?): Flow<List<Area>> {
         return filtersRepository.getRegionsByParent(parent)
     }
+
     override suspend fun getAllRegions(): Flow<List<Area>> {
         return filtersRepository.getAllAreas().map { areas ->
-           areas.filter { area ->
-               area.parent != null && area.parent != "1001"
-           }
+            areas.filter { area ->
+                area.parent != null && area.parent != "1001"
+            }
         }
     }
 
