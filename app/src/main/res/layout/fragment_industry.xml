@@ -27,7 +27,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/input_industry"
             style="@style/FilterSearchField"
-            android:hint="@string/enter_industry" />
+            android:hint="@string/enter_industry"
+            android:imeOptions="actionDone" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

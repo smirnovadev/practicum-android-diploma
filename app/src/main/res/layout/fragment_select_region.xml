@@ -27,7 +27,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/input_region"
             style="@style/FilterSearchField"
-            android:hint="@string/enter_region" />
+            android:hint="@string/enter_region"
+            android:imeOptions="actionDone" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
