@@ -83,13 +83,7 @@ class RegionViewModel(
                     .getAllRegions()
                     .collect { regions ->
                         if (regions.isNotEmpty()) {
-                            renderState(
-                                AreasState.Content(
-                                    regions.filter {
-                                        it.parent != null
-                                    }
-                                )
-                            )
+                            renderState(AreasState.Content(regions))
                         } else {
                             downloadAreasToBase()
                         }
@@ -125,9 +119,10 @@ class RegionViewModel(
                     renderState(
                         if (it.isNotEmpty()) {
                             interactor.insertAreas(it)
-                            AreasState.Content(it.filter { area ->
-                                area.parent != null
-                            })
+                            val cisRegions = it.filter { area ->
+                                area.parent != null && area.parent != "1001"
+                            }
+                            AreasState.Content(cisRegions)
                         } else {
                             AreasState.Empty
                         }

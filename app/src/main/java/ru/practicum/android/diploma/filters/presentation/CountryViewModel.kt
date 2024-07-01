@@ -35,13 +35,14 @@ class CountryViewModel(
                     }
                 )
             } else {
-                transformer.countriesFromDTO(result.first!!).also {
+                transformer.countriesFromDTO(result.first!!).also { areas ->
                     renderState(
-                        if (it.isNotEmpty()) {
-                            interactor.insertAreas(it)
-                            AreasState.Content(it.filter { area ->
-                                area.parent == null
-                            })
+                        if (areas.isNotEmpty()) {
+                            interactor.insertAreas(areas)
+                            val countries = areas
+                                .filter { area -> area.parent == null }
+                                .sortedBy { it.id }
+                            AreasState.Content(countries)
                         } else {
                             AreasState.Empty
                         }
