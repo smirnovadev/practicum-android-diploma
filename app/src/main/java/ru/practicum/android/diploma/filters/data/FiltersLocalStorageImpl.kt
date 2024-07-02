@@ -166,7 +166,6 @@ class FiltersLocalStorageImpl(
                     null
                 }
             }
-
             false -> {
                 if (sharedPreferences.contains(INDUSTRY_KEY)) {
                     gson.fromJson(
@@ -189,7 +188,6 @@ class FiltersLocalStorageImpl(
                     null
                 }
             }
-
             false -> {
                 if (sharedPreferences.contains(SALARY_KEY)) {
                     sharedPreferences.getInt(SALARY_KEY, -1)
@@ -209,7 +207,6 @@ class FiltersLocalStorageImpl(
                     null
                 }
             }
-
             false -> {
                 if (sharedPreferences.contains(SALARY_FLAG_KEY)) {
                     sharedPreferences.getBoolean(SALARY_FLAG_KEY, false)
