@@ -11,173 +11,145 @@ class FiltersLocalStorageImpl(
     private val gson: Gson
 ) : FiltersLocalStorage {
     override fun saveCountry(country: Area?, isCurrent: Boolean) {
-        when (isCurrent) {
-            true -> {
-                sharedPreferences.edit().apply {
-                    if (country == null) {
-                        remove(COUNTRY_KEY_CURRENT)
-                    } else {
-                        putString(COUNTRY_KEY_CURRENT, gson.toJson(country))
-                    }
-                }.apply()
-            }
-
-            false -> {
-                sharedPreferences.edit().apply {
-                    if (country == null) {
-                        remove(COUNTRY_KEY)
-                    } else {
-                        putString(COUNTRY_KEY, gson.toJson(country))
-                    }
-                }.apply()
-            }
+        if (isCurrent) {
+            sharedPreferences.edit().apply {
+                if (country == null) {
+                    remove(COUNTRY_KEY_CURRENT)
+                } else {
+                    putString(COUNTRY_KEY_CURRENT, gson.toJson(country))
+                }
+            }.apply()
+        } else {
+            sharedPreferences.edit().apply {
+                if (country == null) {
+                    remove(COUNTRY_KEY)
+                } else {
+                    putString(COUNTRY_KEY, gson.toJson(country))
+                }
+            }.apply()
         }
     }
 
     override fun saveRegion(region: Area?, isCurrent: Boolean) {
-        when (isCurrent) {
-            true -> {
-                sharedPreferences.edit().apply {
-                    if (region == null) {
-                        remove(REGION_KEY_CURRENT)
-                    } else {
-                        putString(REGION_KEY_CURRENT, gson.toJson(region))
-                    }
-                }.apply()
-            }
-
-            false -> {
-                sharedPreferences.edit().apply {
-                    if (region == null) {
-                        remove(REGION_KEY)
-                    } else {
-                        putString(REGION_KEY, gson.toJson(region))
-                    }
-                }.apply()
-            }
+        if (isCurrent) {
+            sharedPreferences.edit().apply {
+                if (region == null) {
+                    remove(REGION_KEY_CURRENT)
+                } else {
+                    putString(REGION_KEY_CURRENT, gson.toJson(region))
+                }
+            }.apply()
+        } else {
+            sharedPreferences.edit().apply {
+                if (region == null) {
+                    remove(REGION_KEY)
+                } else {
+                    putString(REGION_KEY, gson.toJson(region))
+                }
+            }.apply()
         }
     }
 
     override fun saveIndustry(industry: Industry?, isCurrent: Boolean) {
-        when (isCurrent) {
-            true -> {
-                sharedPreferences.edit().apply {
-                    if (industry == null) {
-                        remove(INDUSTRY_KEY_CURRENT)
-                    } else {
-                        putString(INDUSTRY_KEY_CURRENT, gson.toJson(industry))
-                    }
-                }.apply()
-            }
-
-            false -> {
-                sharedPreferences.edit().apply {
-                    if (industry == null) {
-                        remove(INDUSTRY_KEY)
-                    } else {
-                        putString(INDUSTRY_KEY, gson.toJson(industry))
-                    }
-                }.apply()
-            }
+        if (isCurrent) {
+            sharedPreferences.edit().apply {
+                if (industry == null) {
+                    remove(INDUSTRY_KEY_CURRENT)
+                } else {
+                    putString(INDUSTRY_KEY_CURRENT, gson.toJson(industry))
+                }
+            }.apply()
+        } else {
+            sharedPreferences.edit().apply {
+                if (industry == null) {
+                    remove(INDUSTRY_KEY)
+                } else {
+                    putString(INDUSTRY_KEY, gson.toJson(industry))
+                }
+            }.apply()
         }
     }
 
     override fun saveSalary(salary: Int?, isCurrent: Boolean) {
-        when (isCurrent) {
-            true -> {
-                sharedPreferences.edit().apply {
-                    if (salary == null) {
-                        remove(SALARY_KEY_CURRENT)
-                    } else {
-                        putInt(SALARY_KEY_CURRENT, salary)
-                    }
-                }.apply()
-            }
-
-            false -> {
-                sharedPreferences.edit().apply {
-                    if (salary == null) {
-                        remove(SALARY_KEY)
-                    } else {
-                        putInt(SALARY_KEY, salary)
-                    }
-                }.apply()
-            }
+        if (isCurrent) {
+            sharedPreferences.edit().apply {
+                if (salary == null) {
+                    remove(SALARY_KEY_CURRENT)
+                } else {
+                    putInt(SALARY_KEY_CURRENT, salary)
+                }
+            }.apply()
+        } else {
+            sharedPreferences.edit().apply {
+                if (salary == null) {
+                    remove(SALARY_KEY)
+                } else {
+                    putInt(SALARY_KEY, salary)
+                }
+            }.apply()
         }
     }
 
     override fun saveSalaryFlag(flag: Boolean?, isCurrent: Boolean) {
-        when (isCurrent) {
-            true -> {
-                sharedPreferences.edit().apply {
-                    if (flag == null) {
-                        remove(SALARY_FLAG_KEY_CURRENT)
-                    } else {
-                        putBoolean(SALARY_FLAG_KEY_CURRENT, flag)
-                    }
-                }.apply()
-            }
-
-            false -> {
-                sharedPreferences.edit().apply {
-                    if (flag == null) {
-                        remove(SALARY_FLAG_KEY)
-                    } else {
-                        putBoolean(SALARY_FLAG_KEY, flag)
-                    }
-                }.apply()
-            }
+        if (isCurrent) {
+            sharedPreferences.edit().apply {
+                if (flag == null) {
+                    remove(SALARY_FLAG_KEY_CURRENT)
+                } else {
+                    putBoolean(SALARY_FLAG_KEY_CURRENT, flag)
+                }
+            }.apply()
+        } else {
+            sharedPreferences.edit().apply {
+                if (flag == null) {
+                    remove(SALARY_FLAG_KEY)
+                } else {
+                    putBoolean(SALARY_FLAG_KEY, flag)
+                }
+            }.apply()
         }
     }
 
     override fun getCountry(isCurrent: Boolean): Area? {
-        when (isCurrent) {
-            true -> {
-                return if (sharedPreferences.contains(COUNTRY_KEY_CURRENT)) {
-                    gson.fromJson(
-                        sharedPreferences.getString(COUNTRY_KEY_CURRENT, null),
-                        Area::class.java
-                    )
-                } else {
-                    null
-                }
+        if (isCurrent) {
+            return if (sharedPreferences.contains(COUNTRY_KEY_CURRENT)) {
+                gson.fromJson(
+                    sharedPreferences.getString(COUNTRY_KEY_CURRENT, null),
+                    Area::class.java
+                )
+            } else {
+                null
             }
-
-            false -> {
-                return if (sharedPreferences.contains(COUNTRY_KEY)) {
-                    gson.fromJson(
-                        sharedPreferences.getString(COUNTRY_KEY, null),
-                        Area::class.java
-                    )
-                } else {
-                    null
-                }
+        } else {
+            return if (sharedPreferences.contains(COUNTRY_KEY)) {
+                gson.fromJson(
+                    sharedPreferences.getString(COUNTRY_KEY, null),
+                    Area::class.java
+                )
+            } else {
+                null
             }
         }
     }
 
     override fun getRegion(isCurrent: Boolean): Area? {
-        when (isCurrent) {
-            true -> {
-                return if (sharedPreferences.contains(REGION_KEY_CURRENT)) {
-                    gson.fromJson(
-                        sharedPreferences.getString(REGION_KEY_CURRENT, null),
-                        Area::class.java
-                    )
-                } else {
-                    null
-                }
+        if (isCurrent) {
+            return if (sharedPreferences.contains(REGION_KEY_CURRENT)) {
+                gson.fromJson(
+                    sharedPreferences.getString(REGION_KEY_CURRENT, null),
+                    Area::class.java
+                )
+            } else {
+                null
             }
-
-            false -> {
-                return if (sharedPreferences.contains(REGION_KEY)) {
-                    gson.fromJson(
-                        sharedPreferences.getString(REGION_KEY, null),
-                        Area::class.java
-                    )
-                } else {
-                    null
-                }
+        } else {
+            return if (sharedPreferences.contains(REGION_KEY)) {
+                gson.fromJson(
+                    sharedPreferences.getString(REGION_KEY, null),
+                    Area::class.java
+                )
+            } else {
+                null
             }
         }
     }
