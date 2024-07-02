@@ -11,7 +11,6 @@ class FiltersLocalStorageImpl(
     private val gson: Gson
 ) : FiltersLocalStorage {
 
-
     override fun getCountry(isCurrent: Boolean): Area? {
         if (isCurrent) {
             return if (sharedPreferences.contains(COUNTRY_KEY_CURRENT)) {
