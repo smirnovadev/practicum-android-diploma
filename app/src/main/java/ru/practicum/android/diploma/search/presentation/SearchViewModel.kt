@@ -11,8 +11,8 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.practicum.android.diploma.filters.domain.FiltersSharedInteractor
-import ru.practicum.android.diploma.filters.domain.models.FiltersParameters
 import ru.practicum.android.diploma.filters.domain.models.FiltersIconState
+import ru.practicum.android.diploma.filters.domain.models.FiltersParameters
 import ru.practicum.android.diploma.search.domain.api.SearchInteractor
 import ru.practicum.android.diploma.search.domain.model.Vacancies
 import ru.practicum.android.diploma.search.domain.model.Vacancy
@@ -200,7 +200,11 @@ class SearchViewModel(
             filters.industry != null ||
             filters.area != null
         if (filters.salaryFlag) isActive = true
-        if (isActive) filtersIconState.postValue(FiltersIconState.Active) else filtersIconState.postValue(FiltersIconState.Inactive)
+        if (isActive) {
+            filtersIconState.postValue(FiltersIconState.Active)
+        } else {
+            filtersIconState.postValue(FiltersIconState.Inactive)
+        }
     }
 
     fun checkFiltersStatus() {
