@@ -11,8 +11,8 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.practicum.android.diploma.filters.domain.FiltersSharedInteractor
+import ru.practicum.android.diploma.filters.domain.models.FiltersIconState
 import ru.practicum.android.diploma.filters.domain.models.FiltersParameters
-import ru.practicum.android.diploma.filters.domain.models.FiltersState
 import ru.practicum.android.diploma.search.domain.api.SearchInteractor
 import ru.practicum.android.diploma.search.domain.model.Vacancies
 import ru.practicum.android.diploma.search.domain.model.Vacancy
@@ -47,8 +47,8 @@ class SearchViewModel(
     private val screenState = MutableLiveData<SearchScreenState>(SearchScreenState.Default)
     fun getScreenState(): LiveData<SearchScreenState> = screenState
 
-    private val filtersState = MutableLiveData<FiltersState>(FiltersState.Inactive)
-    fun getFiltersState(): LiveData<FiltersState> = filtersState
+    private val filtersIconState = MutableLiveData<FiltersIconState>(FiltersIconState.Inactive)
+    fun getFiltersState(): LiveData<FiltersIconState> = filtersIconState
 
     init {
         screenState.postValue(SearchScreenState.Default)
@@ -176,12 +176,12 @@ class SearchViewModel(
 
     private fun getFilters(): FiltersParameters {
         return FiltersParameters(
-            salary = filtersSharedInteractor.getSalary(),
-            salaryFlag = filtersSharedInteractor.getSalaryFlag() ?: false,
-            industry = processIndustry(filtersSharedInteractor.getIndustry()),
+            salary = filtersSharedInteractor.getSalary(false),
+            salaryFlag = filtersSharedInteractor.getSalaryFlag(false) ?: false,
+            industry = processIndustry(filtersSharedInteractor.getIndustry(false)),
             area = processArea(
-                filtersSharedInteractor.getCountry(),
-                filtersSharedInteractor.getRegion()
+                filtersSharedInteractor.getCountry(false),
+                filtersSharedInteractor.getRegion(false)
             )
         )
     }
@@ -191,7 +191,11 @@ class SearchViewModel(
             filters.industry != null ||
             filters.area != null
         if (filters.salaryFlag) isActive = true
-        if (isActive) filtersState.postValue(FiltersState.Active) else filtersState.postValue(FiltersState.Inactive)
+        if (isActive) {
+            filtersIconState.postValue(FiltersIconState.Active)
+        } else {
+            filtersIconState.postValue(FiltersIconState.Inactive)
+        }
     }
 
     fun checkFiltersStatus() {

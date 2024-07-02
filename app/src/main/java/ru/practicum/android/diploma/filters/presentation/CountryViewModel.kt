@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.filters.domain.FiltersInteractor
-import ru.practicum.android.diploma.filters.domain.FiltersSharedInteractor
+import ru.practicum.android.diploma.filters.domain.FiltersSharedInteractorSave
 import ru.practicum.android.diploma.filters.domain.FiltersTransformInteractor
 import ru.practicum.android.diploma.filters.domain.state.AreasState
 import ru.practicum.android.diploma.search.domain.model.fields.Area
@@ -14,7 +14,7 @@ import ru.practicum.android.diploma.search.domain.model.fields.Area
 class CountryViewModel(
     private val interactor: FiltersInteractor,
     private val transformer: FiltersTransformInteractor,
-    private val sharedInteractor: FiltersSharedInteractor
+    private val sharedInteractorSave: FiltersSharedInteractorSave
 ) : ViewModel() {
     private val stateMutableLiveData = MutableLiveData<AreasState>()
     private val countriesScreenState: LiveData<AreasState> = stateMutableLiveData
@@ -68,7 +68,7 @@ class CountryViewModel(
     }
 
     fun save(country: Area) {
-        sharedInteractor.saveCurrentCountry(country)
+        sharedInteractorSave.saveCountry(country, true)
     }
 
     private fun renderState(state: AreasState) {

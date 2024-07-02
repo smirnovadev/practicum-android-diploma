@@ -8,6 +8,7 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.filters.domain.FiltersInteractor
 import ru.practicum.android.diploma.filters.domain.FiltersSharedInteractor
+import ru.practicum.android.diploma.filters.domain.FiltersSharedInteractorSave
 import ru.practicum.android.diploma.filters.domain.FiltersTransformInteractor
 import ru.practicum.android.diploma.filters.domain.state.AreasState
 import ru.practicum.android.diploma.search.domain.model.fields.Area
@@ -15,7 +16,8 @@ import ru.practicum.android.diploma.search.domain.model.fields.Area
 class RegionViewModel(
     private val interactor: FiltersInteractor,
     private val transformer: FiltersTransformInteractor,
-    private val sharedInteractor: FiltersSharedInteractor
+    private val sharedInteractor: FiltersSharedInteractor,
+    private val sharedInteractorSave: FiltersSharedInteractorSave
 ) : ViewModel() {
     private val stateMutableLiveData = MutableLiveData<AreasState>()
     private val regionsScreenState: LiveData<AreasState> = stateMutableLiveData
@@ -27,12 +29,12 @@ class RegionViewModel(
 
     fun saveAndExit(region: Area, navController: NavController) {
         viewModelScope.launch {
-            sharedInteractor.saveCurrentRegion(region)
-            val country = sharedInteractor.getCurrentCountry()
+            sharedInteractorSave.saveRegion(region, isCurrent = true)
+            val country = sharedInteractor.getCountry(isCurrent = true)
             if (country == null && region.parent != null) {
                 val parentId = region.parent.toInt()
                 interactor.getCountryById(parentId).collect { parentCountry ->
-                    sharedInteractor.saveCurrentCountry(parentCountry)
+                    sharedInteractorSave.saveCountry(parentCountry, isCurrent = true)
                     navController.navigateUp()
                 }
             } else {
@@ -42,7 +44,7 @@ class RegionViewModel(
     }
 
     fun search(request: String) {
-        val country = sharedInteractor.getCurrentCountry()
+        val country = sharedInteractor.getCountry(isCurrent = true)
         if (country == null) {
             viewModelScope.launch {
                 interactor
@@ -76,7 +78,7 @@ class RegionViewModel(
 
     private fun loadRegions() {
         renderState(AreasState.Loading)
-        val country = sharedInteractor.getCurrentCountry()
+        val country = sharedInteractor.getCountry(isCurrent = true)
         if (country == null) {
             viewModelScope.launch {
                 interactor

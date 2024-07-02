@@ -3,8 +3,8 @@ package ru.practicum.android.diploma.filters.domain
 import ru.practicum.android.diploma.search.domain.model.fields.Area
 import ru.practicum.android.diploma.search.domain.model.fields.Industry
 
-interface FiltersSharedInteractor {
-    fun applyFilter()
+interface FiltersLocalStorage {
+
     fun getCountry(isCurrent: Boolean): Area?
     fun getRegion(isCurrent: Boolean): Area?
     fun getIndustry(isCurrent: Boolean): Industry?

@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.filters.domain.FiltersInteractor
 import ru.practicum.android.diploma.filters.domain.FiltersSharedInteractor
+import ru.practicum.android.diploma.filters.domain.FiltersSharedInteractorSave
 import ru.practicum.android.diploma.filters.domain.FiltersTransformInteractor
 import ru.practicum.android.diploma.filters.domain.state.IndustryState
 import ru.practicum.android.diploma.search.domain.model.fields.Industry
@@ -15,6 +16,7 @@ class IndustryViewModel(
     private val interactor: FiltersInteractor,
     private val transformer: FiltersTransformInteractor,
     private val sharedInteractor: FiltersSharedInteractor,
+    private val sharedInteractorSave: FiltersSharedInteractorSave
 ) : ViewModel() {
     private val stateMutableLiveData = MutableLiveData<IndustryState>()
     private val industryScreenState: LiveData<IndustryState> = stateMutableLiveData
@@ -54,7 +56,7 @@ class IndustryViewModel(
     }
 
     fun save(industry: Industry) {
-        sharedInteractor.saveCurrentIndustry(industry)
+        sharedInteractorSave.saveIndustry(industry, isCurrent = true)
     }
 
     private fun renderState(state: IndustryState) {
@@ -72,9 +74,9 @@ class IndustryViewModel(
         }
     }
 
-    fun getIndustry(): Industry? = sharedInteractor.getCurrentIndustry()
+    fun getIndustry(): Industry? = sharedInteractor.getIndustry(isCurrent = true)
 
-    fun clearIndustry() = sharedInteractor.saveCurrentIndustry(null)
+    fun clearIndustry() = sharedInteractorSave.saveIndustry(null, isCurrent = true)
 
     companion object {
         const val STATUS_OK = 200

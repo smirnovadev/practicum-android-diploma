@@ -25,15 +25,15 @@ val viewModelModule = module {
     }
 
     viewModel<FiltersViewModel> {
-        FiltersViewModel(get())
+        FiltersViewModel(get(), get())
     }
 
     viewModel<PlaceToWorkViewModel> {
-        PlaceToWorkViewModel(get())
+        PlaceToWorkViewModel(get(), get())
     }
 
     viewModel<RegionViewModel> {
-        RegionViewModel(get(), get(), get())
+        RegionViewModel(get(), get(), get(), get())
     }
 
     viewModel<CountryViewModel> {
@@ -41,6 +41,6 @@ val viewModelModule = module {
     }
 
     viewModel<IndustryViewModel> {
-        IndustryViewModel(get(), get(), get())
+        IndustryViewModel(get(), get(), get(), get())
     }
 }
