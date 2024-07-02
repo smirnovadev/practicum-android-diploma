@@ -9,9 +9,16 @@ class PlaceToWorkViewModel(
 ) : ViewModel() {
     private val emptyArea = Area(-1, "")
 
-    fun getCountryName(): String = (sharedInteractor.getCountry() ?: emptyArea).name
-    fun getRegionName(): String = (sharedInteractor.getRegion() ?: emptyArea).name
+    fun getCountryName(): String = (sharedInteractor.getCurrentCountry() ?: emptyArea).name
+    fun getRegionName(): String = (sharedInteractor.getCurrentRegion() ?: emptyArea).name
 
-    fun clearCountryName() = sharedInteractor.saveCountry(null)
-    fun clearRegionName() = sharedInteractor.saveRegion(null)
+    fun clearCountryName() {
+        sharedInteractor.saveCountry(null)
+        sharedInteractor.saveCurrentCountry(null)
+    }
+
+    fun clearRegionName() {
+        sharedInteractor.saveRegion(null)
+        sharedInteractor.saveCurrentRegion(null)
+    }
 }

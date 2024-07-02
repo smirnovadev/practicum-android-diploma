@@ -40,16 +40,24 @@ class FiltersFragment : Fragment() {
         binding.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
-        country = viewModel.getCountryName()
-        region = viewModel.getRegionName()
-        industry = viewModel.getIndustryName()
-        salary = viewModel.getSalary()
-        salaryFlag = viewModel.getSalaryFlag()
+        country = viewModel.getCurrentCountry()
+        region = viewModel.getCurrentRegion()
+        industry = viewModel.getCurrentIndustry()
+        salary = viewModel.getCurrentSalary()
+        salaryFlag = viewModel.getCurrentSalaryFlag()
 
         binding.industryText.setText(industry)
 
         initListeners()
         bottomListeners()
+        viewModel.comparisonChanges()
+
+        viewModel.hasChangesLD().observe(viewLifecycleOwner) { hasChanges ->
+            when (hasChanges) {
+                true -> binding.buttonApply.isVisible = true
+                false -> binding.buttonApply.isVisible = false
+            }
+        }
     }
 
     private fun initListeners() {
@@ -93,6 +101,7 @@ class FiltersFragment : Fragment() {
 
     private fun bottomListeners() {
         binding.buttonApply.setOnClickListener {
+            viewModel.applyFilter()
             findNavController().navigateUp()
         }
         binding.reset.setOnClickListener {
@@ -107,7 +116,7 @@ class FiltersFragment : Fragment() {
         val visible = !binding.placeWorkText.text.isNullOrEmpty() ||
             !binding.industryText.text.isNullOrEmpty() ||
             !binding.salaryText.text.isNullOrEmpty() ||
-            viewModel.getSalaryFlagN() == true
+            viewModel.getCurrentSalaryFlagN() == true
         binding.buttonApply.isVisible = visible
         binding.reset.isVisible = visible
     }
@@ -173,8 +182,8 @@ class FiltersFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        country = viewModel.getCountryName()
-        region = viewModel.getRegionName()
+        country = viewModel.getCurrentCountry()
+        region = viewModel.getCurrentRegion()
 
         val col = mutableListOf<String>()
         if (country.isNotEmpty()) {
@@ -187,11 +196,11 @@ class FiltersFragment : Fragment() {
         binding.placeWorkText.setText(joinToString)
 
         refreshPlaceToWorkIcon()
-        binding.industryText.setText(viewModel.getIndustryName())
+        binding.industryText.setText(viewModel.getCurrentIndustry())
         refreshIndustryIcon()
 
-        binding.salaryText.setText(viewModel.getSalary())
-        binding.salaryCheckBox.isChecked = viewModel.getSalaryFlag()
+        binding.salaryText.setText(viewModel.getCurrentSalary())
+        binding.salaryCheckBox.isChecked = viewModel.getCurrentSalaryFlag()
 
         checkButtonsState()
     }
