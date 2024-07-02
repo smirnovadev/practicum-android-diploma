@@ -6,7 +6,8 @@ import ru.practicum.android.diploma.search.domain.model.fields.Area
 import ru.practicum.android.diploma.search.domain.model.fields.Industry
 
 class FiltersLocalStorage(
-    private val sharedPreferences: SharedPreferences, private val gson: Gson
+    private val sharedPreferences: SharedPreferences,
+    private val gson: Gson
 ) {
     fun saveCountry(country: Area?, isCurrent: Boolean) {
         when (isCurrent) {
@@ -82,7 +83,6 @@ class FiltersLocalStorage(
     }
 
     fun saveSalary(salary: Int?, isCurrent: Boolean) {
-
         when (isCurrent) {
             true -> {
                 sharedPreferences.edit().apply {
@@ -135,7 +135,8 @@ class FiltersLocalStorage(
             true -> {
                 return if (sharedPreferences.contains(COUNTRY_KEY_CURRENT)) {
                     gson.fromJson(
-                        sharedPreferences.getString(COUNTRY_KEY_CURRENT, null), Area::class.java
+                        sharedPreferences.getString(COUNTRY_KEY_CURRENT, null),
+                        Area::class.java
                     )
                 } else {
                     null
@@ -145,7 +146,8 @@ class FiltersLocalStorage(
             false -> {
                 return if (sharedPreferences.contains(COUNTRY_KEY)) {
                     gson.fromJson(
-                        sharedPreferences.getString(COUNTRY_KEY, null), Area::class.java
+                        sharedPreferences.getString(COUNTRY_KEY, null),
+                        Area::class.java
                     )
                 } else {
                     null
@@ -159,7 +161,8 @@ class FiltersLocalStorage(
             true -> {
                 return if (sharedPreferences.contains(REGION_KEY_CURRENT)) {
                     gson.fromJson(
-                        sharedPreferences.getString(REGION_KEY_CURRENT, null), Area::class.java
+                        sharedPreferences.getString(REGION_KEY_CURRENT, null),
+                        Area::class.java
                     )
                 } else {
                     null
@@ -169,7 +172,8 @@ class FiltersLocalStorage(
             false -> {
                 return if (sharedPreferences.contains(REGION_KEY)) {
                     gson.fromJson(
-                        sharedPreferences.getString(REGION_KEY, null), Area::class.java
+                        sharedPreferences.getString(REGION_KEY, null),
+                        Area::class.java
                     )
                 } else {
                     null
@@ -183,7 +187,8 @@ class FiltersLocalStorage(
             true -> {
                 if (sharedPreferences.contains(INDUSTRY_KEY_CURRENT)) {
                     gson.fromJson(
-                        sharedPreferences.getString(INDUSTRY_KEY_CURRENT, null), Industry::class.java
+                        sharedPreferences.getString(INDUSTRY_KEY_CURRENT, null),
+                        Industry::class.java
                     )
                 } else {
                     null
@@ -193,7 +198,8 @@ class FiltersLocalStorage(
             false -> {
                 if (sharedPreferences.contains(INDUSTRY_KEY)) {
                     gson.fromJson(
-                        sharedPreferences.getString(INDUSTRY_KEY, null), Industry::class.java
+                        sharedPreferences.getString(INDUSTRY_KEY, null),
+                        Industry::class.java
                     )
                 } else {
                     null
@@ -227,13 +233,17 @@ class FiltersLocalStorage(
             true -> {
                 if (sharedPreferences.contains(SALARY_FLAG_KEY_CURRENT)) {
                     sharedPreferences.getBoolean(SALARY_FLAG_KEY_CURRENT, false)
-                } else null
+                } else {
+                    null
+                }
             }
 
             false -> {
                 if (sharedPreferences.contains(SALARY_FLAG_KEY)) {
                     sharedPreferences.getBoolean(SALARY_FLAG_KEY, false)
-                } else null
+                } else {
+                    null
+                }
             }
         }
     }
@@ -249,6 +259,6 @@ class FiltersLocalStorage(
         const val REGION_KEY_CURRENT = "filters_region_current"
         const val INDUSTRY_KEY_CURRENT = "filters_industry_current"
         const val SALARY_KEY_CURRENT = "filters_salary_current"
-        const val SALARY_FLAG_KEY_CURRENT = "filters_salary_flag"
+        const val SALARY_FLAG_KEY_CURRENT = "filters_salary_flag_current"
     }
 }
