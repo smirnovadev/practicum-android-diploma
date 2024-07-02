@@ -9,192 +9,239 @@ class FiltersLocalStorage(
     private val sharedPreferences: SharedPreferences,
     private val gson: Gson
 ) {
-    fun saveCurrentCountry(country: Area?) {
-        sharedPreferences.edit().apply {
-            if (country == null) {
-                remove(COUNTRY_KEY_CURRENT)
-            } else {
-                putString(COUNTRY_KEY_CURRENT, gson.toJson(country))
+    fun saveCountry(country: Area?, isCurrent: Boolean) {
+        when (isCurrent) {
+            true -> {
+                sharedPreferences.edit().apply {
+                    if (country == null) {
+                        remove(COUNTRY_KEY_CURRENT)
+                    } else {
+                        putString(COUNTRY_KEY_CURRENT, gson.toJson(country))
+                    }
+                }.apply()
             }
-        }.apply()
-    }
 
-    fun saveCurrentRegion(region: Area?) {
-        sharedPreferences.edit().apply {
-            if (region == null) {
-                remove(REGION_KEY_CURRENT)
-            } else {
-                putString(REGION_KEY_CURRENT, gson.toJson(region))
+            false -> {
+                sharedPreferences.edit().apply {
+                    if (country == null) {
+                        remove(COUNTRY_KEY)
+                    } else {
+                        putString(COUNTRY_KEY, gson.toJson(country))
+                    }
+                }.apply()
             }
-        }.apply()
+        }
+
     }
 
-    fun saveCurrentIndustry(industry: Industry?) {
-        sharedPreferences.edit().apply {
-            if (industry == null) {
-                remove(INDUSTRY_KEY_CURRENT)
-            } else {
-                putString(INDUSTRY_KEY_CURRENT, gson.toJson(industry))
+    fun saveRegion(region: Area?, isCurrent: Boolean) {
+        when (isCurrent) {
+            true -> {
+                sharedPreferences.edit().apply {
+                    if (region == null) {
+                        remove(REGION_KEY_CURRENT)
+                    } else {
+                        putString(REGION_KEY_CURRENT, gson.toJson(region))
+                    }
+                }.apply()
             }
-        }.apply()
-    }
 
-    fun saveCurrentSalary(salary: Int?) {
-        sharedPreferences.edit().apply {
-            if (salary == null) {
-                remove(SALARY_KEY_CURRENT)
-            } else {
-                putString(SALARY_KEY_CURRENT, gson.toJson(salary))
+            false -> {
+                sharedPreferences.edit().apply {
+                    if (region == null) {
+                        remove(REGION_KEY)
+                    } else {
+                        putString(REGION_KEY, gson.toJson(region))
+                    }
+                }.apply()
             }
-        }.apply()
+        }
+
     }
 
-    fun saveCurrentSalaryFlag(flag: Boolean?) {
-        sharedPreferences.edit().apply {
-            if (flag == null) {
-                remove(SALARY_FLAG_KEY_CURRENT)
-            } else {
-                putString(SALARY_FLAG_KEY_CURRENT, gson.toJson(flag))
+    fun saveIndustry(industry: Industry?, isCurrent: Boolean) {
+        when (isCurrent) {
+            true -> {
+                sharedPreferences.edit().apply {
+                    if (industry == null) {
+                        remove(INDUSTRY_KEY_CURRENT)
+                    } else {
+                        putString(INDUSTRY_KEY_CURRENT, gson.toJson(industry))
+                    }
+                }.apply()
             }
-        }.apply()
-    }
 
-    fun saveCountry(country: Area?) {
-        sharedPreferences.edit().apply {
-            if (country == null) {
-                remove(COUNTRY_KEY)
-            } else {
-                putString(COUNTRY_KEY, gson.toJson(country))
+            false -> {
+                sharedPreferences.edit().apply {
+                    if (industry == null) {
+                        remove(INDUSTRY_KEY)
+                    } else {
+                        putString(INDUSTRY_KEY, gson.toJson(industry))
+                    }
+                }.apply()
             }
-        }.apply()
+        }
+
     }
 
-    fun saveRegion(region: Area?) {
-        sharedPreferences.edit().apply {
-            if (region == null) {
-                remove(REGION_KEY)
-            } else {
-                putString(REGION_KEY, gson.toJson(region))
+    fun saveSalary(salary: Int?, isCurrent: Boolean) {
+
+        when (isCurrent) {
+            true -> {
+                sharedPreferences.edit().apply {
+                    if (salary == null) {
+                        remove(SALARY_KEY_CURRENT)
+                    } else {
+                        putInt(SALARY_KEY_CURRENT, salary)
+                    }
+                }.apply()
             }
-        }.apply()
-    }
 
-    fun saveIndustry(industry: Industry?) {
-        sharedPreferences.edit().apply {
-            if (industry == null) {
-                remove(INDUSTRY_KEY)
-            } else {
-                putString(INDUSTRY_KEY, gson.toJson(industry))
+            false -> {
+                sharedPreferences.edit().apply {
+                    if (salary == null) {
+                        remove(SALARY_KEY)
+                    } else {
+                        putInt(SALARY_KEY, salary)
+                    }
+                }.apply()
             }
-        }.apply()
+        }
+
+
     }
 
-    fun saveSalary(salary: Int?) {
-        sharedPreferences.edit().apply {
-            if (salary == null) {
-                remove(SALARY_KEY)
-            } else {
-                putInt(SALARY_KEY, salary)
+    fun saveSalaryFlag(flag: Boolean?, isCurrent: Boolean) {
+        when (isCurrent) {
+            true -> {
+                sharedPreferences.edit().apply {
+                    if (flag == null) {
+                        remove(SALARY_FLAG_KEY_CURRENT)
+                    } else {
+                        putBoolean(SALARY_FLAG_KEY_CURRENT, flag)
+                    }
+                }.apply()
             }
-        }.apply()
-    }
 
-    fun saveSalaryFlag(flag: Boolean?) {
-        sharedPreferences.edit().apply {
-            if (flag == null) {
-                remove(SALARY_FLAG_KEY)
-            } else {
-                putBoolean(SALARY_FLAG_KEY, flag)
+            false -> {
+                sharedPreferences.edit().apply {
+                    if (flag == null) {
+                        remove(SALARY_FLAG_KEY)
+                    } else {
+                        putBoolean(SALARY_FLAG_KEY, flag)
+                    }
+                }.apply()
             }
-        }.apply()
+        }
+
+
     }
 
-    fun getCountry(): Area? {
-        if (sharedPreferences.contains(COUNTRY_KEY)) {
-            return gson.fromJson(
-                sharedPreferences.getString(COUNTRY_KEY, null),
-                Area::class.java
-            )
+    fun getCountry(isCurrent: Boolean): Area? {
+        when (isCurrent) {
+            true -> {
+                if (sharedPreferences.contains(COUNTRY_KEY_CURRENT)) {
+                    return gson.fromJson(
+                        sharedPreferences.getString(COUNTRY_KEY_CURRENT, null),
+                        Area::class.java
+                    )
+                }
+                return null
+            }
+
+            false -> {
+                if (sharedPreferences.contains(COUNTRY_KEY)) {
+                    return gson.fromJson(
+                        sharedPreferences.getString(COUNTRY_KEY, null),
+                        Area::class.java
+                    )
+                }
+                return null
+            }
         }
-        return null
+
     }
 
-    fun getRegion(): Area? {
-        if (sharedPreferences.contains(REGION_KEY)) {
-            return gson.fromJson(
-                sharedPreferences.getString(REGION_KEY, null),
-                Area::class.java
-            )
+    fun getRegion(isCurrent: Boolean): Area? {
+        when (isCurrent) {
+            true -> {
+                if (sharedPreferences.contains(REGION_KEY_CURRENT)) {
+                    return gson.fromJson(
+                        sharedPreferences.getString(REGION_KEY_CURRENT, null),
+                        Area::class.java
+                    )
+                }
+                return null
+            }
+
+            false -> {
+                if (sharedPreferences.contains(REGION_KEY)) {
+                    return gson.fromJson(
+                        sharedPreferences.getString(REGION_KEY, null),
+                        Area::class.java
+                    )
+                }
+                return null
+            }
         }
-        return null
+
     }
 
-    fun getIndustry(): Industry? {
-        if (sharedPreferences.contains(INDUSTRY_KEY)) {
-            return gson.fromJson(
-                sharedPreferences.getString(INDUSTRY_KEY, null),
-                Industry::class.java
-            )
+    fun getIndustry(isCurrent: Boolean): Industry? {
+        when (isCurrent) {
+            true -> {
+                return if (sharedPreferences.contains(INDUSTRY_KEY_CURRENT)) {
+                    gson.fromJson(
+                        sharedPreferences.getString(INDUSTRY_KEY_CURRENT, null),
+                        Industry::class.java
+                    )
+                } else null
+            }
+
+            false -> {
+                return if (sharedPreferences.contains(INDUSTRY_KEY)) {
+                    gson.fromJson(
+                        sharedPreferences.getString(INDUSTRY_KEY, null),
+                        Industry::class.java
+                    )
+                } else null
+            }
         }
-        return null
+
     }
 
-    fun getSalary(): Int? {
-        if (sharedPreferences.contains(SALARY_KEY)) {
-            return sharedPreferences.getInt(SALARY_KEY, -1)
+    fun getSalary(isCurrent: Boolean): Int? {
+        return when (isCurrent) {
+            true -> {
+                if (sharedPreferences.contains(SALARY_KEY_CURRENT)) {
+                    sharedPreferences.getInt(SALARY_KEY_CURRENT, -1)
+                } else null
+            }
+
+            false -> {
+                if (sharedPreferences.contains(SALARY_KEY)) {
+                    sharedPreferences.getInt(SALARY_KEY, -1)
+                } else null
+            }
         }
-        return null
+
     }
 
-    fun getSalaryFlag(): Boolean? {
-        if (sharedPreferences.contains(SALARY_FLAG_KEY)) {
-            return sharedPreferences.getBoolean(SALARY_FLAG_KEY, false)
-        }
-        return null
-    }
+    fun getSalaryFlag(isCurrent: Boolean): Boolean? {
+        return when (isCurrent) {
+            true -> {
+                if (sharedPreferences.contains(SALARY_FLAG_KEY_CURRENT)) {
+                    sharedPreferences.getBoolean(SALARY_FLAG_KEY_CURRENT, false)
+                } else null
+            }
 
-    fun getCurrentCountry(): Area? {
-        if (sharedPreferences.contains(COUNTRY_KEY_CURRENT)) {
-            return gson.fromJson(
-                sharedPreferences.getString(COUNTRY_KEY_CURRENT, null),
-                Area::class.java
-            )
+            false -> {
+                if (sharedPreferences.contains(SALARY_FLAG_KEY)) {
+                    sharedPreferences.getBoolean(SALARY_FLAG_KEY, false)
+                } else null
+            }
         }
-        return null
-    }
 
-    fun getCurrentRegion(): Area? {
-        if (sharedPreferences.contains(REGION_KEY_CURRENT)) {
-            return gson.fromJson(
-                sharedPreferences.getString(REGION_KEY_CURRENT, null),
-                Area::class.java
-            )
-        }
-        return null
-    }
-
-    fun getCurrentIndustry(): Industry? {
-        if (sharedPreferences.contains(INDUSTRY_KEY_CURRENT)) {
-            return gson.fromJson(
-                sharedPreferences.getString(INDUSTRY_KEY_CURRENT, null),
-                Industry::class.java
-            )
-        }
-        return null
-    }
-
-    fun getCurrentSalary(): Int? {
-        if (sharedPreferences.contains(SALARY_KEY_CURRENT)) {
-            return sharedPreferences.getInt(SALARY_KEY_CURRENT, -1)
-        }
-        return null
-    }
-
-    fun getCurrentSalaryFlag(): Boolean? {
-        if (sharedPreferences.contains(SALARY_FLAG_KEY_CURRENT)) {
-            return sharedPreferences.getBoolean(SALARY_FLAG_KEY_CURRENT, false)
-        }
-        return null
     }
 
     private companion object {

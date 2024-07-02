@@ -23,6 +23,7 @@ class FiltersViewModel(private val sharedInteractor: FiltersSharedInteractor) : 
     fun getCurrentSalary(): String = sharedInteractor.getCurrentSalary()?.toString() ?: ""
     fun getCurrentSalaryFlag(): Boolean = sharedInteractor.getCurrentSalaryFlag() ?: DEFAULT_SALARY_FLAG
     fun getCurrentSalaryFlagN(): Boolean? = sharedInteractor.getCurrentSalaryFlag()
+
     fun getCountryName(): String = (sharedInteractor.getCountry() ?: EMPTY_AREA).name
     fun getRegionName(): String = (sharedInteractor.getRegion() ?: EMPTY_AREA).name
     fun getIndustryName(): String = (sharedInteractor.getIndustry() ?: EMPTY_INDUSTRY).name
