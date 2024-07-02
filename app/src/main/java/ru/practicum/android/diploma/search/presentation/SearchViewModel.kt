@@ -66,15 +66,11 @@ class SearchViewModel(
         }
 
         isNextPageLoading = true
-        if (!request.isNullOrEmpty()) {
+        if (request.isNotEmpty()) {
             viewModelScope.launch {
                 withContext(Dispatchers.IO) {
                     searchInteractor
-                        .getVacancies(
-                            request,
-                            page,
-                            currentFilters
-                        )
+                        .getVacancies(request, page, currentFilters)
                         .catch { exception ->
                             if (!isUploading) {
                                 previousRequest = request
@@ -88,9 +84,7 @@ class SearchViewModel(
                                 isNextPageLoading = false
                             }
                         }
-                        .collect { pair ->
-                            processResults(pair.data, pair.message, request)
-                        }
+                        .collect { pair -> processResults(pair.data, pair.message, request) }
                 }
             }
         }
@@ -184,9 +178,7 @@ class SearchViewModel(
         return FiltersParameters(
             salary = filtersSharedInteractor.getSalary(false),
             salaryFlag = filtersSharedInteractor.getSalaryFlag(false) ?: false,
-            industry = processIndustry(
-                filtersSharedInteractor.getIndustry(false)
-            ),
+            industry = processIndustry(filtersSharedInteractor.getIndustry(false)),
             area = processArea(
                 filtersSharedInteractor.getCountry(false),
                 filtersSharedInteractor.getRegion(false)
@@ -195,8 +187,7 @@ class SearchViewModel(
     }
 
     private fun processFiltersStatus(filters: FiltersParameters) {
-        var isActive = false
-        isActive = filters.salary != null ||
+        var isActive = filters.salary != null ||
             filters.industry != null ||
             filters.area != null
         if (filters.salaryFlag) isActive = true
@@ -212,7 +203,7 @@ class SearchViewModel(
         if (filters != currentFilters) {
             currentFilters = filters
             processFiltersStatus(currentFilters)
-            if (!previousRequest.isNullOrEmpty()) repeatRequest()
+            if (previousRequest.isNotEmpty()) repeatRequest()
         }
     }
 
@@ -222,8 +213,7 @@ class SearchViewModel(
     }
 
     private fun processArea(country: Area?, region: Area?): String? {
-        val result: String?
-        result = if (country == null && region == null) {
+        val result: String? = if (country == null && region == null) {
             null
         } else if (country != null && region == null) {
             country.id.toString()
@@ -234,11 +224,7 @@ class SearchViewModel(
     }
 
     private fun processIndustry(industry: Industry?): String? {
-        return if (industry == null) {
-            null
-        } else {
-            industry.id.toString()
-        }
+        return industry?.id?.toString()
     }
 
     fun actionDoneRequest(request: String) {
