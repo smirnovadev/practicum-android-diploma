@@ -27,12 +27,12 @@ class RegionViewModel(
 
     fun saveAndExit(region: Area, navController: NavController) {
         viewModelScope.launch {
-            sharedInteractor.saveRegion(region)
-            val country = sharedInteractor.getCountry()
+            sharedInteractor.saveCurrentRegion(region)
+            val country = sharedInteractor.getCurrentCountry()
             if (country == null && region.parent != null) {
                 val parentId = region.parent.toInt()
                 interactor.getCountryById(parentId).collect { parentCountry ->
-                    sharedInteractor.saveCountry(parentCountry)
+                    sharedInteractor.saveCurrentCountry(parentCountry)
                     navController.navigateUp()
                 }
             } else {
@@ -42,7 +42,7 @@ class RegionViewModel(
     }
 
     fun search(request: String) {
-        val country = sharedInteractor.getCountry()
+        val country = sharedInteractor.getCurrentCountry()
         if (country == null) {
             viewModelScope.launch {
                 interactor
@@ -76,7 +76,7 @@ class RegionViewModel(
 
     private fun loadRegions() {
         renderState(AreasState.Loading)
-        val country = sharedInteractor.getCountry()
+        val country = sharedInteractor.getCurrentCountry()
         if (country == null) {
             viewModelScope.launch {
                 interactor

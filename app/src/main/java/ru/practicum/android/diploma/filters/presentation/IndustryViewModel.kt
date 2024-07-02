@@ -54,7 +54,7 @@ class IndustryViewModel(
     }
 
     fun save(industry: Industry) {
-        sharedInteractor.saveIndustry(industry)
+        sharedInteractor.saveCurrentIndustry(industry)
     }
 
     private fun renderState(state: IndustryState) {
@@ -72,9 +72,9 @@ class IndustryViewModel(
         }
     }
 
-    fun getIndustry(): Industry? = sharedInteractor.getIndustry()
+    fun getIndustry(): Industry? = sharedInteractor.getCurrentIndustry()
 
-    fun clearIndustry() = sharedInteractor.saveIndustry(null)
+    fun clearIndustry() = sharedInteractor.saveCurrentIndustry(null)
 
     companion object {
         const val STATUS_OK = 200
