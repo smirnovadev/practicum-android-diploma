@@ -84,7 +84,6 @@ class FiltersViewModel(private val sharedInteractor: FiltersSharedInteractor) : 
 
     fun updateCurrentSalary(salary: String?) {
         sharedInteractor.saveSalary(salary?.toIntOrNull(), isCurrent = true)
-        updateFilters()
     }
 
     fun updateSalaryFlag(flag: Boolean) {
