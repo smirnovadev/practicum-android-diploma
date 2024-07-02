@@ -10,105 +10,7 @@ class FiltersLocalStorageImpl(
     private val sharedPreferences: SharedPreferences,
     private val gson: Gson
 ) : FiltersLocalStorage {
-    override fun saveCountry(country: Area?, isCurrent: Boolean) {
-        if (isCurrent) {
-            sharedPreferences.edit().apply {
-                if (country == null) {
-                    remove(COUNTRY_KEY_CURRENT)
-                } else {
-                    putString(COUNTRY_KEY_CURRENT, gson.toJson(country))
-                }
-            }.apply()
-        } else {
-            sharedPreferences.edit().apply {
-                if (country == null) {
-                    remove(COUNTRY_KEY)
-                } else {
-                    putString(COUNTRY_KEY, gson.toJson(country))
-                }
-            }.apply()
-        }
-    }
 
-    override fun saveRegion(region: Area?, isCurrent: Boolean) {
-        if (isCurrent) {
-            sharedPreferences.edit().apply {
-                if (region == null) {
-                    remove(REGION_KEY_CURRENT)
-                } else {
-                    putString(REGION_KEY_CURRENT, gson.toJson(region))
-                }
-            }.apply()
-        } else {
-            sharedPreferences.edit().apply {
-                if (region == null) {
-                    remove(REGION_KEY)
-                } else {
-                    putString(REGION_KEY, gson.toJson(region))
-                }
-            }.apply()
-        }
-    }
-
-    override fun saveIndustry(industry: Industry?, isCurrent: Boolean) {
-        if (isCurrent) {
-            sharedPreferences.edit().apply {
-                if (industry == null) {
-                    remove(INDUSTRY_KEY_CURRENT)
-                } else {
-                    putString(INDUSTRY_KEY_CURRENT, gson.toJson(industry))
-                }
-            }.apply()
-        } else {
-            sharedPreferences.edit().apply {
-                if (industry == null) {
-                    remove(INDUSTRY_KEY)
-                } else {
-                    putString(INDUSTRY_KEY, gson.toJson(industry))
-                }
-            }.apply()
-        }
-    }
-
-    override fun saveSalary(salary: Int?, isCurrent: Boolean) {
-        if (isCurrent) {
-            sharedPreferences.edit().apply {
-                if (salary == null) {
-                    remove(SALARY_KEY_CURRENT)
-                } else {
-                    putInt(SALARY_KEY_CURRENT, salary)
-                }
-            }.apply()
-        } else {
-            sharedPreferences.edit().apply {
-                if (salary == null) {
-                    remove(SALARY_KEY)
-                } else {
-                    putInt(SALARY_KEY, salary)
-                }
-            }.apply()
-        }
-    }
-
-    override fun saveSalaryFlag(flag: Boolean?, isCurrent: Boolean) {
-        if (isCurrent) {
-            sharedPreferences.edit().apply {
-                if (flag == null) {
-                    remove(SALARY_FLAG_KEY_CURRENT)
-                } else {
-                    putBoolean(SALARY_FLAG_KEY_CURRENT, flag)
-                }
-            }.apply()
-        } else {
-            sharedPreferences.edit().apply {
-                if (flag == null) {
-                    remove(SALARY_FLAG_KEY)
-                } else {
-                    putBoolean(SALARY_FLAG_KEY, flag)
-                }
-            }.apply()
-        }
-    }
 
     override fun getCountry(isCurrent: Boolean): Area? {
         if (isCurrent) {
@@ -166,6 +68,7 @@ class FiltersLocalStorageImpl(
                     null
                 }
             }
+
             false -> {
                 if (sharedPreferences.contains(INDUSTRY_KEY)) {
                     gson.fromJson(
@@ -188,6 +91,7 @@ class FiltersLocalStorageImpl(
                     null
                 }
             }
+
             false -> {
                 if (sharedPreferences.contains(SALARY_KEY)) {
                     sharedPreferences.getInt(SALARY_KEY, -1)
@@ -207,6 +111,7 @@ class FiltersLocalStorageImpl(
                     null
                 }
             }
+
             false -> {
                 if (sharedPreferences.contains(SALARY_FLAG_KEY)) {
                     sharedPreferences.getBoolean(SALARY_FLAG_KEY, false)

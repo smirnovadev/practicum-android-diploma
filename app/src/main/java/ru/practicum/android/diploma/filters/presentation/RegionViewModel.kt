@@ -8,6 +8,7 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.filters.domain.FiltersInteractor
 import ru.practicum.android.diploma.filters.domain.FiltersSharedInteractor
+import ru.practicum.android.diploma.filters.domain.FiltersSharedInteractorSave
 import ru.practicum.android.diploma.filters.domain.FiltersTransformInteractor
 import ru.practicum.android.diploma.filters.domain.state.AreasState
 import ru.practicum.android.diploma.search.domain.model.fields.Area
@@ -15,7 +16,8 @@ import ru.practicum.android.diploma.search.domain.model.fields.Area
 class RegionViewModel(
     private val interactor: FiltersInteractor,
     private val transformer: FiltersTransformInteractor,
-    private val sharedInteractor: FiltersSharedInteractor
+    private val sharedInteractor: FiltersSharedInteractor,
+    private val sharedInteractorSave: FiltersSharedInteractorSave
 ) : ViewModel() {
     private val stateMutableLiveData = MutableLiveData<AreasState>()
     private val regionsScreenState: LiveData<AreasState> = stateMutableLiveData
@@ -27,12 +29,12 @@ class RegionViewModel(
 
     fun saveAndExit(region: Area, navController: NavController) {
         viewModelScope.launch {
-            sharedInteractor.saveRegion(region, isCurrent = true)
+            sharedInteractorSave.saveRegion(region, isCurrent = true)
             val country = sharedInteractor.getCountry(isCurrent = true)
             if (country == null && region.parent != null) {
                 val parentId = region.parent.toInt()
                 interactor.getCountryById(parentId).collect { parentCountry ->
-                    sharedInteractor.saveCountry(parentCountry, isCurrent = true)
+                    sharedInteractorSave.saveCountry(parentCountry, isCurrent = true)
                     navController.navigateUp()
                 }
             } else {

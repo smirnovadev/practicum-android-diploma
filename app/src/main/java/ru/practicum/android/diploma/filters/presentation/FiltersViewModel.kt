@@ -3,6 +3,7 @@ package ru.practicum.android.diploma.filters.presentation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import ru.practicum.android.diploma.filters.domain.FiltersLocalStorageSave
 import ru.practicum.android.diploma.filters.domain.FiltersSharedInteractor
 import ru.practicum.android.diploma.filters.domain.models.Filters
 import ru.practicum.android.diploma.filters.domain.models.FiltersApplyButtonState
@@ -11,7 +12,10 @@ import ru.practicum.android.diploma.filters.domain.models.FiltersScreenState
 import ru.practicum.android.diploma.search.domain.model.fields.Area
 import ru.practicum.android.diploma.search.domain.model.fields.Industry
 
-class FiltersViewModel(private val sharedInteractor: FiltersSharedInteractor) : ViewModel() {
+class FiltersViewModel(
+    private val sharedInteractor: FiltersSharedInteractor,
+    private val sharedInteractorSave: FiltersLocalStorageSave
+) : ViewModel() {
 
     private var currentFilters: Filters = getCurrentFilters()
     private var appliedFilters: Filters = getAppliedFilters()
@@ -83,51 +87,51 @@ class FiltersViewModel(private val sharedInteractor: FiltersSharedInteractor) : 
     }
 
     fun updateCurrentSalary(salary: String?) {
-        sharedInteractor.saveSalary(salary?.toIntOrNull(), isCurrent = true)
+        sharedInteractorSave.saveSalary(salary?.toIntOrNull(), isCurrent = true)
         updateFilters()
     }
 
     fun updateSalaryFlag(flag: Boolean) {
-        sharedInteractor.saveSalaryFlag(flag, isCurrent = true)
+        sharedInteractorSave.saveSalaryFlag(flag, isCurrent = true)
         updateFilters()
         screenState.postValue(FiltersScreenState.Content(currentFilters))
     }
 
     fun clearRegions() {
-        sharedInteractor.saveCountry(null, isCurrent = true)
-        sharedInteractor.saveRegion(null, isCurrent = true)
+        sharedInteractorSave.saveCountry(null, isCurrent = true)
+        sharedInteractorSave.saveRegion(null, isCurrent = true)
         updateFilters()
         screenState.postValue(FiltersScreenState.Content(currentFilters))
     }
 
     fun clearIndustry() {
-        sharedInteractor.saveIndustry(null, isCurrent = true)
+        sharedInteractorSave.saveIndustry(null, isCurrent = true)
         updateFilters()
         screenState.postValue(FiltersScreenState.Content(currentFilters))
     }
 
     fun clearSalary() {
-        sharedInteractor.saveSalary(null, isCurrent = true)
+        sharedInteractorSave.saveSalary(null, isCurrent = true)
         updateFilters()
         screenState.postValue(FiltersScreenState.Content(currentFilters))
     }
 
     fun clearSalaryFlag() {
-        sharedInteractor.saveSalaryFlag(null, isCurrent = true)
+        sharedInteractorSave.saveSalaryFlag(null, isCurrent = true)
         updateFilters()
         screenState.postValue(FiltersScreenState.Content(currentFilters))
     }
 
     fun resetFilters() {
         clearRegions()
-        sharedInteractor.saveCountry(null, isCurrent = false)
-        sharedInteractor.saveRegion(null, isCurrent = false)
+        sharedInteractorSave.saveCountry(null, isCurrent = false)
+        sharedInteractorSave.saveRegion(null, isCurrent = false)
         clearIndustry()
-        sharedInteractor.saveIndustry(null, isCurrent = false)
+        sharedInteractorSave.saveIndustry(null, isCurrent = false)
         clearSalary()
-        sharedInteractor.saveSalary(null, isCurrent = false)
+        sharedInteractorSave.saveSalary(null, isCurrent = false)
         clearSalaryFlag()
-        sharedInteractor.saveSalaryFlag(null, isCurrent = false)
+        sharedInteractorSave.saveSalaryFlag(null, isCurrent = false)
         updateFilters()
         screenState.postValue(FiltersScreenState.Content(appliedFilters))
     }
