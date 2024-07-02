@@ -13,7 +13,7 @@ class FiltersViewModel(private val sharedInteractor: FiltersSharedInteractor) : 
     private val hasChangesML = MutableLiveData<Boolean>()
     fun hasChangesLD() = hasChangesML as LiveData<Boolean>
 
-    fun applyFilter(){
+    fun applyFilter() {
         sharedInteractor.applyFilter()
     }
 
@@ -79,10 +79,12 @@ class FiltersViewModel(private val sharedInteractor: FiltersSharedInteractor) : 
         sharedInteractor.saveIndustry(null)
         sharedInteractor.saveCurrentIndustry(null)
     }
+
     fun clearSalary() {
         sharedInteractor.saveSalary(null)
         sharedInteractor.saveCurrentSalary(null)
     }
+
     fun clearSalaryFlag() {
         sharedInteractor.saveSalaryFlag(null)
         sharedInteractor.saveCurrentSalaryFlag(null)

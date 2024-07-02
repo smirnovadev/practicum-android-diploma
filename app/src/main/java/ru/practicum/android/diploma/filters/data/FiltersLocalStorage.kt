@@ -6,8 +6,7 @@ import ru.practicum.android.diploma.search.domain.model.fields.Area
 import ru.practicum.android.diploma.search.domain.model.fields.Industry
 
 class FiltersLocalStorage(
-    private val sharedPreferences: SharedPreferences,
-    private val gson: Gson
+    private val sharedPreferences: SharedPreferences, private val gson: Gson
 ) {
     fun saveCountry(country: Area?, isCurrent: Boolean) {
         when (isCurrent) {
@@ -56,7 +55,6 @@ class FiltersLocalStorage(
                 }.apply()
             }
         }
-
     }
 
     fun saveIndustry(industry: Industry?, isCurrent: Boolean) {
@@ -81,7 +79,6 @@ class FiltersLocalStorage(
                 }.apply()
             }
         }
-
     }
 
     fun saveSalary(salary: Int?, isCurrent: Boolean) {
@@ -107,8 +104,6 @@ class FiltersLocalStorage(
                 }.apply()
             }
         }
-
-
     }
 
     fun saveSalaryFlag(flag: Boolean?, isCurrent: Boolean) {
@@ -133,81 +128,78 @@ class FiltersLocalStorage(
                 }.apply()
             }
         }
-
-
     }
 
     fun getCountry(isCurrent: Boolean): Area? {
         when (isCurrent) {
             true -> {
-                if (sharedPreferences.contains(COUNTRY_KEY_CURRENT)) {
-                    return gson.fromJson(
-                        sharedPreferences.getString(COUNTRY_KEY_CURRENT, null),
-                        Area::class.java
+                return if (sharedPreferences.contains(COUNTRY_KEY_CURRENT)) {
+                    gson.fromJson(
+                        sharedPreferences.getString(COUNTRY_KEY_CURRENT, null), Area::class.java
                     )
+                } else {
+                    null
                 }
-                return null
             }
 
             false -> {
-                if (sharedPreferences.contains(COUNTRY_KEY)) {
-                    return gson.fromJson(
-                        sharedPreferences.getString(COUNTRY_KEY, null),
-                        Area::class.java
+                return if (sharedPreferences.contains(COUNTRY_KEY)) {
+                    gson.fromJson(
+                        sharedPreferences.getString(COUNTRY_KEY, null), Area::class.java
                     )
+                } else {
+                    null
                 }
-                return null
             }
         }
-
     }
 
     fun getRegion(isCurrent: Boolean): Area? {
         when (isCurrent) {
             true -> {
-                if (sharedPreferences.contains(REGION_KEY_CURRENT)) {
-                    return gson.fromJson(
-                        sharedPreferences.getString(REGION_KEY_CURRENT, null),
-                        Area::class.java
+                return if (sharedPreferences.contains(REGION_KEY_CURRENT)) {
+                    gson.fromJson(
+                        sharedPreferences.getString(REGION_KEY_CURRENT, null), Area::class.java
                     )
+                } else {
+                    null
                 }
-                return null
             }
 
             false -> {
-                if (sharedPreferences.contains(REGION_KEY)) {
-                    return gson.fromJson(
-                        sharedPreferences.getString(REGION_KEY, null),
-                        Area::class.java
+                return if (sharedPreferences.contains(REGION_KEY)) {
+                    gson.fromJson(
+                        sharedPreferences.getString(REGION_KEY, null), Area::class.java
                     )
+                } else {
+                    null
                 }
-                return null
             }
         }
-
     }
 
     fun getIndustry(isCurrent: Boolean): Industry? {
-        when (isCurrent) {
+        return when (isCurrent) {
             true -> {
-                return if (sharedPreferences.contains(INDUSTRY_KEY_CURRENT)) {
+                if (sharedPreferences.contains(INDUSTRY_KEY_CURRENT)) {
                     gson.fromJson(
-                        sharedPreferences.getString(INDUSTRY_KEY_CURRENT, null),
-                        Industry::class.java
+                        sharedPreferences.getString(INDUSTRY_KEY_CURRENT, null), Industry::class.java
                     )
-                } else null
+                } else {
+                    null
+                }
             }
 
             false -> {
-                return if (sharedPreferences.contains(INDUSTRY_KEY)) {
+                if (sharedPreferences.contains(INDUSTRY_KEY)) {
                     gson.fromJson(
-                        sharedPreferences.getString(INDUSTRY_KEY, null),
-                        Industry::class.java
+                        sharedPreferences.getString(INDUSTRY_KEY, null), Industry::class.java
                     )
-                } else null
+                } else {
+                    null
+                }
             }
         }
-
     }
 
     fun getSalary(isCurrent: Boolean): Int? {
@@ -215,16 +207,19 @@ class FiltersLocalStorage(
             true -> {
                 if (sharedPreferences.contains(SALARY_KEY_CURRENT)) {
                     sharedPreferences.getInt(SALARY_KEY_CURRENT, -1)
-                } else null
+                } else {
+                    null
+                }
             }
 
             false -> {
                 if (sharedPreferences.contains(SALARY_KEY)) {
                     sharedPreferences.getInt(SALARY_KEY, -1)
-                } else null
+                } else {
+                    null
+                }
             }
         }
-
     }
 
     fun getSalaryFlag(isCurrent: Boolean): Boolean? {
@@ -241,7 +236,6 @@ class FiltersLocalStorage(
                 } else null
             }
         }
-
     }
 
     private companion object {
