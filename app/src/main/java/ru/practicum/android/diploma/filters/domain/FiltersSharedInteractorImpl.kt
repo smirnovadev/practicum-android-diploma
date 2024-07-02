@@ -35,7 +35,6 @@ class FiltersSharedInteractorImpl(
         filtersLocalStorage.saveSalaryFlag(flag, false)
     }
 
-
     override fun saveCurrentCountry(country: Area?) {
         filtersLocalStorage.saveCountry(country, true)
     }
@@ -55,7 +54,6 @@ class FiltersSharedInteractorImpl(
     override fun saveCurrentSalaryFlag(flag: Boolean?) {
         filtersLocalStorage.saveSalaryFlag(flag, true)
     }
-
 
     override fun getCountry(): Area? = filtersLocalStorage.getCountry(false)
     override fun getRegion(): Area? = filtersLocalStorage.getRegion(false)
