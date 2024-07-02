@@ -38,10 +38,6 @@ class FiltersFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.toolbar.setNavigationOnClickListener {
-            clearIndustry()
-            clearSalaryFlag()
-            clearPlaceToWork()
-            clearSalary()
             findNavController().navigateUp()
         }
         country = viewModel.getCountryName()
