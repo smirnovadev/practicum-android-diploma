@@ -16,7 +16,7 @@ import debounce
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
-import ru.practicum.android.diploma.filters.domain.models.FiltersState
+import ru.practicum.android.diploma.filters.domain.models.FiltersIconState
 import ru.practicum.android.diploma.job.ui.JobFragment
 import ru.practicum.android.diploma.search.domain.model.Vacancy
 import ru.practicum.android.diploma.search.presentation.SearchViewModel
@@ -136,10 +136,10 @@ class SearchFragment : Fragment(), SearchClickListener {
 
     }
 
-    private fun renderFiltersState(state: FiltersState) {
+    private fun renderFiltersState(state: FiltersIconState) {
         when (state) {
-            FiltersState.Active -> binding.icFilter.setImageResource(R.drawable.ic_filter_on)
-            FiltersState.Inactive -> binding.icFilter.setImageResource(R.drawable.ic_filter_off)
+            FiltersIconState.Active -> binding.icFilter.setImageResource(R.drawable.ic_filter_on)
+            FiltersIconState.Inactive -> binding.icFilter.setImageResource(R.drawable.ic_filter_off)
         }
     }
 
