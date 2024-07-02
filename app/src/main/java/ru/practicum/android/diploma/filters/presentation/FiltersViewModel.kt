@@ -14,9 +14,9 @@ import ru.practicum.android.diploma.search.domain.model.fields.Industry
 class FiltersViewModel(private val sharedInteractor: FiltersSharedInteractor) : ViewModel() {
 
     private var currentFilters: Filters = getCurrentFilters()
-    private var appliedFilters: Filters = getAppliedFiltes()
+    private var appliedFilters: Filters = getAppliedFilters()
 
-    private val screenState = MutableLiveData<FiltersScreenState>()
+    private val screenState = MutableLiveData<FiltersScreenState>(FiltersScreenState.Content(appliedFilters))
     fun getScreenState(): LiveData<FiltersScreenState> = screenState
 
     private val applyButtonState = MutableLiveData<FiltersApplyButtonState>()
@@ -27,9 +27,10 @@ class FiltersViewModel(private val sharedInteractor: FiltersSharedInteractor) : 
 
     init {
         updateFilters()
+        screenState.postValue(FiltersScreenState.Content(getAppliedFilters()))
     }
 
-    private fun getAppliedFiltes(): Filters {
+    private fun getAppliedFilters(): Filters {
         return Filters(
             (sharedInteractor.getCountry(isCurrent = false) ?: EMPTY_AREA).name,
             (sharedInteractor.getRegion(isCurrent = false) ?: EMPTY_AREA).name,
@@ -51,9 +52,7 @@ class FiltersViewModel(private val sharedInteractor: FiltersSharedInteractor) : 
 
     fun updateFilters() {
         currentFilters = getCurrentFilters()
-        appliedFilters = getAppliedFiltes()
-        screenState.postValue(FiltersScreenState.Content(currentFilters))
-
+        appliedFilters = getAppliedFilters()
         if (currentFilters == appliedFilters) {
             applyButtonState.postValue(FiltersApplyButtonState.InVisible)
         } else {
@@ -80,36 +79,43 @@ class FiltersViewModel(private val sharedInteractor: FiltersSharedInteractor) : 
     fun applyFilters() {
         sharedInteractor.applyFilter()
         updateFilters()
+        screenState.postValue(FiltersScreenState.Content(appliedFilters))
     }
 
     fun updateCurrentSalary(salary: String?) {
         sharedInteractor.saveSalary(salary?.toIntOrNull(), isCurrent = true)
+        updateFilters()
     }
 
     fun updateSalaryFlag(flag: Boolean) {
         sharedInteractor.saveSalaryFlag(flag, isCurrent = true)
         updateFilters()
+        screenState.postValue(FiltersScreenState.Content(currentFilters))
     }
 
     fun clearRegions() {
         sharedInteractor.saveCountry(null, isCurrent = true)
         sharedInteractor.saveRegion(null, isCurrent = true)
         updateFilters()
+        screenState.postValue(FiltersScreenState.Content(currentFilters))
     }
 
     fun clearIndustry() {
         sharedInteractor.saveIndustry(null, isCurrent = true)
         updateFilters()
+        screenState.postValue(FiltersScreenState.Content(currentFilters))
     }
 
     fun clearSalary() {
         sharedInteractor.saveSalary(null, isCurrent = true)
         updateFilters()
+        screenState.postValue(FiltersScreenState.Content(currentFilters))
     }
 
     fun clearSalaryFlag() {
         sharedInteractor.saveSalaryFlag(null, isCurrent = true)
         updateFilters()
+        screenState.postValue(FiltersScreenState.Content(currentFilters))
     }
 
     fun resetFilters() {
@@ -123,6 +129,12 @@ class FiltersViewModel(private val sharedInteractor: FiltersSharedInteractor) : 
         clearSalaryFlag()
         sharedInteractor.saveSalaryFlag(null, isCurrent = false)
         updateFilters()
+        screenState.postValue(FiltersScreenState.Content(appliedFilters))
+    }
+
+    fun updateFiltersOnResume() {
+        updateFilters()
+        screenState.postValue(FiltersScreenState.Content(currentFilters))
     }
 
     companion object {

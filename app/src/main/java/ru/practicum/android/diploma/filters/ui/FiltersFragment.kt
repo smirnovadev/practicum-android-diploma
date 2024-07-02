@@ -176,26 +176,20 @@ class FiltersFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.updateFilters()
+        viewModel.updateFiltersOnResume()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        viewModel.updateCurrentSalary(binding.salaryText.text.toString())
         _binding = null
         salaryDebounce = null
-    }
-
-    override fun onPause() {
-        super.onPause()
-        viewModel.updateCurrentSalary(binding.salaryText.text.toString())
     }
 
     private fun renderScreenState(state: FiltersScreenState) {
         when (state) {
             is FiltersScreenState.Content -> {
-                val country = state.currentFilters.country
-                val region = state.currentFilters.region
+                val country = state.filters.country
+                val region = state.filters.region
                 val col = mutableListOf<String>()
                 if (country.isNotEmpty()) {
                     col.add(country)
@@ -205,11 +199,11 @@ class FiltersFragment : Fragment() {
                 }
                 val joinToString = col.joinToString()
                 binding.placeWorkText.setText(joinToString)
-                binding.industryText.setText(state.currentFilters.industry)
-                previousSalary = state.currentFilters.salary
+                binding.industryText.setText(state.filters.industry)
+                previousSalary = state.filters.salary
                 binding.inputLayoutSalary.editText?.setText(previousSalary)
-                Log.d("Salary from SP", "${state.currentFilters.salary}")
-                binding.salaryCheckBox.isChecked = state.currentFilters.salaryFlag
+                Log.d("Salary from SP", "${state.filters.salary}")
+                binding.salaryCheckBox.isChecked = state.filters.salaryFlag
             }
         }
     }
