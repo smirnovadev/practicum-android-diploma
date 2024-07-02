@@ -1,97 +1,134 @@
 package ru.practicum.android.diploma.filters.presentation
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.practicum.android.diploma.filters.domain.FiltersSharedInteractor
+import ru.practicum.android.diploma.filters.domain.models.Filters
+import ru.practicum.android.diploma.filters.domain.models.FiltersApplyButtonState
+import ru.practicum.android.diploma.filters.domain.models.FiltersResetButtonState
+import ru.practicum.android.diploma.filters.domain.models.FiltersScreenState
 import ru.practicum.android.diploma.search.domain.model.fields.Area
 import ru.practicum.android.diploma.search.domain.model.fields.Industry
 
 class FiltersViewModel(private val sharedInteractor: FiltersSharedInteractor) : ViewModel() {
 
-    private val hasChangesML = MutableLiveData<Boolean>()
-    fun hasChangesLD() = hasChangesML as LiveData<Boolean>
+    private var currentFilters: Filters = getCurrentFilters()
+    private var appliedFilters: Filters = getAppliedFiltes()
 
-    fun applyFilter() {
+    private val screenState = MutableLiveData<FiltersScreenState>()
+    fun getScreenState(): LiveData<FiltersScreenState> = screenState
+
+    private val applyButtonState = MutableLiveData<FiltersApplyButtonState>()
+    fun getApplyButtonState(): LiveData<FiltersApplyButtonState> = applyButtonState
+
+    private val resetButtonState = MutableLiveData<FiltersResetButtonState>()
+    fun getResetButtonState(): LiveData<FiltersResetButtonState> = resetButtonState
+
+    init {
+        updateFilters()
+    }
+
+    private fun getAppliedFiltes(): Filters {
+        return Filters(
+            (sharedInteractor.getCountry(isCurrent = false) ?: EMPTY_AREA).name,
+            (sharedInteractor.getRegion(isCurrent = false) ?: EMPTY_AREA).name,
+            (sharedInteractor.getIndustry(isCurrent = false) ?: EMPTY_INDUSTRY).name,
+            sharedInteractor.getSalary(isCurrent = false)?.toString() ?: EMPTY_STRING,
+            sharedInteractor.getSalaryFlag(isCurrent = false) ?: DEFAULT_SALARY_FLAG
+        )
+    }
+
+    private fun getCurrentFilters(): Filters {
+        return Filters(
+            (sharedInteractor.getCountry(isCurrent = true) ?: EMPTY_AREA).name,
+            (sharedInteractor.getRegion(isCurrent = true) ?: EMPTY_AREA).name,
+            (sharedInteractor.getIndustry(isCurrent = true) ?: EMPTY_INDUSTRY).name,
+            sharedInteractor.getSalary(isCurrent = true)?.toString() ?: EMPTY_STRING,
+            sharedInteractor.getSalaryFlag(isCurrent = true) ?: DEFAULT_SALARY_FLAG
+        )
+    }
+
+    fun updateFilters() {
+        currentFilters = getCurrentFilters()
+        appliedFilters = getAppliedFiltes()
+        screenState.postValue(FiltersScreenState.Content(currentFilters))
+
+        if (currentFilters == appliedFilters) {
+            applyButtonState.postValue(FiltersApplyButtonState.InVisible)
+        } else {
+            applyButtonState.postValue(FiltersApplyButtonState.Visible)
+        }
+
+        if (areFiltersEmpty(appliedFilters)) {
+            resetButtonState.postValue(FiltersResetButtonState.InVisible)
+        } else {
+            resetButtonState.postValue(FiltersResetButtonState.Visible)
+        }
+    }
+
+    private fun areFiltersEmpty(filters: Filters): Boolean {
+        val isEmpty: Boolean =
+            filters.country.isEmpty()
+                && filters.region.isEmpty()
+                && filters.industry.isEmpty()
+                && filters.salary.isEmpty()
+
+        return isEmpty && !filters.salaryFlag
+    }
+
+    fun applyFilters() {
         sharedInteractor.applyFilter()
+        updateFilters()
     }
 
-    fun getCurrentCountry(): String = (sharedInteractor.getCurrentCountry() ?: EMPTY_AREA).name
-    fun getCurrentRegion(): String = (sharedInteractor.getCurrentRegion() ?: EMPTY_AREA).name
-    fun getCurrentIndustry(): String = (sharedInteractor.getCurrentIndustry() ?: EMPTY_INDUSTRY).name
-    fun getCurrentSalary(): String = sharedInteractor.getCurrentSalary()?.toString() ?: ""
-    fun getCurrentSalaryFlag(): Boolean = sharedInteractor.getCurrentSalaryFlag() ?: DEFAULT_SALARY_FLAG
-    fun getCurrentSalaryFlagN(): Boolean? = sharedInteractor.getCurrentSalaryFlag()
-
-    fun getCountryName(): String = (sharedInteractor.getCountry() ?: EMPTY_AREA).name
-    fun getRegionName(): String = (sharedInteractor.getRegion() ?: EMPTY_AREA).name
-    fun getIndustryName(): String = (sharedInteractor.getIndustry() ?: EMPTY_INDUSTRY).name
-    fun getSalary(): String = sharedInteractor.getSalary()?.toString() ?: ""
-    fun getSalaryFlag(): Boolean = sharedInteractor.getSalaryFlag() ?: DEFAULT_SALARY_FLAG
-
-    fun comparisonChanges() {
-        var discrepancy = false
-        val currentCountry = getCurrentCountry()
-        val savedCountry = getCountryName()
-
-        if (currentCountry != savedCountry) discrepancy = true
-
-        val currentRegion = getCurrentRegion()
-        val savedRegion = getRegionName()
-
-        if (currentRegion != savedRegion) discrepancy = true
-
-        val currentIndustry = getCurrentIndustry()
-        val savedIndustry = getIndustryName()
-
-        if (currentIndustry != savedIndustry) discrepancy = true
-
-        val currentSalary = getCurrentSalary()
-        val savedSalary = getSalary()
-
-        if (currentSalary != savedSalary) discrepancy = true
-
-        val currentSalaryFlag = getCurrentSalaryFlag()
-        val savedSalaryFlag = getSalaryFlag()
-
-        if (currentSalaryFlag != savedSalaryFlag) discrepancy = true
-
-        Log.i("comparisonChanges", discrepancy.toString())
-
-        hasChangesML.postValue(discrepancy)
+    fun updateCurrentSalary(salary: String?) {
+        sharedInteractor.saveSalary(salary?.toIntOrNull(), isCurrent = true)
+        updateFilters()
     }
 
-    fun saveSalary(salary: String?) = sharedInteractor.saveCurrentSalary(salary?.toIntOrNull())
-    fun saveSalaryFlag(flag: Boolean) = sharedInteractor.saveCurrentSalaryFlag(flag)
-
-    fun clearCountryName() {
-        sharedInteractor.saveCountry(null)
-        sharedInteractor.saveCurrentCountry(null)
+    fun updateSalaryFlag(flag: Boolean) {
+        sharedInteractor.saveSalaryFlag(flag, isCurrent = true)
+        updateFilters()
     }
 
-    fun clearRegionName() {
-        sharedInteractor.saveRegion(null)
-        sharedInteractor.saveCurrentRegion(null)
+    fun clearRegions() {
+        sharedInteractor.saveCountry(null, isCurrent = true)
+        sharedInteractor.saveRegion(null, isCurrent = true)
+        updateFilters()
     }
 
-    fun clearIndustryName() {
-        sharedInteractor.saveIndustry(null)
-        sharedInteractor.saveCurrentIndustry(null)
+    fun clearIndustry() {
+        sharedInteractor.saveIndustry(null, isCurrent = true)
+        updateFilters()
     }
 
     fun clearSalary() {
-        sharedInteractor.saveSalary(null)
-        sharedInteractor.saveCurrentSalary(null)
+        sharedInteractor.saveSalary(null, isCurrent = true)
+        updateFilters()
     }
 
     fun clearSalaryFlag() {
-        sharedInteractor.saveSalaryFlag(null)
-        sharedInteractor.saveCurrentSalaryFlag(null)
+        sharedInteractor.saveSalaryFlag(null, isCurrent = true)
+        updateFilters()
+    }
+
+    fun resetFilters() {
+        clearRegions()
+        sharedInteractor.saveCountry(null, isCurrent = false)
+        sharedInteractor.saveRegion(null, isCurrent = false)
+        clearIndustry()
+        sharedInteractor.saveIndustry(null, isCurrent = false)
+        clearSalary()
+        sharedInteractor.saveSalary(null, isCurrent = false)
+        clearSalaryFlag()
+        sharedInteractor.saveSalaryFlag(null, isCurrent = false)
+        updateFilters()
     }
 
     companion object {
         const val DEFAULT_SALARY_FLAG = false
+        const val EMPTY_STRING = ""
         val EMPTY_AREA = Area(-1, "")
         val EMPTY_INDUSTRY = Industry(-1, "")
     }

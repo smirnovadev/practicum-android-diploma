@@ -2,14 +2,15 @@ package ru.practicum.android.diploma.filters.data
 
 import android.content.SharedPreferences
 import com.google.gson.Gson
+import ru.practicum.android.diploma.filters.domain.FiltersLocalStorage
 import ru.practicum.android.diploma.search.domain.model.fields.Area
 import ru.practicum.android.diploma.search.domain.model.fields.Industry
 
-class FiltersLocalStorage(
+class FiltersLocalStorageImpl(
     private val sharedPreferences: SharedPreferences,
     private val gson: Gson
-) {
-    fun saveCountry(country: Area?, isCurrent: Boolean) {
+) : FiltersLocalStorage {
+    override fun saveCountry(country: Area?, isCurrent: Boolean) {
         when (isCurrent) {
             true -> {
                 sharedPreferences.edit().apply {
@@ -31,10 +32,9 @@ class FiltersLocalStorage(
                 }.apply()
             }
         }
-
     }
 
-    fun saveRegion(region: Area?, isCurrent: Boolean) {
+    override fun saveRegion(region: Area?, isCurrent: Boolean) {
         when (isCurrent) {
             true -> {
                 sharedPreferences.edit().apply {
@@ -58,7 +58,7 @@ class FiltersLocalStorage(
         }
     }
 
-    fun saveIndustry(industry: Industry?, isCurrent: Boolean) {
+    override fun saveIndustry(industry: Industry?, isCurrent: Boolean) {
         when (isCurrent) {
             true -> {
                 sharedPreferences.edit().apply {
@@ -82,7 +82,7 @@ class FiltersLocalStorage(
         }
     }
 
-    fun saveSalary(salary: Int?, isCurrent: Boolean) {
+    override fun saveSalary(salary: Int?, isCurrent: Boolean) {
         when (isCurrent) {
             true -> {
                 sharedPreferences.edit().apply {
@@ -106,7 +106,7 @@ class FiltersLocalStorage(
         }
     }
 
-    fun saveSalaryFlag(flag: Boolean?, isCurrent: Boolean) {
+    override fun saveSalaryFlag(flag: Boolean?, isCurrent: Boolean) {
         when (isCurrent) {
             true -> {
                 sharedPreferences.edit().apply {
@@ -130,7 +130,7 @@ class FiltersLocalStorage(
         }
     }
 
-    fun getCountry(isCurrent: Boolean): Area? {
+    override fun getCountry(isCurrent: Boolean): Area? {
         when (isCurrent) {
             true -> {
                 return if (sharedPreferences.contains(COUNTRY_KEY_CURRENT)) {
@@ -156,7 +156,7 @@ class FiltersLocalStorage(
         }
     }
 
-    fun getRegion(isCurrent: Boolean): Area? {
+    override fun getRegion(isCurrent: Boolean): Area? {
         when (isCurrent) {
             true -> {
                 return if (sharedPreferences.contains(REGION_KEY_CURRENT)) {
@@ -182,7 +182,7 @@ class FiltersLocalStorage(
         }
     }
 
-    fun getIndustry(isCurrent: Boolean): Industry? {
+    override fun getIndustry(isCurrent: Boolean): Industry? {
         return when (isCurrent) {
             true -> {
                 if (sharedPreferences.contains(INDUSTRY_KEY_CURRENT)) {
@@ -208,7 +208,7 @@ class FiltersLocalStorage(
         }
     }
 
-    fun getSalary(isCurrent: Boolean): Int? {
+    override fun getSalary(isCurrent: Boolean): Int? {
         return when (isCurrent) {
             true -> {
                 if (sharedPreferences.contains(SALARY_KEY_CURRENT)) {
@@ -228,7 +228,7 @@ class FiltersLocalStorage(
         }
     }
 
-    fun getSalaryFlag(isCurrent: Boolean): Boolean? {
+    override fun getSalaryFlag(isCurrent: Boolean): Boolean? {
         return when (isCurrent) {
             true -> {
                 if (sharedPreferences.contains(SALARY_FLAG_KEY_CURRENT)) {
@@ -254,7 +254,6 @@ class FiltersLocalStorage(
         const val INDUSTRY_KEY = "filters_industry"
         const val SALARY_KEY = "filters_salary"
         const val SALARY_FLAG_KEY = "filters_salary_flag"
-
         const val COUNTRY_KEY_CURRENT = "filters_country_current"
         const val REGION_KEY_CURRENT = "filters_region_current"
         const val INDUSTRY_KEY_CURRENT = "filters_industry_current"

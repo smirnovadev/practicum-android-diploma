@@ -68,7 +68,7 @@ class CountryViewModel(
     }
 
     fun save(country: Area) {
-        sharedInteractor.saveCurrentCountry(country)
+        sharedInteractor.saveCountry(country, true)
     }
 
     private fun renderState(state: AreasState) {
