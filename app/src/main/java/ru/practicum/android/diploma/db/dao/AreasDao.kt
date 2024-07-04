@@ -22,15 +22,10 @@ interface AreasDao {
     suspend fun getCountries(): List<AreaEntity>
 
     @Query("SELECT * FROM areas_table WHERE parent==:parent")
-    suspend fun getRegionsByParent(parent: String?): List<AreaEntity>
+    suspend fun getRegions(parent: Int): List<AreaEntity>
 
     @Query("SELECT * FROM areas_table WHERE name LIKE '%' || :name || '%' AND parent=:parent")
-    suspend fun getRegionsByNameAndParent(name: String, parent: String?): List<AreaEntity>
-
-    @Query("SELECT * FROM areas_table WHERE name LIKE '%' || :name || '%'")
-    suspend fun getRegionsByName(name: String): List<AreaEntity>
-    @Query("SELECT * FROM areas_table WHERE id = :id")
-    suspend fun getAreaById(id: Int): AreaEntity
+    suspend fun getRegion(name: String, parent: Int): List<AreaEntity>
 
     @Delete(entity = AreaEntity::class)
     fun deleteArea(areaEntity: AreaEntity)

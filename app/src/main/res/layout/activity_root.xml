@@ -13,14 +13,14 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:defaultNavHost="true"
-        app:layout_constraintBottom_toTopOf="@+id/menuTopDivider"
+        app:layout_constraintBottom_toTopOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navGraph="@navigation/main_navigation_graph" />
+        app:navGraph="@navigation/main_navigation_graph"/>
 
     <View
-        android:id="@+id/menuTopDivider"
+        android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1dp"
         android:background="@color/gray"

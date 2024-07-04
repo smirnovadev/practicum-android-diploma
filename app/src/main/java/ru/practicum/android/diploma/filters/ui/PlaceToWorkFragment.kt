@@ -44,7 +44,7 @@ class PlaceToWorkFragment : Fragment() {
     }
 
     private fun initListeners() {
-        binding.toolbar.setNavigationOnClickListener {
+        binding.toolbar.setOnClickListener {
             findNavController().navigateUp()
             clearCountry()
             clearRegion()
@@ -107,6 +107,7 @@ class PlaceToWorkFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+
         binding.countryText.setText(viewModel.getCountryName())
         refreshCountryIcon()
         binding.regionText.setText(viewModel.getRegionName())

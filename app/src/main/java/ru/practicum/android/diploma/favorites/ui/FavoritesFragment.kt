@@ -49,6 +49,10 @@ class FavoritesFragment : Fragment(), SearchClickListener {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
     private fun renderState(state: FavoritesScreenState) {
         when (state) {
@@ -110,11 +114,6 @@ class FavoritesFragment : Fragment(), SearchClickListener {
     override fun onResume() {
         super.onResume()
         viewModel.getVacancies()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     companion object {

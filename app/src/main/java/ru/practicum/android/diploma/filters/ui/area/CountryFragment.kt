@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.databinding.FragmentSelectCountryBinding
-import ru.practicum.android.diploma.filters.domain.state.AreasState
 import ru.practicum.android.diploma.filters.presentation.CountryViewModel
 import ru.practicum.android.diploma.search.domain.model.fields.Area
 
@@ -35,9 +34,9 @@ class CountryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.groupError.visibility = View.GONE
+        binding.groupEmpty.visibility = View.GONE
 
-        binding.toolbar.setNavigationOnClickListener {
+        binding.toolbar.setOnClickListener {
             findNavController().navigateUp()
         }
         rvAdapter = AreaAdapter(countries) {
@@ -50,9 +49,9 @@ class CountryFragment : Fragment() {
         viewModel.getScreenStateLiveData().observe(viewLifecycleOwner) { state ->
             when (state) {
                 is AreasState.Content -> showContent(state.areasList)
-                is AreasState.Empty -> showEmpty()
+                AreasState.Empty -> showEmpty()
                 is AreasState.Error -> showError()
-                is AreasState.Loading -> showLoading()
+                AreasState.Loading -> showLoading()
             }
         }
     }
@@ -63,14 +62,14 @@ class CountryFragment : Fragment() {
         binding.recyclerView.isVisible = true
         rvAdapter!!.notifyItemRangeChanged(0, countriesList.size)
         binding.apply {
-            groupError.isVisible = false
+            groupEmpty.isVisible = false
             progressBar.isVisible = false
         }
     }
 
     private fun showEmpty() {
         binding.apply {
-            groupError.isVisible = true
+            groupEmpty.isVisible = true
             progressBar.isVisible = false
             recyclerView.isVisible = false
         }
@@ -78,7 +77,7 @@ class CountryFragment : Fragment() {
 
     private fun showError() {
         binding.apply {
-            groupError.isVisible = true
+            groupEmpty.isVisible = true
             progressBar.isVisible = false
             recyclerView.isVisible = false
         }
@@ -86,7 +85,7 @@ class CountryFragment : Fragment() {
 
     private fun showLoading() {
         binding.apply {
-            groupError.isVisible = false
+            groupEmpty.isVisible = false
             progressBar.isVisible = true
             recyclerView.isVisible = false
         }

@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.favorites.presentation
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,7 +21,9 @@ class FavoritesViewModel(private val interactor: FavoritesInteractor) : ViewMode
 
     fun getVacancies() {
         viewModelScope.launch {
-            screenState.postValue(interactor.loadData())
+            val newScreenState = interactor.loadData()
+            Log.i("Favorite_screen_state", newScreenState.toString())
+            screenState.postValue(newScreenState)
         }
     }
 

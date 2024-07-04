@@ -6,7 +6,6 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -16,7 +15,6 @@ import debounce
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
-import ru.practicum.android.diploma.filters.domain.models.FiltersIconState
 import ru.practicum.android.diploma.job.ui.JobFragment
 import ru.practicum.android.diploma.search.domain.model.Vacancy
 import ru.practicum.android.diploma.search.presentation.SearchViewModel
@@ -32,8 +30,6 @@ class SearchFragment : Fragment(), SearchClickListener {
     private val searchAdapter = SearchAdapter(this)
     private var clickDebounce: ((Boolean) -> Unit)? = null
     private var isClickAllowed = true
-    private var uploadDebounce: ((Boolean) -> Unit)? = null
-    private var isUploadingAllowed = true
     private var stateHandler: SearchFragmentStateHandler? = null
 
     override fun onCreateView(
@@ -52,10 +48,6 @@ class SearchFragment : Fragment(), SearchClickListener {
             stateHandler?.renderState(state)
         }
 
-        viewModel.getFiltersState().observe(viewLifecycleOwner) { state ->
-            renderFiltersState(state)
-        }
-
         binding.apply {
             recyclerView.adapter = searchAdapter
             recyclerView.layoutManager = LinearLayoutManager(
@@ -65,17 +57,11 @@ class SearchFragment : Fragment(), SearchClickListener {
             )
         }
 
-        clickDebounce = debounce(
+        clickDebounce = debounce<Boolean>(
             CLICK_DEBOUNCE_DELAY,
             viewLifecycleOwner.lifecycleScope,
             false
-        ) { isClickAllowed = true }
-
-        uploadDebounce = debounce(
-            UPLOAD_DEBOUNCE_DELAY,
-            viewLifecycleOwner.lifecycleScope,
-            false
-        ) { isUploadingAllowed = true }
+        ) { if (!isClickAllowed) allowClick() }
 
         binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -86,11 +72,7 @@ class SearchFragment : Fragment(), SearchClickListener {
                         .findLastVisibleItemPosition()
                     val itemsCount = searchAdapter.itemCount
                     if (pos >= itemsCount - 1) {
-                        if (isUploadingAllowed) {
-                            isUploadingAllowed = false
-                            viewModel.uploadPage()
-                            uploadDebounce?.let { it(isUploadingAllowed) }
-                        }
+                        viewModel.uploadPage()
                     }
                 }
             }
@@ -101,9 +83,9 @@ class SearchFragment : Fragment(), SearchClickListener {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (!s.isNullOrEmpty()) {
-                    binding.searchFieldIcon.setImageResource(R.drawable.ic_close_black)
+                    binding.searchFieldIcon.setImageResource(R.drawable.ic_close)
                 } else {
-                    binding.searchFieldIcon.setImageResource(R.drawable.ic_search_black)
+                    binding.searchFieldIcon.setImageResource(R.drawable.ic_search)
                 }
             }
 
@@ -115,13 +97,6 @@ class SearchFragment : Fragment(), SearchClickListener {
         }
 
         textWatcher.let { binding.searchField.addTextChangedListener(it) }
-
-        binding.searchField.setOnEditorActionListener { v, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_DONE && binding.searchField.text.isNotEmpty()) {
-                viewModel.actionDoneRequest(binding.searchField.text.toString())
-            }
-            false
-        }
 
         binding.searchFieldIcon.setOnClickListener {
             binding.searchField.setText("")
@@ -136,20 +111,6 @@ class SearchFragment : Fragment(), SearchClickListener {
 
     }
 
-    private fun renderFiltersState(state: FiltersIconState) {
-        when (state) {
-            FiltersIconState.Active -> binding.icFilter.setImageResource(R.drawable.ic_filter_on)
-            FiltersIconState.Inactive -> binding.icFilter.setImageResource(R.drawable.ic_filter_off)
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.checkFiltersStatus()
-        isClickAllowed = true
-        isUploadingAllowed = true
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         textWatcher.let { binding.searchField.removeTextChangedListener(it) }
@@ -158,17 +119,10 @@ class SearchFragment : Fragment(), SearchClickListener {
         stateHandler = null
     }
 
-    override fun onPause() {
-        super.onPause()
-        viewModel.prepareOnResumeState()
-    }
-
     override fun onVacancyClick(vacancy: Vacancy) {
-        if (isClickAllowed) {
-            isClickAllowed = false
-            clickDebounce?.let { it(isClickAllowed) }
-            navigateToJobFragment(vacancy.id)
-        }
+        isClickAllowed = false
+        navigateToJobFragment(vacancy.id)
+        clickDebounce?.let { it(isClickAllowed) }
     }
 
     private fun navigateToJobFragment(vacancyId: String) {
@@ -180,9 +134,12 @@ class SearchFragment : Fragment(), SearchClickListener {
         )
     }
 
+    private fun allowClick() {
+        isClickAllowed = true
+    }
+
     companion object {
         private const val CLICK_DEBOUNCE_DELAY = 1000L
-        private const val UPLOAD_DEBOUNCE_DELAY = 500L
         const val EXTRA_ID = "vacancy_id"
     }
 }
