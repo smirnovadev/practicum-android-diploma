@@ -3,8 +3,8 @@ package ru.practicum.android.diploma.data.network
 import ru.practicum.android.diploma.data.dto.NetworkResponse
 import ru.practicum.android.diploma.data.dto.requests.AreaRequest
 import ru.practicum.android.diploma.data.dto.requests.CountriesRequest
-import ru.practicum.android.diploma.data.dto.requests.VacanciesSearchRequest
 import ru.practicum.android.diploma.data.dto.requests.IndustriesRequest
+import ru.practicum.android.diploma.data.dto.requests.VacanciesSearchRequest
 import ru.practicum.android.diploma.data.dto.requests.VacancyByIdRequest
 
 interface NetworkClient {

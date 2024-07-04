@@ -6,15 +6,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.filters.domain.FiltersInteractor
-import ru.practicum.android.diploma.filters.domain.FiltersSharedInteractor
-import ru.practicum.android.diploma.filters.ui.area.AreasState
-import ru.practicum.android.diploma.search.data.mapper.AreaMapper
+import ru.practicum.android.diploma.filters.domain.FiltersSharedInteractorSave
+import ru.practicum.android.diploma.filters.domain.FiltersTransformInteractor
+import ru.practicum.android.diploma.filters.domain.state.AreasState
 import ru.practicum.android.diploma.search.domain.model.fields.Area
 
 class CountryViewModel(
     private val interactor: FiltersInteractor,
-    private val mapper: AreaMapper,
-    private val sharedInteractor: FiltersSharedInteractor
+    private val transformer: FiltersTransformInteractor,
+    private val sharedInteractorSave: FiltersSharedInteractorSave
 ) : ViewModel() {
     private val stateMutableLiveData = MutableLiveData<AreasState>()
     private val countriesScreenState: LiveData<AreasState> = stateMutableLiveData
@@ -31,20 +31,22 @@ class CountryViewModel(
                     if (result.second == STATUS_OK) {
                         AreasState.Empty
                     } else {
-                        AreasState.Error(result.second)
+                        AreasState.Error
                     }
                 )
             } else {
-                val areas = mapper.map(result.first!!, 1)
-                if (areas.isNotEmpty()) {
-                    interactor.insertAreas(areas)
-                    renderState(AreasState.Content(
-                        areas.filter { area ->
-                            area.parent == null
+                transformer.countriesFromDTO(result.first!!).also { areas ->
+                    renderState(
+                        if (areas.isNotEmpty()) {
+                            interactor.insertAreas(areas)
+                            val countries = areas
+                                .filter { area -> area.parent == null }
+                                .sortedBy { it.id }
+                            AreasState.Content(countries)
+                        } else {
+                            AreasState.Empty
                         }
-                    ))
-                } else {
-                    renderState(AreasState.Empty)
+                    )
                 }
             }
         }
@@ -66,7 +68,7 @@ class CountryViewModel(
     }
 
     fun save(country: Area) {
-        sharedInteractor.saveCountry(country)
+        sharedInteractorSave.saveCountry(country, true)
     }
 
     private fun renderState(state: AreasState) {

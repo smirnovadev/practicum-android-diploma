@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.filters.ui.industry
+package ru.practicum.android.diploma.filters.domain.state
 
 import ru.practicum.android.diploma.search.domain.model.fields.Industry
 
@@ -10,5 +10,5 @@ sealed interface IndustryState {
     ) : IndustryState
 
     data object Empty : IndustryState
-    data class Error(val code: Int) : IndustryState
+    data object Error : IndustryState
 }

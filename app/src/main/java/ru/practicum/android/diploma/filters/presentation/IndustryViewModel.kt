@@ -7,62 +7,56 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.filters.domain.FiltersInteractor
 import ru.practicum.android.diploma.filters.domain.FiltersSharedInteractor
-import ru.practicum.android.diploma.filters.ui.industry.IndustryState
-import ru.practicum.android.diploma.search.data.mapper.IndustryMapper
+import ru.practicum.android.diploma.filters.domain.FiltersSharedInteractorSave
+import ru.practicum.android.diploma.filters.domain.FiltersTransformInteractor
+import ru.practicum.android.diploma.filters.domain.state.IndustryState
 import ru.practicum.android.diploma.search.domain.model.fields.Industry
 
 class IndustryViewModel(
     private val interactor: FiltersInteractor,
-    private val mapper: IndustryMapper,
+    private val transformer: FiltersTransformInteractor,
     private val sharedInteractor: FiltersSharedInteractor,
+    private val sharedInteractorSave: FiltersSharedInteractorSave
 ) : ViewModel() {
     private val stateMutableLiveData = MutableLiveData<IndustryState>()
     private val industryScreenState: LiveData<IndustryState> = stateMutableLiveData
     fun getScreenStateLiveData() = industryScreenState
 
+    private val industries = mutableListOf<Industry>()
+
     init {
         loadIndustry()
-    }
-
-    private suspend fun downloadIndustriesToBase() {
-        interactor.downloadIndustries().collect { result ->
-            if (result.first == null) {
-                renderState(
-                    if (result.second == STATUS_OK) {
-                        IndustryState.Empty
-                    } else {
-                        IndustryState.Error(result.second)
-                    }
-                )
-            } else {
-                val industries = mapper.map(result.first!!)
-                if (industries.isNotEmpty()) {
-                    interactor.insertIndustries(industries)
-                    renderState(IndustryState.Content(industries))
-                } else {
-                    renderState(IndustryState.Empty)
-                }
-            }
-        }
     }
 
     private fun loadIndustry() {
         renderState(IndustryState.Loading)
         viewModelScope.launch {
-            interactor
-                .getIndustry()
-                .collect {
-                    if (it.isNotEmpty()) {
-                        renderState(IndustryState.Content(it))
-                    } else {
-                        downloadIndustriesToBase()
+            interactor.downloadIndustries().collect { result ->
+                if (result.first == null) {
+                    renderState(
+                        if (result.second == STATUS_OK) {
+                            IndustryState.Empty
+                        } else {
+                            IndustryState.Error
+                        }
+                    )
+                } else {
+                    transformer.industriesFromDTO(result.first!!).also {
+                        if (it.isNotEmpty()) {
+                            industries.clear()
+                            industries.addAll(it)
+                            renderState(IndustryState.Content(it))
+                        } else {
+                            renderState(IndustryState.Empty)
+                        }
                     }
                 }
+            }
         }
     }
 
     fun save(industry: Industry) {
-        sharedInteractor.saveIndustry(industry)
+        sharedInteractorSave.saveIndustry(industry, isCurrent = true)
     }
 
     private fun renderState(state: IndustryState) {
@@ -71,17 +65,18 @@ class IndustryViewModel(
 
     fun search(request: String) {
         viewModelScope.launch {
-            interactor
-                .findIndustry(request)
-                .collect {
-                    renderState(IndustryState.Content(it))
-                }
+            val filterIndustries = transformer.filterIndustries(request, industries)
+            if (filterIndustries.isEmpty()) {
+                renderState(IndustryState.Empty)
+            } else {
+                renderState(IndustryState.Content(filterIndustries))
+            }
         }
     }
 
-    fun getIndustry(): Industry? = sharedInteractor.getIndustry()
+    fun getIndustry(): Industry? = sharedInteractor.getIndustry(isCurrent = true)
 
-    fun clearIndustry() = sharedInteractor.saveIndustry(null)
+    fun clearIndustry() = sharedInteractorSave.saveIndustry(null, isCurrent = true)
 
     companion object {
         const val STATUS_OK = 200

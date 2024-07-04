@@ -4,17 +4,20 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.filters.domain.FiltersInteractor
 import ru.practicum.android.diploma.filters.domain.FiltersSharedInteractor
-import ru.practicum.android.diploma.filters.ui.area.AreasState
-import ru.practicum.android.diploma.search.data.mapper.AreaMapper
+import ru.practicum.android.diploma.filters.domain.FiltersSharedInteractorSave
+import ru.practicum.android.diploma.filters.domain.FiltersTransformInteractor
+import ru.practicum.android.diploma.filters.domain.state.AreasState
 import ru.practicum.android.diploma.search.domain.model.fields.Area
 
 class RegionViewModel(
     private val interactor: FiltersInteractor,
-    private val mapper: AreaMapper,
-    private val sharedInteractor: FiltersSharedInteractor
+    private val transformer: FiltersTransformInteractor,
+    private val sharedInteractor: FiltersSharedInteractor,
+    private val sharedInteractorSave: FiltersSharedInteractorSave
 ) : ViewModel() {
     private val stateMutableLiveData = MutableLiveData<AreasState>()
     private val regionsScreenState: LiveData<AreasState> = stateMutableLiveData
@@ -24,45 +27,81 @@ class RegionViewModel(
         loadRegions()
     }
 
-    private suspend fun downloadAreasToBase() {
-        interactor.downloadAreas().collect { result ->
-            if (result.first == null) {
-                renderState(
-                    if (result.second == STATUS_OK) {
-                        AreasState.Empty
-                    } else {
-                        AreasState.Error(result.second)
-                    }
-                )
-            } else {
-                val areas = mapper.map(result.first!!, 1)
-                if (areas.isNotEmpty()) {
-                    interactor.insertAreas(areas)
-                    renderState(AreasState.Content(
-                        areas.filter { area ->
-                            area.parent != null
-                        }
-                    ))
-                } else {
-                    renderState(AreasState.Empty)
+    fun saveAndExit(region: Area, navController: NavController) {
+        viewModelScope.launch {
+            sharedInteractorSave.saveRegion(region, isCurrent = true)
+            val country = sharedInteractor.getCountry(isCurrent = true)
+            if (country == null && region.parent != null) {
+                val parentId = region.parent.toInt()
+                interactor.getCountryById(parentId).collect { parentCountry ->
+                    sharedInteractorSave.saveCountry(parentCountry, isCurrent = true)
+                    navController.navigateUp()
                 }
+            } else {
+                navController.navigateUp()
             }
         }
     }
 
-    private fun loadRegions() {
-        val country = sharedInteractor.getCountry()
+    fun search(request: String) {
+        val country = sharedInteractor.getCountry(isCurrent = true)
         if (country == null) {
-            renderState(AreasState.Empty)
+            viewModelScope.launch {
+                interactor
+                    .getRegionsByName(request)
+                    .collect { areas ->
+                        if (areas.isEmpty()) {
+                            renderState(AreasState.Empty)
+                        } else {
+                            val regions = areas.filter { region ->
+                                region.parent != null && region.parent != "1001"
+                            }
+                            renderState(AreasState.Content(regions))
+                        }
+                    }
+            }
+        } else {
+            viewModelScope.launch {
+                interactor
+                    .getRegionsByNameAndParent(request, country.id.toString())
+                    .collect { areas ->
+                        if (areas.isEmpty()) {
+                            renderState(AreasState.Empty)
+                        } else {
+                            renderState(AreasState.Content(areas))
+                        }
+                    }
+            }
+        }
+    }
+
+    private fun renderState(state: AreasState) {
+        stateMutableLiveData.postValue(state)
+    }
+
+    private fun loadRegions() {
+        renderState(AreasState.Loading)
+        val country = sharedInteractor.getCountry(isCurrent = true)
+        if (country == null) {
+            viewModelScope.launch {
+                interactor
+                    .getAllRegions()
+                    .collect { regions ->
+                        if (regions.isNotEmpty()) {
+                            renderState(AreasState.Content(regions))
+                        } else {
+                            downloadAreasToBase()
+                        }
+                    }
+            }
             return
         }
-        renderState(AreasState.Loading)
         viewModelScope.launch {
             interactor
-                .getRegions(country.id)
-                .collect {
-                    if (it.isNotEmpty()) {
-                        renderState(AreasState.Content(it))
+                .getRegionsByParent(country.id.toString())
+                .collect { regions ->
+                    if (regions.isNotEmpty()) {
+                        renderState(AreasState.Content(regions))
                     } else {
                         downloadAreasToBase()
                     }
@@ -70,27 +109,31 @@ class RegionViewModel(
         }
     }
 
-    fun save(region: Area) {
-        sharedInteractor.saveRegion(region)
-    }
-
-    private fun renderState(state: AreasState) {
-        stateMutableLiveData.postValue(state)
-    }
-
-    fun search(request: String) {
-        val country = sharedInteractor.getCountry()
-        if (country == null) {
-            renderState(AreasState.Empty)
-            return
-        }
-
-        viewModelScope.launch {
-            interactor
-                .getRegion(request, country.id)
-                .collect {
-                    renderState(AreasState.Content(it))
+    private suspend fun downloadAreasToBase() {
+        interactor.downloadAreas().collect { result ->
+            if (result.first == null) {
+                renderState(
+                    if (result.second == STATUS_OK) {
+                        AreasState.Empty
+                    } else {
+                        AreasState.Error
+                    }
+                )
+            } else {
+                transformer.regionsFromDTO(result.first!!).also {
+                    renderState(
+                        if (it.isNotEmpty()) {
+                            interactor.insertAreas(it)
+                            val cisRegions = it.filter { area ->
+                                area.parent != null && area.parent != "1001"
+                            }
+                            AreasState.Content(cisRegions)
+                        } else {
+                            AreasState.Empty
+                        }
+                    )
                 }
+            }
         }
     }
 

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/backgroundColor"
     tools:context="ru.practicum.android.diploma.filters.ui.area.RegionFragment">
 
     <androidx.appcompat.widget.Toolbar
@@ -17,10 +18,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout_region"
-        style="@style/input_filter"
-        app:endIconDrawable="@drawable/ic_close"
-        app:endIconMode="clear_text"
-        app:endIconTint="?attr/hintTextColor"
+        style="@style/FilterSearchFieldLayout"
         app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,16 +26,10 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/input_region"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_16dp"
-            android:background="@drawable/bg_searchfield"
-            android:drawableEnd="@drawable/ic_search"
-            android:drawablePadding="@dimen/_8dp"
+            style="@style/FilterSearchField"
             android:hint="@string/enter_region"
-            android:maxLines="1"
-            android:imeOptions="actionDone"
-            android:paddingBottom="@dimen/_20dp" />
+            android:imeOptions="actionDone" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <ProgressBar
@@ -54,6 +46,7 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_16dp"
         android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -97,7 +90,7 @@
         app:layout_constraintTop_toBottomOf="@id/empty_search" />
 
     <androidx.constraintlayout.widget.Group
-        android:id="@+id/group_empty"
+        android:id="@+id/group_error"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:constraint_referenced_ids="empty_region, empty_region_text" />
@@ -107,7 +100,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@null"
-        android:src="@drawable/region_empty"
+        android:src="@drawable/region_error"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -119,7 +112,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_16dp"
         android:fontFamily="@font/ys_display_medium"
-        android:text="@string/empty_region"
+        android:text="@string/error_region"
         android:textAlignment="center"
         android:textColor="@color/filter_text"
         android:textFontWeight="500"

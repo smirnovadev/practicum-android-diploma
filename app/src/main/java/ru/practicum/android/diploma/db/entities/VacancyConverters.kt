@@ -85,16 +85,19 @@ class VacancyConverters {
         val type = object : TypeToken<List<Phone?>>() {}.type
         return Gson().fromJson(data, type)
     }
+
     @TypeConverter
     fun fromKeySkills(keySkills: List<KeySkill?>): String {
         val type = object : TypeToken<List<KeySkill?>>() {}.type
         return Gson().toJson(keySkills, type)
     }
+
     @TypeConverter
     fun toKeySkills(data: String): List<KeySkill?> {
         val type = object : TypeToken<List<KeySkill?>>() {}.type
         return Gson().fromJson(data, type)
     }
+
     @TypeConverter
     fun toSchedule(data: String): Schedule {
         return Gson().fromJson(data, Schedule::class.java)
