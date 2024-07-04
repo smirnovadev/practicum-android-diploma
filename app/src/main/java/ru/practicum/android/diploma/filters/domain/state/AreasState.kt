@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.filters.ui.area
+package ru.practicum.android.diploma.filters.domain.state
 
 import ru.practicum.android.diploma.search.domain.model.fields.Area
 
@@ -9,5 +9,5 @@ sealed interface AreasState {
     ) : AreasState
 
     data object Empty : AreasState
-    data class Error(val code: Int) : AreasState
+    data object Error : AreasState
 }

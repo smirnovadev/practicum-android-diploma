@@ -13,8 +13,7 @@ import ru.practicum.android.diploma.data.network.ApiService
 import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.data.network.RetrofitNetworkClient
 import ru.practicum.android.diploma.db.AppDatabase
-import ru.practicum.android.diploma.db.AppDatabase.Companion.MIGRATION_1_2
-import ru.practicum.android.diploma.filters.data.FiltersLocalStorage
+import ru.practicum.android.diploma.filters.data.FiltersLocalStorageImpl
 import ru.practicum.android.diploma.job.data.ExternalNavigatorImpl
 import ru.practicum.android.diploma.job.data.mapper.ResponseToVacancyMapper
 import ru.practicum.android.diploma.job.domain.ExternalNavigator
@@ -73,7 +72,7 @@ val dataModule = module {
 
     single<AppDatabase> {
         Room.databaseBuilder(androidContext(), AppDatabase::class.java, "database.db")
-            .addMigrations(MIGRATION_1_2)
+            .fallbackToDestructiveMigration()
             .build()
     }
 
@@ -133,8 +132,8 @@ val dataModule = module {
         AreaMapper()
     }
 
-    single<FiltersLocalStorage> {
-        FiltersLocalStorage(get(), get())
+    single<FiltersLocalStorageImpl> {
+        FiltersLocalStorageImpl(get(), get())
     }
 
     single<ResponseToVacancyMapper> {

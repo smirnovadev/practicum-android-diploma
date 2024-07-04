@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/backgroundColor"
     tools:context="ru.practicum.android.diploma.filters.ui.PlaceToWorkFragment">
 
     <androidx.appcompat.widget.Toolbar
@@ -15,30 +16,15 @@
         app:navigationIcon="@drawable/ic_arrow_back"
         app:title="@string/choosing_place_work" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineEnd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="@dimen/_16dp" />
-
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/_16dp" />
-
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout_country"
         style="@style/filter_region"
-        android:layout_marginTop="@dimen/_24dp"
+        android:layout_marginTop="@dimen/_16dp"
         android:clickable="true"
         android:hint="@string/country"
-        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -67,10 +53,9 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout_region"
         style="@style/filter_region"
-        android:layout_marginTop="@dimen/_24dp"
         android:hint="@string/region"
-        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/input_layout_country">
 
         <com.google.android.material.textfield.TextInputEditText

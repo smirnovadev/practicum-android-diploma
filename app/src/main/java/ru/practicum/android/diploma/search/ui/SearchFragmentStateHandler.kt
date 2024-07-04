@@ -1,6 +1,9 @@
 package ru.practicum.android.diploma.search.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.view.isVisible
 import ru.practicum.android.diploma.R
@@ -25,7 +28,20 @@ class SearchFragmentStateHandler(
             is SearchScreenState.ShowContent -> showContent(state.vacancies, state.found)
             is SearchScreenState.UploadNextPage -> uploadNextPage()
             is SearchScreenState.Error -> showError()
-            is SearchScreenState.IOError -> showIOError()
+            is SearchScreenState.IOError -> showError()
+            is SearchScreenState.UploadingError -> {
+                Toast
+                    .makeText(context, context.getString(R.string.error_occured), Toast.LENGTH_SHORT)
+                    .show()
+                showUploadingError(state.vacancies, state.found)
+            }
+
+            is SearchScreenState.UploadingInternetError -> {
+                Toast
+                    .makeText(context, context.getString(R.string.check_internet_connection), Toast.LENGTH_SHORT)
+                    .show()
+                showUploadingError(state.vacancies, state.found)
+            }
         }
     }
 
@@ -54,6 +70,7 @@ class SearchFragmentStateHandler(
             searchStatus.isVisible = false
             recyclerView.isVisible = false
         }
+        hideKeyboard(context, binding.searchField)
     }
 
     private fun showServerError() {
@@ -71,6 +88,7 @@ class SearchFragmentStateHandler(
             searchStatus.isVisible = false
             recyclerView.isVisible = false
         }
+        hideKeyboard(context, binding.searchField)
     }
 
     private fun showSearchError() {
@@ -89,6 +107,7 @@ class SearchFragmentStateHandler(
             searchStatus.text = context.getString(R.string.no_such_vacancies)
             recyclerView.isVisible = false
         }
+        hideKeyboard(context, binding.searchField)
     }
 
     private fun showDefaultScreenState() {
@@ -99,6 +118,7 @@ class SearchFragmentStateHandler(
             searchStatus.isVisible = false
             recyclerView.isVisible = false
         }
+        hideKeyboard(context, binding.searchField)
     }
 
     private fun uploadNextPage() {
@@ -117,30 +137,35 @@ class SearchFragmentStateHandler(
             searchStatus.isVisible = false
             recyclerView.isVisible = false
         }
+        hideKeyboard(context, binding.searchField)
     }
 
-    private fun showIOError() {
-        Toast.makeText(context, context.getString(R.string.error_occured), Toast.LENGTH_SHORT).show()
-        binding.apply {
-            searchScreenCover.isVisible = false
-            progressBar.isVisible = false
-            errorPlaceholder.isVisible = false
-            searchStatus.isVisible = true
-            recyclerView.isVisible = true
-        }
-    }
-
+    @SuppressLint("NotifyDataSetChanged")
     private fun showContent(list: ArrayList<Vacancy>, resultsQty: Int) {
         searchAdapter.vacanciesList.clear()
         searchAdapter.vacanciesList.addAll(list)
         searchAdapter.notifyDataSetChanged()
         binding.apply {
+            searchScreenCover.isVisible = false
             progressBar.isVisible = false
             errorPlaceholder.isVisible = false
             searchStatus.isVisible = true
             searchStatus.text = getVacanciesWordForm(resultsQty)
             recyclerView.isVisible = true
         }
+        hideKeyboard(context, binding.searchField)
+    }
+
+    private fun showUploadingError(list: ArrayList<Vacancy>, resultsQty: Int) {
+        binding.apply {
+            searchScreenCover.isVisible = false
+            progressBar.isVisible = false
+            errorPlaceholder.isVisible = false
+            searchStatus.isVisible = true
+            searchStatus.text = getVacanciesWordForm(resultsQty)
+            recyclerView.isVisible = true
+        }
+        hideKeyboard(context, binding.searchField)
     }
 
     private fun getVacanciesWordForm(quantity: Int): String {
@@ -161,5 +186,10 @@ class SearchFragmentStateHandler(
             )
 
         return "$foundForm $quantity $vacancyForm"
+    }
+
+    private fun hideKeyboard(context: Context, view: View) {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }
