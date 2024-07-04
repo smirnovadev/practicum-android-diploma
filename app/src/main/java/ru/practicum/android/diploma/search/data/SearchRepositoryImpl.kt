@@ -46,7 +46,6 @@ class SearchRepositoryImpl(
                     emit(Resource.Error(NOTHING_FOUND))
                 }
             }
-
             else -> emit(Resource.Error(response.resultCode))
         }
     }
