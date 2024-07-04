@@ -54,21 +54,24 @@ class RegionViewModel(
                             renderState(AreasState.Empty)
                         } else {
                             val regions = areas.filter { region ->
-                                region.parent != null
+                                region.parent != null && region.parent != "1001"
                             }
                             renderState(AreasState.Content(regions))
                         }
                     }
             }
-            return
-        }
-
-        viewModelScope.launch {
-            interactor
-                .getRegionsByNameAndParent(request, country.id.toString())
-                .collect {
-                    renderState(AreasState.Content(it))
-                }
+        } else {
+            viewModelScope.launch {
+                interactor
+                    .getRegionsByNameAndParent(request, country.id.toString())
+                    .collect { areas ->
+                        if (areas.isEmpty()) {
+                            renderState(AreasState.Empty)
+                        } else {
+                            renderState(AreasState.Content(areas))
+                        }
+                    }
+            }
         }
     }
 
