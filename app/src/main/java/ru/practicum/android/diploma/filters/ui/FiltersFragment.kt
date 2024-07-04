@@ -1,24 +1,18 @@
 package ru.practicum.android.diploma.filters.ui
 
 import android.os.Bundle
-import android.text.Editable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import debounce
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterBinding
-import ru.practicum.android.diploma.filters.domain.models.FiltersApplyButtonState
-import ru.practicum.android.diploma.filters.domain.models.FiltersResetButtonState
-import ru.practicum.android.diploma.filters.domain.models.FiltersScreenState
 import ru.practicum.android.diploma.filters.presentation.FiltersViewModel
 
 class FiltersFragment : Fragment() {
@@ -26,9 +20,15 @@ class FiltersFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel by viewModel<FiltersViewModel>()
+    private var country: String = EMPTY
+    private var region: String = EMPTY
+    private var industry: String = EMPTY
+    private var salary: String = EMPTY
+    private var salaryFlag: Boolean = false
 
-    private var previousSalary: String = ""
-    private var salaryDebounce: ((String) -> Unit)? = null
+    private val bottomNavView: BottomNavigationView by lazy {
+        requireActivity().findViewById(R.id.bottomNavigationView)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,35 +42,26 @@ class FiltersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.toolbar.setNavigationOnClickListener {
+        binding.toolbar.setOnClickListener {
+            clearIndustry()
+            clearSalaryFlag()
+            clearPlaceToWork()
+            clearSalary()
             findNavController().navigateUp()
         }
-        viewModel.getScreenState().observe(viewLifecycleOwner) { state ->
-            renderScreenState(state)
-        }
+        bottomNavView.isVisible = false
 
-        viewModel.getApplyButtonState().observe(viewLifecycleOwner) { state ->
-            when (state) {
-                is FiltersApplyButtonState.Visible -> binding.buttonApply.isVisible = true
-                is FiltersApplyButtonState.InVisible -> binding.buttonApply.isVisible = false
-            }
-        }
+        country = viewModel.getCountryName()
+        region = viewModel.getRegionName()
+        industry = viewModel.getIndustryName()
+        salary = viewModel.getSalary()
+        salaryFlag = viewModel.getSalaryFlag()
 
-        viewModel.getResetButtonState().observe(viewLifecycleOwner) { state ->
-            when (state) {
-                is FiltersResetButtonState.Visible -> binding.reset.isVisible = true
-                is FiltersResetButtonState.InVisible -> binding.reset.isVisible = false
-            }
-        }
-
-        salaryDebounce = debounce(
-            DEBOUNCE_DELAY,
-            viewLifecycleOwner.lifecycleScope,
-            true
-        ) { newSalary -> viewModel.updateCurrentSalary(newSalary) }
+        binding.placeWorkText.setText(getString(R.string.place_to_work_text, country, region))
+        binding.industryText.setText(industry)
 
         initListeners()
-        buttonsListeners()
+        bottomListeners()
     }
 
     private fun initListeners() {
@@ -79,17 +70,6 @@ class FiltersFragment : Fragment() {
                 openPlaceToWorkFragment()
             }
         }
-
-        binding.placeWorkText.addTextChangedListener(
-            afterTextChanged = { text: Editable? ->
-                if (text.isNullOrEmpty()) {
-                    binding.placeWorkBtn.setImageResource(R.drawable.ic_arrow_forward)
-                } else {
-                    binding.placeWorkBtn.setImageResource(R.drawable.ic_close)
-                }
-            }
-        )
-
         binding.placeWorkBtn.setOnClickListener {
             if (binding.placeWorkText.text?.isEmpty() == true) {
                 openPlaceToWorkFragment()
@@ -97,23 +77,11 @@ class FiltersFragment : Fragment() {
                 clearPlaceToWork()
             }
         }
-
         binding.industryText.setOnClickListener {
             if (binding.industryText.text?.isEmpty() == true) {
                 openIndustryFragment()
             }
         }
-
-        binding.industryText.addTextChangedListener(
-            afterTextChanged = { text: Editable? ->
-                if (text.isNullOrEmpty()) {
-                    binding.industryBtn.setImageResource(R.drawable.ic_arrow_forward)
-                } else {
-                    binding.industryBtn.setImageResource(R.drawable.ic_close)
-                }
-            }
-        )
-
         binding.industryBtn.setOnClickListener {
             if (binding.industryText.text?.isEmpty() == true) {
                 openIndustryFragment()
@@ -121,49 +89,86 @@ class FiltersFragment : Fragment() {
                 clearIndustry()
             }
         }
-
-        binding.salaryText
-            .addTextChangedListener(
-                afterTextChanged = { text: Editable? ->
-                    if (text.toString() != previousSalary) {
-                        val newSalary = text.toString()
-                        salaryDebounce?.let { it(newSalary) }
-                        previousSalary = newSalary
-                    }
-                }
-            )
-
-        binding.salaryText.setOnEditorActionListener { v, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_DONE && !binding.salaryText.text.isNullOrEmpty()) {
-                viewModel.updateCurrentSalary(binding.salaryText.text.toString())
-            }
-            false
-        }
-
+        binding.salaryText.addTextChangedListener(onTextChanged = { text, _, _, _ ->
+            viewModel.saveSalary(text?.toString())
+            checkButtonsState()
+        })
         binding.salaryCheckBox.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.updateSalaryFlag(isChecked)
+            viewModel.saveSalaryFlag(isChecked)
+            checkButtonsState()
         }
     }
 
-    private fun buttonsListeners() {
+    private fun bottomListeners() {
         binding.buttonApply.setOnClickListener {
-            viewModel.updateCurrentSalary(binding.salaryText.text.toString())
-            viewModel.applyFilters()
             findNavController().navigateUp()
         }
         binding.reset.setOnClickListener {
-            viewModel.resetFilters()
+            clearPlaceToWork()
+            clearIndustry()
+            clearSalaryFlag()
+            clearSalary()
         }
+    }
+
+    private fun checkButtonsState() {
+        val visible = !binding.placeWorkText.text.isNullOrEmpty() ||
+            !binding.industryText.text.isNullOrEmpty() ||
+            !binding.salaryText.text.isNullOrEmpty() ||
+            viewModel.getSalaryFlagN() != null
+        binding.buttonApply.isVisible = visible
+        binding.reset.isVisible = visible
     }
 
     private fun clearPlaceToWork() {
         binding.placeWorkText.setText(EMPTY)
-        viewModel.clearRegions()
+        viewModel.clearCountryName()
+        viewModel.clearRegionName()
+        refreshPlaceToWorkIcon()
     }
 
     private fun clearIndustry() {
         binding.industryText.setText(EMPTY)
-        viewModel.clearIndustry()
+        viewModel.clearIndustryName()
+        refreshIndustryIcon()
+    }
+
+    private fun clearSalary() {
+        binding.salaryText.setText(EMPTY)
+        viewModel.clearSalary()
+    }
+
+    private fun clearSalaryFlag() {
+        binding.salaryCheckBox.isChecked = false
+        viewModel.clearSalaryFlag()
+    }
+
+    private fun refreshPlaceToWorkIcon() {
+        binding.placeWorkBtn.setImageDrawable(
+            ResourcesCompat.getDrawable(
+                resources,
+                if (binding.placeWorkText.text?.isEmpty() == true) {
+                    R.drawable.ic_arrow_forward
+                } else {
+                    R.drawable.ic_close
+                },
+                activity?.theme
+            )
+        )
+    }
+
+    private fun refreshIndustryIcon() {
+        binding.industryBtn.setImageDrawable(
+            ResourcesCompat.getDrawable(
+                resources,
+                if (binding.industryText.text?.isEmpty() == true) {
+                    R.drawable.ic_arrow_forward
+                } else {
+                    R.drawable.ic_close
+                },
+                activity?.theme
+            )
+        )
     }
 
     private fun openIndustryFragment() {
@@ -176,40 +181,35 @@ class FiltersFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.updateFiltersOnResume()
+        country = viewModel.getCountryName()
+        region = viewModel.getRegionName()
+        if (country.isEmpty() && region.isEmpty()) {
+            binding.placeWorkText.setText(EMPTY)
+        } else {
+            binding.placeWorkText.setText(
+                getString(
+                    R.string.place_to_work_text,
+                    country,
+                    region
+                )
+            )
+        }
+        refreshPlaceToWorkIcon()
+        binding.industryText.setText(viewModel.getIndustryName())
+        refreshIndustryIcon()
+
+        binding.salaryText.setText(viewModel.getSalary())
+        binding.salaryCheckBox.isChecked = viewModel.getSalaryFlag()
+
+        checkButtonsState()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-        salaryDebounce = null
-    }
-
-    private fun renderScreenState(state: FiltersScreenState) {
-        when (state) {
-            is FiltersScreenState.Content -> {
-                val country = state.filters.country
-                val region = state.filters.region
-                val col = mutableListOf<String>()
-                if (country.isNotEmpty()) {
-                    col.add(country)
-                }
-                if (region.isNotEmpty()) {
-                    col.add(region)
-                }
-                val joinToString = col.joinToString()
-                binding.placeWorkText.setText(joinToString)
-                binding.industryText.setText(state.filters.industry)
-                previousSalary = state.filters.salary
-                binding.inputLayoutSalary.editText?.setText(previousSalary)
-                Log.d("Salary from SP", "${state.filters.salary}")
-                binding.salaryCheckBox.isChecked = state.filters.salaryFlag
-            }
-        }
     }
 
     companion object {
         private const val EMPTY = ""
-        private const val DEBOUNCE_DELAY = 1000L
     }
 }

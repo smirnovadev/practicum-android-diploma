@@ -12,6 +12,5 @@ sealed class SearchScreenState {
     data object Error : SearchScreenState()
     data object UploadNextPage : SearchScreenState()
     data class ShowContent(val vacancies: ArrayList<Vacancy>, val found: Int) : SearchScreenState()
-    data class UploadingError(val vacancies: ArrayList<Vacancy>, val found: Int) : SearchScreenState()
-    data class UploadingInternetError(val vacancies: ArrayList<Vacancy>, val found: Int) : SearchScreenState()
+
 }

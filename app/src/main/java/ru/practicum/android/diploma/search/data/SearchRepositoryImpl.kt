@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.flow
 import ru.practicum.android.diploma.data.dto.requests.VacanciesSearchRequest
 import ru.practicum.android.diploma.data.dto.responses.VacanciesSearchResponse
 import ru.practicum.android.diploma.data.network.NetworkClient
-import ru.practicum.android.diploma.filters.domain.models.FiltersParameters
 import ru.practicum.android.diploma.search.data.mapper.ResponseToVacanciesMapper
 import ru.practicum.android.diploma.search.domain.api.SearchRepository
 import ru.practicum.android.diploma.search.domain.model.Resource
@@ -17,19 +16,8 @@ class SearchRepositoryImpl(
     private val responseToVacanciesMapper: ResponseToVacanciesMapper
 ) : SearchRepository {
 
-    override fun getVacancies(
-        query: String,
-        page: Int,
-        filtersParameters: FiltersParameters
-    ): Flow<Resource<Vacancies>> = flow {
-        val vacancySearchRequest = VacanciesSearchRequest(
-            query = query,
-            page = page,
-            salary = filtersParameters.salary,
-            onlyWithSalary = filtersParameters.salaryFlag,
-            industry = filtersParameters.industry,
-            area = filtersParameters.area
-        )
+    override fun getVacancies(query: String, page: Int): Flow<Resource<Vacancies>> = flow {
+        val vacancySearchRequest = VacanciesSearchRequest(query = query, page = page)
         Log.d(TAG_SEARCH_REQUEST, "$vacancySearchRequest")
         val response = networkClient.findVacancies(vacancySearchRequest)
 

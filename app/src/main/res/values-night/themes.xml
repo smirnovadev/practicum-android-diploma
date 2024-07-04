@@ -7,7 +7,6 @@
         <item name="hintTextColor">@color/white</item>
         <item name="backgroundColor">@color/black</item>
         <item name="colorOnContainer">@color/gray</item>
-        <item name="colorTertiaryContainer">@color/white</item>
     </style>
 
 </resources>

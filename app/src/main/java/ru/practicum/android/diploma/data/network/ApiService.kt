@@ -7,7 +7,7 @@ import retrofit2.http.Query
 import ru.practicum.android.diploma.BuildConfig
 import ru.practicum.android.diploma.data.dto.responses.VacanciesSearchResponse
 import ru.practicum.android.diploma.data.dto.responses.VacancyByIdResponse
-import ru.practicum.android.diploma.data.dto.responses.areas.AreasListDTO
+import ru.practicum.android.diploma.data.dto.responses.areas.AreasListDAO
 import ru.practicum.android.diploma.data.dto.responses.industry.IndustriesListDAO
 
 interface ApiService {
@@ -25,7 +25,7 @@ interface ApiService {
     @GET("/vacancies")
     suspend fun findVacancies(
         @Query("text") query: String,
-        @Query("salary") salary: Int? = null,
+        @Query("salary") salary: String? = null,
         @Query("page") page: Int = 0,
         @Query("per_page") amount: Int = 20,
         @Query("only_with_salary") onlyWithSalary: Boolean = false,
@@ -36,12 +36,12 @@ interface ApiService {
     @GET("/areas/countries")
     suspend fun getCountries(
         @Query("locale") locale: String = "RU"
-    ): AreasListDTO
+    ): AreasListDAO
 
     @GET("/areas")
     suspend fun getAreas(
         @Query("locale") locale: String = "RU"
-    ): AreasListDTO
+    ): AreasListDAO
 
     @GET("/salary_statistics/dictionaries/salary_industries")
     suspend fun getIndustries(

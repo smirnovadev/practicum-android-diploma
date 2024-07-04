@@ -5,9 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="?attr/backgroundColor"
-    android:id="@+id/area_item"
-    android:clickable="true"
-    android:focusable="true">
+    android:paddingVertical="@dimen/_9dp">
 
     <TextView
         android:id="@+id/area_text"
@@ -18,12 +16,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/area_btn"
         style="@style/image_filter"
         android:contentDescription="@null"
         android:src="@drawable/ic_arrow_forward"
-        android:layout_marginEnd="@dimen/_16dp"
         app:layout_constraintBottom_toBottomOf="@id/area_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/area_text" />
