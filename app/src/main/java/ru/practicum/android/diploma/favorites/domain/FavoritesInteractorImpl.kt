@@ -24,7 +24,7 @@ class FavoritesInteractorImpl(private val favoritesRepository: FavoritesReposito
     }
 
     private fun verificationData(list: ArrayList<Vacancy>): ArrayList<Vacancy>? {
-        return if (list.toString() == "[]") {
+        return if (list.isEmpty()) {
             null
         } else {
             list

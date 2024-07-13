@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import debounce
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.databinding.FragmentSelectRegionBinding
+import ru.practicum.android.diploma.filters.domain.state.AreasState
 import ru.practicum.android.diploma.filters.presentation.RegionViewModel
 import ru.practicum.android.diploma.search.domain.model.fields.Area
 
@@ -43,18 +44,17 @@ class RegionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.groupNotFound.visibility = View.GONE
-        binding.groupEmpty.visibility = View.GONE
-        binding.toolbar.setOnClickListener {
+        binding.groupError.visibility = View.GONE
+        binding.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
         searchDebounce = debounce(
             SEARCH_DEBOUNCE_DELAY,
             viewLifecycleOwner.lifecycleScope,
-            false
+            true
         ) { request -> viewModel.search(request) }
-        rvAdapter = AreaAdapter(regions) {
-            viewModel.save(it)
-            findNavController().navigateUp()
+        rvAdapter = AreaAdapter(regions) { area ->
+            viewModel.saveAndExit(area, findNavController())
         }
         binding.recyclerView.adapter = rvAdapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -62,20 +62,17 @@ class RegionFragment : Fragment() {
         viewModel.getScreenStateLiveData().observe(viewLifecycleOwner) { state ->
             when (state) {
                 is AreasState.Content -> showContent(state.areasList)
-                AreasState.Empty -> showEmpty()
+                is AreasState.Empty -> showEmpty()
                 is AreasState.Error -> showError()
-                AreasState.Loading -> showLoading()
+                is AreasState.Loading -> showLoading()
             }
         }
     }
 
     private fun initListeners() {
         binding.inputRegion.addTextChangedListener(
-            afterTextChanged =
-            { editable ->
-                if (editable.toString().isNotEmpty()) {
-                    search(editable.toString())
-                }
+            afterTextChanged = { editable ->
+                search(editable.toString())
             }
         )
         binding.inputRegion.setOnEditorActionListener { _, actionId, _ ->
@@ -105,7 +102,7 @@ class RegionFragment : Fragment() {
         binding.recyclerView.isVisible = true
         rvAdapter!!.notifyDataSetChanged()
         binding.apply {
-            groupEmpty.isVisible = false
+            groupError.isVisible = false
             groupNotFound.isVisible = false
             progressBar.isVisible = false
         }
@@ -114,8 +111,8 @@ class RegionFragment : Fragment() {
     private fun showEmpty() {
         binding.apply {
             binding.recyclerView.isVisible = false
-            binding.groupEmpty.isVisible = true
-            binding.groupNotFound.isVisible = false
+            binding.groupError.isVisible = false
+            binding.groupNotFound.isVisible = true
             progressBar.isVisible = false
         }
     }
@@ -123,8 +120,8 @@ class RegionFragment : Fragment() {
     private fun showError() {
         binding.apply {
             binding.recyclerView.isVisible = false
-            binding.groupEmpty.isVisible = false
-            binding.groupNotFound.isVisible = true
+            binding.groupError.isVisible = true
+            binding.groupNotFound.isVisible = false
             progressBar.isVisible = false
         }
     }
@@ -133,7 +130,7 @@ class RegionFragment : Fragment() {
         binding.apply {
             progressBar.isVisible = true
             binding.recyclerView.isVisible = false
-            binding.groupEmpty.isVisible = false
+            binding.groupError.isVisible = false
             binding.groupNotFound.isVisible = false
         }
     }

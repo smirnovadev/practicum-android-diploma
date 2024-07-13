@@ -4,7 +4,7 @@ import ru.practicum.android.diploma.data.dto.NetworkRequest
 
 data class VacanciesSearchRequest(
     val query: String,
-    val salary: String? = null,
+    val salary: Int? = null,
     val page: Int = 0,
     val amount: Int = 20,
     val onlyWithSalary: Boolean = false,
